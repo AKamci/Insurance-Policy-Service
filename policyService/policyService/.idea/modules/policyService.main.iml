@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="AdditionalModuleElements">
+    <content url="file://$MODULE_DIR$/../../src/main" dumb="true">
+      <excludeFolder url="file://$MODULE_DIR$/../../src/main/java/Application" />
+      <excludeFolder url="file://$MODULE_DIR$/../../src/main/java/Application/Gateways" />
+      <excludeFolder url="file://$MODULE_DIR$/../../src/main/java/Domain" />
+      <excludeFolder url="file://$MODULE_DIR$/../../src/main/java/Infrastructure" />
+      <excludeFolder url="file://$MODULE_DIR$/../../src/main/java/Interfaces" />
+    </content>
+  </component>
+</module>
