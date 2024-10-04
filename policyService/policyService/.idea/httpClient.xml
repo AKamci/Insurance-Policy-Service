@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="HttpClientEndpointsTabState">
+    <option name="requestToText" value="&lt;CachedHttpClientTabRequests&gt;&#10;  &lt;entry key=&quot;58c17b8b5d8aaca1ddb2818ad5bcd8e0ee2d382e&quot; value=&quot;###&amp;#10;PUT http://localhost:8080/api/v1/carPolicy?&amp;#10;    id={{$random.integer(100)}}&amp;amp;&amp;#10;    decision=false&quot; /&gt;&#10;  &lt;entry key=&quot;0eecacd5a451fc331184120052f368827a9aef4b&quot; value=&quot;###&amp;#10;GET http://localhost:8080/api/v1/carPolicy&amp;#10;Content-Type: application/json&amp;#10;&amp;#10;{&amp;#10;  &amp;quot;id&amp;quot;: 0&amp;#10;}&quot; /&gt;&#10;&lt;/CachedHttpClientTabRequests&gt;" />
+  </component>
+</project>
