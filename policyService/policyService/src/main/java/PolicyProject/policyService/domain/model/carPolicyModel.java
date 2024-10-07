@@ -17,7 +17,7 @@ public record carPolicyModel(
         Long customerId,
 
         //Navigation Properties
-        Customer customer,
+        CustomerModel CustomerModel,
         Car car
 
 

@@ -1,17 +1,14 @@
-version: '3.8'
-
 services:
-  postgres:
-    image: postgres:latest
-    container_name: PostgreSQL
-    environment:
-      POSTGRES_DB: InsurancePostgreSQL
-      POSTGRES_USER: kadir123
-      POSTGRES_PASSWORD: password
+  database:
+    image: 'postgres:15.2'
     ports:
-      - "5432:5432"
+      - '5432'
+    environment:
+      - 'POSTGRES_USER=kadir123'
+      - 'POSTGRES_DB=InsurancePostgreSQL'
+      - 'POSTGRES_PASSWORD=password'
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
+    postgres_data:

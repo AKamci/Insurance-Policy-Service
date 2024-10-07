@@ -1,10 +1,12 @@
 package PolicyProject.policyService.application.service.IService;
 
+import PolicyProject.policyService.domain.dto.response.CustomerResponse.GetCustomerResponse;
+
 import java.util.List;
 
-public interface IBaseService<T,Response> {
+public interface IBaseService<Response,T> {
 
-    List<Response> getList();
+    //Iterable<Response> getList();
     Response get(T T);
     Response create(T T);
     Response update(T T);

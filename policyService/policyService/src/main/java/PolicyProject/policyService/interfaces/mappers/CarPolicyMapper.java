@@ -1,39 +1,44 @@
 package PolicyProject.policyService.interfaces.mappers;
 
-import PolicyProject.policyService.domain.dto.request.carPolicyRequest.createCarPolicyRequest;
-import PolicyProject.policyService.domain.dto.request.carPolicyRequest.deleteCarPolicyRequest;
-import PolicyProject.policyService.domain.dto.request.carPolicyRequest.getCarPolicyRequest;
-import PolicyProject.policyService.domain.dto.request.carPolicyRequest.updateCarPolicyRequest;
+import PolicyProject.policyService.domain.dto.request.carPolicyRequest.*;
+import PolicyProject.policyService.domain.dto.response.CustomerResponse.GetCarPoliciesByCustomer;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.createCarPolicyResponse;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.deleteCarPolicyResponse;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.getCarPolicyResponse;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.updateCarPolicyResponse;
+import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.domain.model.carPolicyModel;
-import PolicyProject.policyService.infrastructure.persistence.entity.carPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
 import java.util.Optional;
-
-public interface CarPolicyMapper extends Mapper{
+@org.mapstruct.Mapper(componentModel = "spring")
+public interface CarPolicyMapper {
 
     CarPolicyMapper INSTANCE = Mappers.getMapper(CarPolicyMapper.class);
 
-    //@Mapping(source = "customerId", target = "customerId")
     carPolicyModel createCarPolicyRequestToCarPolicyModel(createCarPolicyRequest createCarPolicyRequest);
     carPolicyModel updateCarPolicyRequestToCarPolicyModel(updateCarPolicyRequest createCarPolicyRequest);
     carPolicyModel getCarPolicyRequestTocarPolicyModel(getCarPolicyRequest getCarPolicyRequest);
     carPolicyModel deleteCarPolicyRequestToCarPolicyModel(deleteCarPolicyRequest deleteCarPolicyRequest);
+    carPolicyModel getCustomerCarPoliciesToCarPolicyModel(getCustomerCarPoliciesRequest getCustomerCarPoliciesRequest);
 
-    createCarPolicyResponse cartPolicyModelToCreateCarPolicyResponse(carPolicyModel carPolicyModel);
+    createCarPolicyResponse carPolicyModelToCreateCarPolicyResponse(carPolicyModel carPolicyModel);
     updateCarPolicyResponse cartPolicyModelToUpdateCarPolicyResponse(carPolicyModel carPolicyModel);
     getCarPolicyResponse cartPolicyModelToGetCarPolicyResponse(carPolicyModel carPolicyModel);
     deleteCarPolicyResponse cartPolicyModelToDeleteCarPolicyResponse(carPolicyModel carPolicyModel);
 
-    getCarPolicyResponse getCarPolicyResponse(carPolicyModel carPolicyModel);
 
-    carPolicy carPolicyModelToCarEntity(carPolicyModel carPolicyModel);
+    List<carPolicyModel> carPolicyEntityListToCarPolicyModelList(List<CarPolicy> carPolicies);
 
-    carPolicyModel carPolicyEntityToCarPolicyModel(Optional<carPolicy> carPolicy);
+    List<getCarPolicyResponse> customerModelToGetCarPoliciesByCustomer(List<carPolicyModel> carPolicyModelList);
 
-    createCarPolicyResponse carPolicyModelToCreateCarPolicyResponse(carPolicyModel carPolicyModel);
+
+
+    CarPolicy carPolicyModelToCarPolicyEntity(carPolicyModel carPolicyModel);
+
+    carPolicyModel carPolicyEntityToCarPolicyModel(CarPolicy carPolicy);
+
+
 }

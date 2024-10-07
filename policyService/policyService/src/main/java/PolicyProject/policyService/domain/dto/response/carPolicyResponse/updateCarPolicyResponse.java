@@ -6,5 +6,5 @@ public record updateCarPolicyResponse(
 
        Long PolicyId
 
-) {
+) implements ICarPolicyResponse {
 }

@@ -1,7 +1,9 @@
 package PolicyProject.policyService.application.gateways;
 
+import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
-import PolicyProject.policyService.infrastructure.persistence.entity.carPolicy;
+
+import java.util.List;
 
 public interface CustomerGateway {
 
@@ -9,7 +11,10 @@ public interface CustomerGateway {
     Customer get(Customer Customer);
     Customer update(Customer Customer);
     Customer delete(Customer Customer);
-    Customer getList(Customer Customer);
+    Iterable<Customer> getList();
+
+
+
 
 
 

@@ -4,10 +4,12 @@ import PolicyProject.policyService.application.gateways.carPolicyGateway;
 import PolicyProject.policyService.domain.model.carPolicyModel;
 import PolicyProject.policyService.infrastructure.persistence.entity.Car;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
-import PolicyProject.policyService.infrastructure.persistence.entity.carPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.repository.carPolicyRepository;
 import PolicyProject.policyService.interfaces.mappers.Mapper;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -18,20 +20,21 @@ public class carPolicyRepositoryGateway implements carPolicyGateway
 
 
     @Override
-    public carPolicy create(carPolicy carPolicy, double Amount) {
-         carPolicy.setPolicyAmount(Amount);
+    public CarPolicy create(CarPolicy carPolicy, double Amount, Customer customer) {
 
+         carPolicy.setCustomer(customer);
+         carPolicy.setPolicyAmount(Amount);
          return carPolicyRepository.save(carPolicy);
     }
 
     @Override
-    public carPolicy get(carPolicy carPolicy) {
+    public CarPolicy get(CarPolicy carPolicy) {
         var EntityObject = carPolicyRepository.findById(carPolicy.getId());
         return EntityObject.orElse(null);
     }
 
     @Override
-    public carPolicy update(carPolicy carPolicy) {
+    public CarPolicy update(CarPolicy carPolicy) {
        var EntityObject = get(carPolicy);
        if (EntityObject != null) {
         return carPolicyRepository.save(carPolicy);
@@ -40,17 +43,28 @@ public class carPolicyRepositoryGateway implements carPolicyGateway
     }
 
     @Override
-    public carPolicy delete(carPolicy carPolicy) {
+    public CarPolicy delete(CarPolicy carPolicy) {
 
         var EntityObject = get(carPolicy);
         if (EntityObject != null) {
             carPolicyRepository.delete(carPolicy);
+            return EntityObject;
         }
         return null;
     }
 
     @Override
-    public carPolicy getList(carPolicy carPolicy) {
+    public CarPolicy getList(CarPolicy carPolicy) {
         return null;
+    }
+
+    @Override
+    public List<CarPolicy> getCarPoliciesByCustomer(Long customerId) {
+        var PolicyList = carPolicyRepository.findByCustomerId(customerId).stream().toList();
+        if (PolicyList.isEmpty() )
+        {
+            return null;
+        }
+            return PolicyList;
     }
 }

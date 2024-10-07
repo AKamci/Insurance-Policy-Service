@@ -29,11 +29,9 @@ public class Customer {
 
     //Navigation Properties
     @Transient
-    @org.springframework.data.annotation.Transient
-    private List<carPolicy> carPolicy;
+    private List<Car> cars;
 
     @OneToMany(mappedBy = "customer")
-
-    private List<carPolicy> carPolicies;
+    private List<CarPolicy> carPolicies;
 
 }

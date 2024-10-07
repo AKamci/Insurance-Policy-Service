@@ -4,6 +4,6 @@ import java.sql.Date;
 
 public record deleteCarPolicyRequest(
 
-            Long policyId
+            Long id
 ) implements ICarPolicyRequest{
 }

@@ -8,8 +8,8 @@ public record getCarPolicyResponse(
         String policyDescription,
         String policyType,
         Date policyDate,
-        Double policyAmount,
-        Long customerId
+        Double policyAmount
 
-) {
+
+) implements ICarPolicyResponse {
 }

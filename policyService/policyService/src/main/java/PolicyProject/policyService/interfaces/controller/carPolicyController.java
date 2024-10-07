@@ -1,9 +1,12 @@
 package PolicyProject.policyService.interfaces.controller;
 
-import PolicyProject.policyService.application.service.carPolicyService;
+import PolicyProject.policyService.application.service.Service.carPolicyService;
+import PolicyProject.policyService.domain.dto.request.CustomerRequest.GetCustomerRequest;
 import PolicyProject.policyService.domain.dto.request.carPolicyRequest.*;
+import PolicyProject.policyService.domain.dto.response.CustomerResponse.GetCarPoliciesByCustomer;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
 import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
+import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import PolicyProject.policyService.interfaces.mappers.Mapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +35,6 @@ public class carPolicyController {
 
     }
 
-
     @GetMapping
     public ResponseEntity<getCarPolicyResponse> getPolicy(@RequestBody getCarPolicyRequest getCarPolicyRequest)
     {
@@ -51,13 +53,13 @@ public class carPolicyController {
                         (CarPolicyMapper.INSTANCE.updateCarPolicyRequestToCarPolicyModel(updateCarPolicyRequest)));
     }
 
-
+/*
     @GetMapping("/list")
     public ResponseEntity<List<getCustomerCarPoliciesResponse>> getCustomerPolicies(@RequestBody getCustomerCarPoliciesRequest getCustomerCarPoliciesRequest)
     {
         return null;
     }
-
+*/
     @DeleteMapping
     public ResponseEntity<deleteCarPolicyResponse> deletePolicy(@RequestBody deleteCarPolicyRequest deleteCarPolicyRequest)
     {
@@ -66,6 +68,19 @@ public class carPolicyController {
                 .body(carPolicyService.delete
                         (CarPolicyMapper.INSTANCE.deleteCarPolicyRequestToCarPolicyModel(deleteCarPolicyRequest)));
     }
+
+
+    @GetMapping("/customerPolicies")
+    public ResponseEntity<List<getCarPolicyResponse>> deletePolicy(@RequestBody getCustomerCarPoliciesRequest getCustomerCarPoliciesRequest)
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(carPolicyService.get_wPolicy
+                        (CarPolicyMapper.INSTANCE.getCustomerCarPoliciesToCarPolicyModel(getCustomerCarPoliciesRequest)));
+    }
+
+
+
 
 
 }

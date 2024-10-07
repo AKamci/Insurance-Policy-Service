@@ -2,20 +2,22 @@ package PolicyProject.policyService.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 import java.sql.Date;
 
-
+@Builder
 @Entity
 @Table(name = "CarPolicy")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 
-public class carPolicy {
+
+public class CarPolicy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,9 +30,6 @@ public class carPolicy {
     private Double policyAmount;
     private String licensePlate;
 
-
-
-    //Isimlendirme
     //Navigation Properties
 
     @ManyToOne

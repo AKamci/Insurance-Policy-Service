@@ -5,7 +5,7 @@ import java.sql.Date;
 
 public record getCarPolicyRequest(
 
-    Long policyId
+    Long id
 
 )implements ICarPolicyRequest {
 }

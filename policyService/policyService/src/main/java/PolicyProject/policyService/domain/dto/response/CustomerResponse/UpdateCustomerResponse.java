@@ -1,4 +1,10 @@
 package PolicyProject.policyService.domain.dto.response.CustomerResponse;
 
-public record UpdateCustomerResponse() {
+public record UpdateCustomerResponse(
+
+
+        Long id
+
+
+) implements ICustomerResponse{
 }

@@ -10,5 +10,5 @@ public record getCustomerCarPoliciesResponse(
         Date policyDate,
         Double policyAmount
 
-) {
+) implements ICarPolicyResponse {
 }
