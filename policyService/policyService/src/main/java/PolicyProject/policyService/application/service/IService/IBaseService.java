@@ -4,12 +4,17 @@ import PolicyProject.policyService.domain.dto.response.CustomerResponse.GetCusto
 
 import java.util.List;
 
-public interface IBaseService<Response,T> {
-
-    //Iterable<Response> getList();
-    Response get(T T);
-    Response create(T T);
-    Response update(T T);
-    Response delete(T T);
-
+public interface IBaseService<
+        CreateResponse,
+        UpdateResponse,
+        DeleteResponse,
+        GetResponse,
+        ListResponse,
+        T
+        > {
+    List<ListResponse> getList();
+    GetResponse get(T entity);
+    CreateResponse create(T entity);
+    UpdateResponse update(T entity);
+    DeleteResponse delete(T entity);
 }

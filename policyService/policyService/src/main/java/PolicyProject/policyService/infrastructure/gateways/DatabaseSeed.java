@@ -35,6 +35,7 @@ public class DatabaseSeed implements CommandLineRunner {
         if (carPolicyrepository.count() == 0) {
             seedDataCarPolicies();
         }
+        System.out.println("DATABASE SEED IS COMPLETED");
     }
 
     private void seedDataCustomer() {

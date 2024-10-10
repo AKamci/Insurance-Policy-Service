@@ -64,13 +64,13 @@ public class CustomerController
     }
 
 
-/*
+
     @GetMapping("/list")
-    public ResponseEntity<Iterable<GetCustomerResponse>> getCustomerPolicies()
+    public ResponseEntity<List<GetCustomerResponse>> getCustomerPolicies()
     {
         return ResponseEntity.status(HttpStatus.OK).body(customerService.getList());
     }
-*/
+
 
 
 

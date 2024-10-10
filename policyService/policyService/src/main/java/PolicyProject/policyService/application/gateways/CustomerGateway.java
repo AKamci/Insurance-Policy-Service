@@ -11,7 +11,7 @@ public interface CustomerGateway {
     Customer get(Customer Customer);
     Customer update(Customer Customer);
     Customer delete(Customer Customer);
-    Iterable<Customer> getList();
+    List<Customer> getList();
 
 
 

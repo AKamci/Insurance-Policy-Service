@@ -1,10 +1,15 @@
 package PolicyProject.policyService.application.service.IService;
 
-import PolicyProject.policyService.domain.dto.request.CustomerRequest.ICustomerRequest;
-import PolicyProject.policyService.domain.dto.request.carPolicyRequest.ICarPolicyRequest;
-import PolicyProject.policyService.domain.dto.response.CustomerResponse.ICustomerResponse;
+import PolicyProject.policyService.domain.dto.response.CustomerResponse.*;
 import PolicyProject.policyService.domain.model.CustomerModel;
-import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 
-public interface ICustomerService extends IBaseService<ICustomerResponse,CustomerModel> {
+public interface ICustomerService extends IBaseService<
+        CreateCustomerResponse,
+        UpdateCustomerResponse,
+        DeleteCustomerResponse,
+        GetCustomerResponse,
+        GetCustomerResponse,
+        CustomerModel
+        > {
+    // Ek metodlar varsa burada tanımlanabilir
 }

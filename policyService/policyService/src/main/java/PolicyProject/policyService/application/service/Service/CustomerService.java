@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -42,21 +40,15 @@ public class CustomerService implements ICustomerService {
                 (executeCustomer.executeDelete(CustomerModel));
     }
 
-    /*
-        @Override
-        public Iterable<GetCustomerResponse> getList() {
+    @Override
+    public List<GetCustomerResponse> getList() {
+        return CustomerMapper.INSTANCE.customersModelToGetCustomerResponse(executeCustomer.executeGetList());
+    }
 
-            var ResponseList = CustomerMapper.INSTANCE.customersModelToGetCustomerResponse(executeCustomer.executeGetList());
-
-            return ResponseList;
-        }
-    */
     @Override
     public GetCustomerResponse get(CustomerModel CustomerModel) {
         objectValidation.CustomerModelValidations(CustomerModel);
         return CustomerMapper.INSTANCE.customerModelToGetCustomerResponse
                 (executeCustomer.executeGet(CustomerModel));
     }
-
-
 }

@@ -10,6 +10,8 @@ import PolicyProject.policyService.interfaces.mappers.Mapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 
 @RequiredArgsConstructor
@@ -54,8 +56,10 @@ public class carPolicyRepositoryGateway implements carPolicyGateway
     }
 
     @Override
-    public CarPolicy getList(CarPolicy carPolicy) {
-        return null;
+    public List<CarPolicy> getList() {
+        Iterable<CarPolicy> iterable = carPolicyRepository.findAll();
+        return StreamSupport.stream(iterable.spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     @Override

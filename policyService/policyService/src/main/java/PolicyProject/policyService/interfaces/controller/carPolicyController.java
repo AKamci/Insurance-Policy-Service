@@ -8,6 +8,7 @@ import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
 import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import PolicyProject.policyService.interfaces.mappers.Mapper;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,13 +54,13 @@ public class carPolicyController {
                         (CarPolicyMapper.INSTANCE.updateCarPolicyRequestToCarPolicyModel(updateCarPolicyRequest)));
     }
 
-/*
+
     @GetMapping("/list")
-    public ResponseEntity<List<getCustomerCarPoliciesResponse>> getCustomerPolicies(@RequestBody getCustomerCarPoliciesRequest getCustomerCarPoliciesRequest)
+    public ResponseEntity<List<getCarPolicyResponse>> getCustomerPolicies()
     {
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(carPolicyService.getList());
     }
-*/
+
     @DeleteMapping
     public ResponseEntity<deleteCarPolicyResponse> deletePolicy(@RequestBody deleteCarPolicyRequest deleteCarPolicyRequest)
     {
@@ -71,16 +72,12 @@ public class carPolicyController {
 
 
     @GetMapping("/customerPolicies")
-    public ResponseEntity<List<getCarPolicyResponse>> deletePolicy(@RequestBody getCustomerCarPoliciesRequest getCustomerCarPoliciesRequest)
+    public ResponseEntity<List<getCustomerCarPoliciesResponse>> deletePolicy(@RequestBody @Valid getCustomerCarPoliciesRequest getCustomerCarPoliciesRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(carPolicyService.get_wPolicy
                         (CarPolicyMapper.INSTANCE.getCustomerCarPoliciesToCarPolicyModel(getCustomerCarPoliciesRequest)));
     }
-
-
-
-
 
 }

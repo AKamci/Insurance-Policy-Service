@@ -8,6 +8,8 @@ import PolicyProject.policyService.infrastructure.persistence.repository.carPoli
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
 public class CustomerRepositoryGateway implements CustomerGateway {
@@ -44,8 +46,10 @@ public class CustomerRepositoryGateway implements CustomerGateway {
     }
 
     @Override
-    public Iterable<Customer> getList() {
-        return customerRepository.findAll();
+    public List<Customer> getList() {
+        Iterable<Customer> iterable = customerRepository.findAll();
+        return StreamSupport.stream(iterable.spliterator(), false)
+                .collect(Collectors.toList());
     }
 
 

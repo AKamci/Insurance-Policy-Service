@@ -48,12 +48,11 @@ public deleteCarPolicyResponse delete(carPolicyModel carPolicyModel)
 }
 
 
-    /*
     @Override
-    public Iterable<GetCustomerResponse> getList() {
-           return List.of();
+    public List<getCarPolicyResponse> getList() {
+        return CarPolicyMapper.INSTANCE.CarPolicyModelListToCarPolicyResponseList(executeCarPolicy.executeGetList());
     }
-    */
+
     @Override
     public getCarPolicyResponse get (carPolicyModel carPolicyModel)
     {
@@ -63,7 +62,7 @@ public deleteCarPolicyResponse delete(carPolicyModel carPolicyModel)
     }
 
 
-    public List<getCarPolicyResponse> get_wPolicy(carPolicyModel carPolicyModel) {
+    public List<getCustomerCarPoliciesResponse> get_wPolicy(carPolicyModel carPolicyModel) {
         return CarPolicyMapper.INSTANCE.customerModelToGetCarPoliciesByCustomer
                 (executeCarPolicy.executeGet_wPolicy(carPolicyModel));
     }

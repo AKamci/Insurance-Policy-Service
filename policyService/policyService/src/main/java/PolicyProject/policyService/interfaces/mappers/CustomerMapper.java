@@ -33,10 +33,10 @@ public interface CustomerMapper{
 
 
 
-    Iterable<GetCustomerResponse> customersModelToGetCustomerResponse(Iterable<CustomerModel> customerModel);
+    List<GetCustomerResponse> customersModelToGetCustomerResponse(List<CustomerModel> customerModel);
 
 
-    Iterable<CustomerModel> CustomerEntityListToCustomerModelList(Iterable<Customer> customerList);
+    List<CustomerModel> CustomerEntityListToCustomerModelList(List<Customer> customerList);
 
     Customer customerModelToCustomerEntity(CustomerModel customerModel);
 

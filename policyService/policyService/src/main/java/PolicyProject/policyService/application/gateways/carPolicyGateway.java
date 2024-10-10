@@ -13,7 +13,7 @@ public interface carPolicyGateway {
     CarPolicy get(CarPolicy carPolicy);
     CarPolicy update(CarPolicy carPolicy);
     CarPolicy delete(CarPolicy carPolicy);
-    CarPolicy getList(CarPolicy carPolicy);
+    List<CarPolicy> getList();
     List<CarPolicy> getCarPoliciesByCustomer(Long Customer);
 
 }

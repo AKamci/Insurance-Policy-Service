@@ -49,7 +49,8 @@ public class executeCarPolicy {
         Optional<CarPolicy> optionalEntity = Optional.ofNullable
                 (carPolicyGateway.get(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel)));
         CarPolicy carPolicyEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.customerId(),"Entity not found"));
-        return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(carPolicyEntity);
+        carPolicyEntity.getCustomer().getId();
+        return (CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(carPolicyEntity));
 
     }
 
@@ -72,20 +73,12 @@ public class executeCarPolicy {
         return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
     }
 
-
-
-
-
-
-
-
-    /*
-    public carPolicyModel executeGetList(carPolicyModel carPolicyModel)
+    public List<carPolicyModel> executeGetList()
     {
-        carPolicy EnityObject = carPolicyGateway.getList(CarPolicyMapper.INSTANCE.carPolicyModelToCarEntity(carPolicyModel));
-        return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(Optional.ofNullable(EnityObject));
+        var EnityObject = carPolicyGateway.getList();
+        return CarPolicyMapper.INSTANCE.CarpolicyEntityListToCarpolicyModelList(EnityObject);
     }
-*/
+
 
 
 

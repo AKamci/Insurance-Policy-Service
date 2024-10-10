@@ -4,12 +4,13 @@ import java.sql.Date;
 
 public record getCarPolicyResponse(
 
+        Long id,
         String policyName,
         String policyDescription,
         String policyType,
         Date policyDate,
-        Double policyAmount
-
+        Double policyAmount,
+        Long customerId
 
 ) implements ICarPolicyResponse {
 }

@@ -53,7 +53,7 @@ public class executeCustomer {
         return CustomerMapper.INSTANCE.customerEntityToCustomerModel(customerEntity);
     }
 
-    public Iterable<CustomerModel> executeGetList()
+    public List<CustomerModel> executeGetList()
     {
         var CustomerList = customerGateway.getList();
         return CustomerMapper.INSTANCE.CustomerEntityListToCustomerModelList(CustomerList);
