@@ -9,13 +9,12 @@ public record GetCustomerResponse(
 
         Long id,
         String name,
+        String tckn,
         String address,
         String phone,
         String email,
         int age,
-        String gender,
-
-        List<CarPolicy> carPolicies
+        String gender
 
 
 ) implements ICustomerResponse{

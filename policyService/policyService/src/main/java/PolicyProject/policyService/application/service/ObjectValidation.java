@@ -1,31 +1,29 @@
 package PolicyProject.policyService.application.service;
 
 import PolicyProject.policyService.domain.model.CustomerModel;
-import PolicyProject.policyService.domain.model.carPolicyModel;
+import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.infrastructure.exception.CustomerValidationException;
-import PolicyProject.policyService.infrastructure.exception.carPolicyValidationException;
+import PolicyProject.policyService.infrastructure.exception.CarPolicyValidationException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ObjectValidation
 {
 
-public boolean carPolicyModelValidations(carPolicyModel carPolicyModel)
+public boolean carPolicyModelValidations(CarPolicyModel carPolicyModel)
 {
     if (carPolicyModel.id() == null)
-        throw new carPolicyValidationException(" id is null or empty");
+        throw new CarPolicyValidationException(" id is null or empty");
     else if (carPolicyModel.id() == 0)
-        throw new carPolicyValidationException("id is 0");
+        throw new CarPolicyValidationException("id is 0");
     else
         return true;
 }
 
 public boolean CustomerModelValidations(CustomerModel customerModel)
 {
-    if (customerModel.id() == null)
+    if (customerModel.tckn() == null)
         throw new CustomerValidationException("id is null or empty");
-    else if (customerModel.id() == 0)
-        throw new CustomerValidationException("id is 0");
     else
         return true;
 }

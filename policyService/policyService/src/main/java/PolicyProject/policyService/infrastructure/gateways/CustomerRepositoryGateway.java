@@ -1,10 +1,8 @@
 package PolicyProject.policyService.infrastructure.gateways;
 
 import PolicyProject.policyService.application.gateways.CustomerGateway;
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.repository.CustomerRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.carPolicyRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -23,7 +21,7 @@ public class CustomerRepositoryGateway implements CustomerGateway {
 
     @Override
     public Customer get(Customer Customer) {
-        return customerRepository.findById(Customer.getId()).orElse(null);
+        return customerRepository.findByTckn(Customer.getTckn());
     }
 
     @Override

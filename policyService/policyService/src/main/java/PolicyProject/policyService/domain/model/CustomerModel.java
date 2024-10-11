@@ -10,6 +10,7 @@ public record CustomerModel(
 
          Long id,
          String name,
+         String tckn,
          String address,
          String phone,
          String email,

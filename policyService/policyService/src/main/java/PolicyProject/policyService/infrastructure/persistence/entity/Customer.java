@@ -28,9 +28,6 @@ public class Customer {
     private int age;
     private String gender;
 
-    //Navigation Properties
-    @Transient
-    private List<Car> cars;
 
     @OneToMany(mappedBy = "customer")
     private List<CarPolicy> carPolicies;

@@ -5,14 +5,14 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serial;
 
-public class carPolicyValidationException extends RuntimeException{
+public class CarPolicyValidationException extends RuntimeException{
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private static final Logger logger = LoggerFactory.getLogger(carPolicyValidationException.class);
+    private static final Logger logger = LoggerFactory.getLogger(CarPolicyValidationException.class);
 
 
-    public carPolicyValidationException(String message) {
+    public CarPolicyValidationException(String message) {
         super(message);
         logger.error(message);
     }

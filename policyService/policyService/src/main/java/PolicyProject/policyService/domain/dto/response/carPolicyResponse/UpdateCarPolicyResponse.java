@@ -1,11 +1,8 @@
 package PolicyProject.policyService.domain.dto.response.carPolicyResponse;
 
-import java.sql.Date;
+public record UpdateCarPolicyResponse(
 
-public record createCarPolicyResponse(
-
-        Long id
-
+       Long PolicyId
 
 ) implements ICarPolicyResponse {
 }

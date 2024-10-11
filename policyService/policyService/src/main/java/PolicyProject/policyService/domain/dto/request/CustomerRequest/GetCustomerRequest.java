@@ -1,9 +1,6 @@
 package PolicyProject.policyService.domain.dto.request.CustomerRequest;
 
 public record GetCustomerRequest(
-
-
-        Long id
-
+        String tckn
 ) implements ICustomerRequest{
 }

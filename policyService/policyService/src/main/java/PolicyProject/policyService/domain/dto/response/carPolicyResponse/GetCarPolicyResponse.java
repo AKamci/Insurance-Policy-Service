@@ -2,7 +2,7 @@ package PolicyProject.policyService.domain.dto.response.carPolicyResponse;
 
 import java.sql.Date;
 
-public record getCarPolicyResponse(
+public record GetCarPolicyResponse(
 
         Long id,
         String policyName,

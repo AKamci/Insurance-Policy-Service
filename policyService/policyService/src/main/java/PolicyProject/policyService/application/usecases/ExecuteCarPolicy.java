@@ -1,28 +1,26 @@
 package PolicyProject.policyService.application.usecases;
 
-import PolicyProject.policyService.application.gateways.carPolicyGateway;
+import PolicyProject.policyService.application.gateways.CarPolicyGateway;
+import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.domain.model.CustomerModel;
-import PolicyProject.policyService.domain.model.carPolicyModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.persistence.entity.Calculator;
-import PolicyProject.policyService.infrastructure.persistence.entity.Car;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
-import PolicyProject.policyService.interfaces.mappers.Mapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class executeCarPolicy {
+public class ExecuteCarPolicy {
 
-    private final carPolicyGateway carPolicyGateway;
-    private final executeCustomer executeCustomer;
+    private final CarPolicyGateway carPolicyGateway;
+    private final ExecuteCustomer executeCustomer;
 
-    public carPolicyModel executeUpdate(carPolicyModel carPolicyModel)
+    public CarPolicyModel executeUpdate(CarPolicyModel carPolicyModel)
     {
         Optional<CarPolicy> optionalEntity = Optional.ofNullable
                 (carPolicyGateway.update(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel)));
@@ -30,10 +28,10 @@ public class executeCarPolicy {
         return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(carPolicyEntity);
     }
 
-    public carPolicyModel executeCreate(carPolicyModel carPolicyModel)
+    public CarPolicyModel executeCreate(CarPolicyModel carPolicyModel)
     {
         CustomerModel customerModel = new CustomerModel(carPolicyModel.customerId(),
-                null,null,null,null,null, 0,null,null);
+                null,null,null,null,null, null,0,null, null);
         //Get a CUSTOMER
         Customer customer = CustomerMapper.INSTANCE.customerModelToCustomerEntity
                 (executeCustomer.executeGet(customerModel));
@@ -44,7 +42,7 @@ public class executeCarPolicy {
         return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(EnityObject);
     }
 
-    public carPolicyModel executeGet(carPolicyModel carPolicyModel)
+    public CarPolicyModel executeGet(CarPolicyModel carPolicyModel)
     {
         Optional<CarPolicy> optionalEntity = Optional.ofNullable
                 (carPolicyGateway.get(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel)));
@@ -54,7 +52,7 @@ public class executeCarPolicy {
 
     }
 
-    public carPolicyModel executeDelete(carPolicyModel carPolicyModel)
+    public CarPolicyModel executeDelete(CarPolicyModel carPolicyModel)
     {
         Optional<CarPolicy> optionalEntity = Optional.ofNullable
                 (carPolicyGateway.delete(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel)));
@@ -62,7 +60,7 @@ public class executeCarPolicy {
         return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(carPolicyEntity);
     }
 
-    public List<carPolicyModel> executeGet_wPolicy(carPolicyModel carPolicyModel)
+    public List<CarPolicyModel> executeGet_wPolicy(CarPolicyModel carPolicyModel)
     {
         Long customerId = carPolicyModel.customerId();
 
@@ -73,7 +71,7 @@ public class executeCarPolicy {
         return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
     }
 
-    public List<carPolicyModel> executeGetList()
+    public List<CarPolicyModel> executeGetList()
     {
         var EnityObject = carPolicyGateway.getList();
         return CarPolicyMapper.INSTANCE.CarpolicyEntityListToCarpolicyModelList(EnityObject);

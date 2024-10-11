@@ -1,11 +1,10 @@
 package PolicyProject.policyService.domain.model;
 
 import PolicyProject.policyService.infrastructure.persistence.entity.Car;
-import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 
 import java.sql.Date;
 
-public record carPolicyModel(
+public record CarPolicyModel(
 
         Long id,
         String policyName, //

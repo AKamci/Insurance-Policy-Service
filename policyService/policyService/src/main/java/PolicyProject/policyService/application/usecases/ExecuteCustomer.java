@@ -1,14 +1,8 @@
 package PolicyProject.policyService.application.usecases;
 
 import PolicyProject.policyService.application.gateways.CustomerGateway;
-import PolicyProject.policyService.application.gateways.carPolicyGateway;
-import PolicyProject.policyService.domain.dto.request.CustomerRequest.GetCustomerRequest;
 import PolicyProject.policyService.domain.model.CustomerModel;
-import PolicyProject.policyService.domain.model.carPolicyModel;
-import PolicyProject.policyService.infrastructure.exception.CustomerValidationException;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
-import PolicyProject.policyService.infrastructure.persistence.entity.Calculator;
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class executeCustomer {
+public class ExecuteCustomer {
 
 
     private final CustomerGateway customerGateway ;

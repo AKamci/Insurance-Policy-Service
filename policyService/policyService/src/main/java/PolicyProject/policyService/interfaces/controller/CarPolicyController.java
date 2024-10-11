@@ -1,13 +1,9 @@
 package PolicyProject.policyService.interfaces.controller;
 
-import PolicyProject.policyService.application.service.Service.carPolicyService;
-import PolicyProject.policyService.domain.dto.request.CustomerRequest.GetCustomerRequest;
+import PolicyProject.policyService.application.service.Service.CarPolicyService;
 import PolicyProject.policyService.domain.dto.request.carPolicyRequest.*;
-import PolicyProject.policyService.domain.dto.response.CustomerResponse.GetCarPoliciesByCustomer;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
 import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
-import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
-import PolicyProject.policyService.interfaces.mappers.Mapper;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +17,13 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/carPolicy")
 @RequiredArgsConstructor
-public class carPolicyController {
+public class CarPolicyController {
 
-    private final carPolicyService carPolicyService;
+    private final CarPolicyService carPolicyService;
 
 
     @PostMapping
-    public ResponseEntity<createCarPolicyResponse> createPolicy(@RequestBody createCarPolicyRequest createCarPolicyRequest)
+    public ResponseEntity<CreateCarPolicyResponse> createPolicy(@RequestBody CreateCarPolicyRequest createCarPolicyRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -37,7 +33,7 @@ public class carPolicyController {
     }
 
     @GetMapping
-    public ResponseEntity<getCarPolicyResponse> getPolicy(@RequestBody getCarPolicyRequest getCarPolicyRequest)
+    public ResponseEntity<GetCarPolicyResponse> getPolicy(@RequestBody GetCarPolicyRequest getCarPolicyRequest)
     {
      return ResponseEntity
                 .status(HttpStatus.FOUND)
@@ -46,7 +42,7 @@ public class carPolicyController {
     }
 
     @PutMapping
-    public  ResponseEntity<updateCarPolicyResponse> policyRejectionOrApproval(@RequestBody updateCarPolicyRequest updateCarPolicyRequest)
+    public  ResponseEntity<UpdateCarPolicyResponse> policyRejectionOrApproval(@RequestBody UpdateCarPolicyRequest updateCarPolicyRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -56,13 +52,13 @@ public class carPolicyController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<List<getCarPolicyResponse>> getCustomerPolicies()
+    public ResponseEntity<List<GetCarPolicyResponse>> getCustomerPolicies()
     {
         return ResponseEntity.status(HttpStatus.OK).body(carPolicyService.getList());
     }
 
     @DeleteMapping
-    public ResponseEntity<deleteCarPolicyResponse> deletePolicy(@RequestBody deleteCarPolicyRequest deleteCarPolicyRequest)
+    public ResponseEntity<DeleteCarPolicyResponse> deletePolicy(@RequestBody DeleteCarPolicyRequest deleteCarPolicyRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -72,7 +68,7 @@ public class carPolicyController {
 
 
     @GetMapping("/customerPolicies")
-    public ResponseEntity<List<getCustomerCarPoliciesResponse>> deletePolicy(@RequestBody @Valid getCustomerCarPoliciesRequest getCustomerCarPoliciesRequest)
+    public ResponseEntity<List<GetCustomerCarPoliciesResponse>> deletePolicy(@RequestBody @Valid GetCustomerCarPoliciesRequest getCustomerCarPoliciesRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)

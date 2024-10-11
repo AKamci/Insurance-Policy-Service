@@ -1,9 +1,7 @@
 package PolicyProject.policyService.domain.dto.request.carPolicyRequest;
 
 
-import java.sql.Date;
-
-public record getCarPolicyRequest(
+public record GetCarPolicyRequest(
 
     Long id
 

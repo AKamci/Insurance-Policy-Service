@@ -2,28 +2,23 @@ package PolicyProject.policyService.application.service.Service;
 
 import PolicyProject.policyService.application.service.IService.ICarPolicyService;
 import PolicyProject.policyService.application.service.ObjectValidation;
-import PolicyProject.policyService.application.usecases.executeCarPolicy;
-import PolicyProject.policyService.domain.dto.response.CustomerResponse.GetCarPoliciesByCustomer;
-import PolicyProject.policyService.domain.dto.response.CustomerResponse.GetCustomerResponse;
+import PolicyProject.policyService.application.usecases.ExecuteCarPolicy;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
-import PolicyProject.policyService.domain.model.CustomerModel;
-import PolicyProject.policyService.domain.model.carPolicyModel;
+import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
-import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
 @RequiredArgsConstructor
-public class carPolicyService implements ICarPolicyService {
+public class CarPolicyService implements ICarPolicyService {
 
-private final executeCarPolicy executeCarPolicy;
+private final ExecuteCarPolicy executeCarPolicy;
 private final ObjectValidation objectValidation;
 
 @Override
-public createCarPolicyResponse create (carPolicyModel carPolicyModel)
+public CreateCarPolicyResponse create (CarPolicyModel carPolicyModel)
 {
     objectValidation.carPolicyModelValidations(carPolicyModel);
     return CarPolicyMapper.INSTANCE.carPolicyModelToCreateCarPolicyResponse
@@ -31,7 +26,7 @@ public createCarPolicyResponse create (carPolicyModel carPolicyModel)
 }
 
 @Override
-public updateCarPolicyResponse update (carPolicyModel carPolicyModel)
+public UpdateCarPolicyResponse update (CarPolicyModel carPolicyModel)
 {
     objectValidation.carPolicyModelValidations(carPolicyModel);
     return CarPolicyMapper.INSTANCE.cartPolicyModelToUpdateCarPolicyResponse
@@ -40,7 +35,7 @@ public updateCarPolicyResponse update (carPolicyModel carPolicyModel)
 
 
 @Override
-public deleteCarPolicyResponse delete(carPolicyModel carPolicyModel)
+public DeleteCarPolicyResponse delete(CarPolicyModel carPolicyModel)
 {
     objectValidation.carPolicyModelValidations(carPolicyModel);
     return CarPolicyMapper.INSTANCE.cartPolicyModelToDeleteCarPolicyResponse
@@ -49,12 +44,12 @@ public deleteCarPolicyResponse delete(carPolicyModel carPolicyModel)
 
 
     @Override
-    public List<getCarPolicyResponse> getList() {
+    public List<GetCarPolicyResponse> getList() {
         return CarPolicyMapper.INSTANCE.CarPolicyModelListToCarPolicyResponseList(executeCarPolicy.executeGetList());
     }
 
     @Override
-    public getCarPolicyResponse get (carPolicyModel carPolicyModel)
+    public GetCarPolicyResponse get (CarPolicyModel carPolicyModel)
     {
         objectValidation.carPolicyModelValidations(carPolicyModel);
         return CarPolicyMapper.INSTANCE.cartPolicyModelToGetCarPolicyResponse
@@ -62,7 +57,7 @@ public deleteCarPolicyResponse delete(carPolicyModel carPolicyModel)
     }
 
 
-    public List<getCustomerCarPoliciesResponse> get_wPolicy(carPolicyModel carPolicyModel) {
+    public List<GetCustomerCarPoliciesResponse> get_wPolicy(CarPolicyModel carPolicyModel) {
         return CarPolicyMapper.INSTANCE.customerModelToGetCarPoliciesByCustomer
                 (executeCarPolicy.executeGet_wPolicy(carPolicyModel));
     }

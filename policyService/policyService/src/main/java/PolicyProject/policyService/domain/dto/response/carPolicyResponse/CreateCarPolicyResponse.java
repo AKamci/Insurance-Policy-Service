@@ -1,9 +1,9 @@
 package PolicyProject.policyService.domain.dto.response.carPolicyResponse;
 
-import java.sql.Date;
-
-public record deleteCarPolicyResponse(
+public record CreateCarPolicyResponse(
 
         Long id
-)implements ICarPolicyResponse {
+
+
+) implements ICarPolicyResponse {
 }

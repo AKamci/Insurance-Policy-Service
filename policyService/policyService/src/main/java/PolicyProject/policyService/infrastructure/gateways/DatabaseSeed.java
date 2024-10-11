@@ -7,7 +7,7 @@ import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlat
 import PolicyProject.policyService.infrastructure.persistence.repository.CarRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.CustomerRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.LicensePlateRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.carPolicyRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.CarPolicyRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -18,13 +18,13 @@ import java.util.*;
 @Component
 public class DatabaseSeed implements CommandLineRunner {
 
-    private final carPolicyRepository carPolicyrepository;
+    private final CarPolicyRepository carPolicyrepository;
     private final CustomerRepository customerRepository;
     private final CarRepository carRepository;
     private final LicensePlateRepository licensePlateRepository;
 
     // Constructor
-    public DatabaseSeed(carPolicyRepository carPolicyrepository, CustomerRepository customerRepository, CarRepository carRepository, LicensePlateRepository licensePlateRepository) {
+    public DatabaseSeed(CarPolicyRepository carPolicyrepository, CustomerRepository customerRepository, CarRepository carRepository, LicensePlateRepository licensePlateRepository) {
         this.carPolicyrepository = carPolicyrepository;
         this.customerRepository = customerRepository;
         this.carRepository = carRepository;
@@ -363,10 +363,11 @@ public class DatabaseSeed implements CommandLineRunner {
         for (int i = 0; i < 20; i++) {
             String tckn;
             do {
-                tckn = String.format("%011d", random.nextLong() & Long.MAX_VALUE);
+                tckn = String.format("%011d", random.nextInt(1_000_000_000) + 100_000_0000);
             } while (uniqueTCKNs.contains(tckn));
             uniqueTCKNs.add(tckn);
         }
+
 
         customers.add(Customer.builder()
                 .name("Ahmet Yılmaz")

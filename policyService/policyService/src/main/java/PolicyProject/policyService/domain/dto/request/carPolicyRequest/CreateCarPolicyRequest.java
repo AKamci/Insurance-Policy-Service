@@ -4,7 +4,7 @@ import PolicyProject.policyService.infrastructure.persistence.entity.Car;
 
 import java.sql.Date;
 
-public record createCarPolicyRequest(
+public record CreateCarPolicyRequest(
 
          String policyName,
          String policyDescription,

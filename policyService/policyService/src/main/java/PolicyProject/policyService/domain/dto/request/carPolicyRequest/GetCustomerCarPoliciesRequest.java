@@ -1,9 +1,8 @@
 package PolicyProject.policyService.domain.dto.request.carPolicyRequest;
 
-import java.sql.Date;
+public record GetCustomerCarPoliciesRequest(
 
-public record deleteCarPolicyRequest(
+        Long customerId
 
-            Long id
 ) implements ICarPolicyRequest{
 }

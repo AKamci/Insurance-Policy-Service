@@ -1,7 +1,7 @@
 package PolicyProject.policyService.application.service.Service;
 import PolicyProject.policyService.application.service.IService.ICustomerService;
 import PolicyProject.policyService.application.service.ObjectValidation;
-import PolicyProject.policyService.application.usecases.executeCustomer;
+import PolicyProject.policyService.application.usecases.ExecuteCustomer;
 import PolicyProject.policyService.domain.dto.response.CustomerResponse.*;
 import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
@@ -15,7 +15,7 @@ import java.util.List;
 public class CustomerService implements ICustomerService {
 
 
-    private final executeCustomer executeCustomer;
+    private final ExecuteCustomer executeCustomer;
     private final ObjectValidation objectValidation;
 
     @Override

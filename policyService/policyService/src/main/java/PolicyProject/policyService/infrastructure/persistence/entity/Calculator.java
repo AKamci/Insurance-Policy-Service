@@ -1,10 +1,10 @@
 package PolicyProject.policyService.infrastructure.persistence.entity;
 
-import PolicyProject.policyService.domain.model.carPolicyModel;
+import PolicyProject.policyService.domain.model.CarPolicyModel;
 
 public class Calculator {
 
-    public static double Calculate(carPolicyModel carPolicyModel) {
+    public static double Calculate(CarPolicyModel carPolicyModel) {
         Car car= carPolicyModel.car();
 
         double basePremium = 500;

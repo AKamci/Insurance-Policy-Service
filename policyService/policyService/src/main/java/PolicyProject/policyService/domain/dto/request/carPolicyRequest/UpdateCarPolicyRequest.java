@@ -2,7 +2,7 @@ package PolicyProject.policyService.domain.dto.request.carPolicyRequest;
 
 import java.sql.Date;
 
-public record updateCarPolicyRequest(
+public record UpdateCarPolicyRequest(
 
         Long policyId,
         String policyName,

@@ -1,14 +1,9 @@
 package PolicyProject.policyService.interfaces.controller;
 
 import PolicyProject.policyService.application.service.Service.CustomerService;
-import PolicyProject.policyService.application.service.Service.carPolicyService;
 import PolicyProject.policyService.domain.dto.request.CustomerRequest.*;
-import PolicyProject.policyService.domain.dto.request.carPolicyRequest.*;
 import PolicyProject.policyService.domain.dto.response.CustomerResponse.*;
-import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
-import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

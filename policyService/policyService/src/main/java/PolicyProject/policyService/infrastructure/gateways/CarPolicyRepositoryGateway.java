@@ -1,12 +1,9 @@
 package PolicyProject.policyService.infrastructure.gateways;
 
-import PolicyProject.policyService.application.gateways.carPolicyGateway;
-import PolicyProject.policyService.domain.model.carPolicyModel;
-import PolicyProject.policyService.infrastructure.persistence.entity.Car;
+import PolicyProject.policyService.application.gateways.CarPolicyGateway;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
-import PolicyProject.policyService.infrastructure.persistence.repository.carPolicyRepository;
-import PolicyProject.policyService.interfaces.mappers.Mapper;
+import PolicyProject.policyService.infrastructure.persistence.repository.CarPolicyRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -15,10 +12,10 @@ import java.util.stream.StreamSupport;
 
 
 @RequiredArgsConstructor
-public class carPolicyRepositoryGateway implements carPolicyGateway
+public class CarPolicyRepositoryGateway implements CarPolicyGateway
 {
 
-    private final carPolicyRepository carPolicyRepository;
+    private final CarPolicyRepository carPolicyRepository;
 
 
     @Override
