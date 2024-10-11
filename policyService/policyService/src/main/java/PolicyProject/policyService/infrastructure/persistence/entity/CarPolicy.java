@@ -28,7 +28,10 @@ public class CarPolicy {
     private boolean policyStatus;
     private Date policyDate; //
     private Double policyAmount;
-    private String licensePlate;
+
+    @ManyToOne
+    @JoinColumn(name = "license_plate_id", nullable = false)
+    private LicensePlate licensePlate;
 
     //Navigation Properties
 
@@ -36,6 +39,4 @@ public class CarPolicy {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @Transient
-    private Car car;
 }
