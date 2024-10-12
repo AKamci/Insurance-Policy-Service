@@ -41,6 +41,17 @@ public class CarPolicyController {
                         (CarPolicyMapper.INSTANCE.getCarPolicyRequestTocarPolicyModel(getCarPolicyRequest)));
     }
 
+    @GetMapping("/byPlate")
+    public ResponseEntity<List<GetCarPolicyResponse>> getPolicy(@RequestBody GetCarPolicyWPlateRequest getCarPolicyWPlateRequest)
+    {
+        return ResponseEntity
+                .status(HttpStatus.FOUND)
+                .body(carPolicyService.getByPlate
+                        (CarPolicyMapper.INSTANCE.getCarPolicyRequestWPlateTocarPolicyModel(getCarPolicyWPlateRequest)));
+    }
+
+
+
     @PutMapping
     public  ResponseEntity<UpdateCarPolicyResponse> policyRejectionOrApproval(@RequestBody UpdateCarPolicyRequest updateCarPolicyRequest)
     {
@@ -68,12 +79,23 @@ public class CarPolicyController {
 
 
     @GetMapping("/customerPolicies")
-    public ResponseEntity<List<GetCustomerCarPoliciesResponse>> deletePolicy(@RequestBody @Valid GetCustomerCarPoliciesRequest getCustomerCarPoliciesRequest)
+    public ResponseEntity<List<GetCustomerCarPoliciesResponse>> deletePolicy(@RequestBody GetCustomerCarPoliciesRequest getCustomerCarPoliciesRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(carPolicyService.get_wPolicy
                         (CarPolicyMapper.INSTANCE.getCustomerCarPoliciesToCarPolicyModel(getCustomerCarPoliciesRequest)));
     }
+
+    @GetMapping("/customerPoliciesBetweenDate")
+    public ResponseEntity<List<GetCustomerCarPoliciesResponse>> deletePolicy(@RequestBody GetCarPolicyBetweenDateRequest getCarPolicyBetweenDateRequest)
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(carPolicyService.get_Policies_BetweenDate
+                        (CarPolicyMapper.INSTANCE.getCustomerCarPoliciesBetweenDateToCarPolicyModel(getCarPolicyBetweenDateRequest)));
+    }
+
+
 
 }

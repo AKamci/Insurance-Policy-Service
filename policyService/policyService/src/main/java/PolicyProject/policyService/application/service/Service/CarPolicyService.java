@@ -57,9 +57,22 @@ public DeleteCarPolicyResponse delete(CarPolicyModel carPolicyModel)
     }
 
 
+    public List<GetCarPolicyResponse> getByPlate (CarPolicyModel carPolicyModel)
+    {
+        //objectValidation.carPolicyModelValidations(carPolicyModel);
+        return CarPolicyMapper.INSTANCE.cartPolicyModelListToGetCarPolicyResponseList
+                (executeCarPolicy.executeGetWPlate(carPolicyModel));
+    }
+
+
     public List<GetCustomerCarPoliciesResponse> get_wPolicy(CarPolicyModel carPolicyModel) {
         return CarPolicyMapper.INSTANCE.customerModelToGetCarPoliciesByCustomer
                 (executeCarPolicy.executeGet_wPolicy(carPolicyModel));
+    }
+
+    public List<GetCustomerCarPoliciesResponse> get_Policies_BetweenDate(CarPolicyModel carPolicyModel) {
+        return CarPolicyMapper.INSTANCE.customerModelToGetCarPoliciesByCustomer
+                (executeCarPolicy.executeGet_BetweenDate(carPolicyModel));
     }
 
 

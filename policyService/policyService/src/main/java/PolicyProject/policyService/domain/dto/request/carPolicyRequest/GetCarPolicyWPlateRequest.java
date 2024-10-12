@@ -1,8 +1,10 @@
 package PolicyProject.policyService.domain.dto.request.carPolicyRequest;
 
+public record GetCarPolicyWPlateRequest(
 
-public record GetCarPolicyRequest(
+        String tckn,
+        String licensePlateNumber
 
-    String tckn
+
 )implements ICarPolicyRequest {
 }

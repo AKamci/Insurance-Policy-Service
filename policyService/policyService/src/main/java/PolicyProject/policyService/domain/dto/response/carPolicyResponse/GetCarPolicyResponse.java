@@ -11,6 +11,5 @@ public record GetCarPolicyResponse(
         Date policyDate,
         Double policyAmount,
         Long customerId
-
 ) implements ICarPolicyResponse {
 }

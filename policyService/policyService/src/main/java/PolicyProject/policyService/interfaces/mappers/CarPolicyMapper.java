@@ -17,14 +17,18 @@ public interface CarPolicyMapper {
     CarPolicyModel createCarPolicyRequestToCarPolicyModel(CreateCarPolicyRequest createCarPolicyRequest);
     CarPolicyModel updateCarPolicyRequestToCarPolicyModel(UpdateCarPolicyRequest createCarPolicyRequest);
     CarPolicyModel getCarPolicyRequestTocarPolicyModel(GetCarPolicyRequest getCarPolicyRequest);
+    CarPolicyModel getCarPolicyRequestWPlateTocarPolicyModel(GetCarPolicyWPlateRequest getCarPolicyWPlateRequest);
     CarPolicyModel deleteCarPolicyRequestToCarPolicyModel(DeleteCarPolicyRequest deleteCarPolicyRequest);
     CarPolicyModel getCustomerCarPoliciesToCarPolicyModel(GetCustomerCarPoliciesRequest getCustomerCarPoliciesRequest);
+    CarPolicyModel getCustomerCarPoliciesBetweenDateToCarPolicyModel(GetCarPolicyBetweenDateRequest getCarPolicyBetweenDateRequest);
 
 
     GetCustomerCarPoliciesResponse carPolicyModelToCustomerCarPoliciesResponse(CarPolicyModel carPolicyModel);
     CreateCarPolicyResponse carPolicyModelToCreateCarPolicyResponse(CarPolicyModel carPolicyModel);
     UpdateCarPolicyResponse cartPolicyModelToUpdateCarPolicyResponse(CarPolicyModel carPolicyModel);
     GetCarPolicyResponse cartPolicyModelToGetCarPolicyResponse(CarPolicyModel carPolicyModel);
+    List<GetCarPolicyResponse> cartPolicyModelListToGetCarPolicyResponseList(List<CarPolicyModel> carPolicyModel);
+
     DeleteCarPolicyResponse cartPolicyModelToDeleteCarPolicyResponse(CarPolicyModel carPolicyModel);
 
     List<CarPolicyModel> CarpolicyEntityListToCarpolicyModelList(List<CarPolicy> carPolicy);
@@ -32,6 +36,7 @@ public interface CarPolicyMapper {
     List<GetCarPolicyResponse> CarPolicyModelListToCarPolicyResponseList(List<CarPolicyModel> carPolicyModel);
 
     List<CarPolicyModel> carPolicyEntityListToCarPolicyModelList(List<CarPolicy> carPolicies);
+
 
     List<GetCustomerCarPoliciesResponse> customerModelToGetCarPoliciesByCustomer(List<CarPolicyModel> carPolicyModelList);
 

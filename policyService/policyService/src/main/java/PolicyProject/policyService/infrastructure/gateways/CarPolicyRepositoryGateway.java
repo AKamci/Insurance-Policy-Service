@@ -6,6 +6,7 @@ import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.repository.CarPolicyRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -28,6 +29,10 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
 
     @Override
     public CarPolicy get(CarPolicy carPolicy) {
+        //Customer ı çek eşitle.
+        var Tckn = carPolicy.getCustomer().getTckn();
+        var Plate = carPolicy.getLicensePlate().getPlate();
+
         var EntityObject = carPolicyRepository.findById(carPolicy.getId());
         return EntityObject.orElse(null);
     }
@@ -60,12 +65,35 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
     }
 
     @Override
-    public List<CarPolicy> getCarPoliciesByCustomer(Long customerId) {
-        var PolicyList = carPolicyRepository.findByCustomerId(customerId).stream().toList();
+    public List<CarPolicy> getCarPoliciesByCustomer(String tckn) {
+        var PolicyList = carPolicyRepository.findByCustomerTckn(tckn).stream().toList();
         if (PolicyList.isEmpty() )
         {
             return null;
         }
-            return PolicyList;
+        return PolicyList;
     }
+
+    @Override
+    public List<CarPolicy> getCarPoliciesByPlateAndTckn(String plate, String tckn) {
+        var PolicyList = carPolicyRepository.findByCustomerTcknAndLicensePlatePlate(tckn, plate);
+        if (PolicyList.isEmpty() )
+        {
+            return null;
+        }
+        return PolicyList;
+    }
+
+    @Override
+    public List<CarPolicy> getCarPoliciesBetweenDate(Date startDate, Date endDate) {
+        var PolicyList = carPolicyRepository.findByPolicyDateBetween(startDate, endDate);
+        if (PolicyList.isEmpty() )
+        {
+            return null;
+        }
+        return PolicyList;
+    }
+
+
+
 }
