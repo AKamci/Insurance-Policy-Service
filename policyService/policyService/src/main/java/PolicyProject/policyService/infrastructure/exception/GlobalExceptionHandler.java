@@ -30,4 +30,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetails);
     }
 
+    @ExceptionHandler(DuplicateTcknException.class)
+    public ResponseEntity<ErrorDetails> handleDuplicateTcknException(DuplicateTcknException exception) {
+        ErrorDetails errorDetails = new ErrorDetails(exception.getMessage(), HttpStatus.BAD_REQUEST.value());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetails);
+    }
+
 }

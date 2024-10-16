@@ -367,8 +367,6 @@ public class DatabaseSeed implements CommandLineRunner {
             } while (uniqueTCKNs.contains(tckn));
             uniqueTCKNs.add(tckn);
         }
-
-
         customers.add(Customer.builder()
                 .name("Ahmet Yılmaz")
                 .tckn(uniqueTCKNs.toArray()[0].toString())
@@ -376,7 +374,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-123-4567")
                 .email("ahmet.yilmaz@example.com")
                 .password("password123")
-                .age(30)
+                .birthDay(LocalDate.of(1993, 1, 1)) // Doğum tarihi
                 .gender("Erkek")
                 .build());
 
@@ -387,7 +385,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-234-5678")
                 .email("ayse.demir@example.com")
                 .password("password234")
-                .age(28)
+                .birthDay(LocalDate.of(1995, 2, 1)) // Doğum tarihi
                 .gender("Kadın")
                 .build());
 
@@ -398,7 +396,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-345-6789")
                 .email("mehmet.oz@example.com")
                 .password("password345")
-                .age(35)
+                .birthDay(LocalDate.of(1988, 3, 1)) // Doğum tarihi
                 .gender("Erkek")
                 .build());
 
@@ -409,7 +407,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-456-7890")
                 .email("fatma.korkmaz@example.com")
                 .password("password456")
-                .age(32)
+                .birthDay(LocalDate.of(1991, 4, 1)) // Doğum tarihi
                 .gender("Kadın")
                 .build());
 
@@ -420,7 +418,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-567-8901")
                 .email("ali.can@example.com")
                 .password("password567")
-                .age(40)
+                .birthDay(LocalDate.of(1983, 5, 1)) // Doğum tarihi
                 .gender("Erkek")
                 .build());
 
@@ -431,7 +429,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-678-9012")
                 .email("emine.celik@example.com")
                 .password("password678")
-                .age(29)
+                .birthDay(LocalDate.of(1994, 6, 1)) // Doğum tarihi
                 .gender("Kadın")
                 .build());
 
@@ -442,7 +440,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-789-0123")
                 .email("burak.yildiz@example.com")
                 .password("password789")
-                .age(33)
+                .birthDay(LocalDate.of(1990, 7, 1)) // Doğum tarihi
                 .gender("Erkek")
                 .build());
 
@@ -453,7 +451,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-890-1234")
                 .email("zeynep.arslan@example.com")
                 .password("password890")
-                .age(25)
+                .birthDay(LocalDate.of(1998, 8, 1)) // Doğum tarihi
                 .gender("Kadın")
                 .build());
 
@@ -464,7 +462,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-901-2345")
                 .email("cemal.akman@example.com")
                 .password("password901")
-                .age(38)
+                .birthDay(LocalDate.of(1986, 9, 1)) // Doğum tarihi
                 .gender("Erkek")
                 .build());
 
@@ -475,7 +473,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-012-3456")
                 .email("merve.koc@example.com")
                 .password("password012")
-                .age(22)
+                .birthDay(LocalDate.of(2001, 10, 1)) // Doğum tarihi
                 .gender("Kadın")
                 .build());
 
@@ -486,7 +484,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-123-4568")
                 .email("oguzhan.sahin@example.com")
                 .password("password1234")
-                .age(27)
+                .birthDay(LocalDate.of(1996, 11, 1)) // Doğum tarihi
                 .gender("Erkek")
                 .build());
 
@@ -497,7 +495,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-234-5679")
                 .email("seda.eren@example.com")
                 .password("password2345")
-                .age(31)
+                .birthDay(LocalDate.of(1992, 12, 1)) // Doğum tarihi
                 .gender("Kadın")
                 .build());
 
@@ -508,7 +506,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-345-6780")
                 .email("ali.riza.polat@example.com")
                 .password("password3456")
-                .age(34)
+                .birthDay(LocalDate.of(1989, 1, 1)) // Doğum tarihi
                 .gender("Erkek")
                 .build());
 
@@ -519,7 +517,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-456-7891")
                 .email("nihayl.aydin@example.com")
                 .password("password4567")
-                .age(26)
+                .birthDay(LocalDate.of(1997, 2, 1)) // Doğum tarihi
                 .gender("Kadın")
                 .build());
 
@@ -530,7 +528,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-567-8902")
                 .email("ege.simsek@example.com")
                 .password("password5678")
-                .age(23)
+                .birthDay(LocalDate.of(2000, 3, 1)) // Doğum tarihi
                 .gender("Erkek")
                 .build());
 
@@ -541,7 +539,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-678-9013")
                 .email("busra.kaplan@example.com")
                 .password("password6789")
-                .age(24)
+                .birthDay(LocalDate.of(1999, 4, 1)) // Doğum tarihi
                 .gender("Kadın")
                 .build());
 
@@ -552,7 +550,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-789-0124")
                 .email("mert.cetin@example.com")
                 .password("password7890")
-                .age(39)
+                .birthDay(LocalDate.of(1985, 5, 1)) // Doğum tarihi
                 .gender("Erkek")
                 .build());
 
@@ -563,7 +561,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-890-1235")
                 .email("eylul.aksu@example.com")
                 .password("password8901")
-                .age(30)
+                .birthDay(LocalDate.of(1993, 6, 1)) // Doğum tarihi
                 .gender("Kadın")
                 .build());
 
@@ -574,20 +572,22 @@ public class DatabaseSeed implements CommandLineRunner {
                 .phone("0532-901-2346")
                 .email("deniz.ozdemir@example.com")
                 .password("password9012")
-                .age(36)
+                .birthDay(LocalDate.of(1981, 7, 1)) // Doğum tarihi
                 .gender("Erkek")
                 .build());
 
         customers.add(Customer.builder()
-                .name("Gamze Arı")
+                .name("Şeyma Korkut")
                 .tckn(uniqueTCKNs.toArray()[19].toString())
-                .address("Çorum, Türkiye")
+                .address("Aksaray, Türkiye")
                 .phone("0532-012-3457")
-                .email("gamze.ari@example.com")
+                .email("seyma.korkut@example.com")
                 .password("password0123")
-                .age(21)
+                .birthDay(LocalDate.of(1994, 8, 1)) // Doğum tarihi
                 .gender("Kadın")
                 .build());
+
+
 
         customerRepository.saveAll(customers);
     }

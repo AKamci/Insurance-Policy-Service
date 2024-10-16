@@ -2,6 +2,8 @@ package PolicyProject.policyService.domain.dto.response.CustomerResponse;
 
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public record GetCustomerResponse(
@@ -13,7 +15,7 @@ public record GetCustomerResponse(
         String address,
         String phone,
         String email,
-        int age,
+        LocalDate birthDay,
         String gender
 
 

@@ -32,7 +32,7 @@ public class ExecuteCarPolicy {
     public CarPolicyModel executeCreate(CarPolicyModel carPolicyModel)
     {
         CustomerModel customerModel = new CustomerModel(carPolicyModel.customerId(),
-                null,null,null,null,null, null,0,null, null);
+                null,null,null,null,null, null,null,null, null);
         //Get a CUSTOMER
         Customer customer = CustomerMapper.INSTANCE.customerModelToCustomerEntity
                 (executeCustomer.executeGet(customerModel));

@@ -31,12 +31,13 @@ public class CustomerController
     }
 
     @GetMapping
-    public ResponseEntity<GetCustomerResponse> getCustomer(@RequestBody GetCustomerRequest GetCustomerRequest)
+    public ResponseEntity<GetCustomerResponse> getCustomer(@RequestParam String tckn)
     {
+        GetCustomerRequest getCustomerRequest = new GetCustomerRequest(tckn);
         return ResponseEntity
-                .status(HttpStatus.FOUND)
+                .status(HttpStatus.OK)
                 .body(customerService.get
-                        (CustomerMapper.INSTANCE.getCustomerRequestToCustomerModel(GetCustomerRequest)));
+                        (CustomerMapper.INSTANCE.getCustomerRequestToCustomerModel(getCustomerRequest)));
     }
 
     @PutMapping
@@ -50,18 +51,18 @@ public class CustomerController
 
 
     @DeleteMapping
-    public ResponseEntity<DeleteCustomerResponse> deletePolicy(@RequestBody DeleteCustomerRequest DeleteCustomerRequest)
+    public ResponseEntity<DeleteCustomerResponse> deletePolicy(@RequestParam String tckn)
     {
+        DeleteCustomerRequest deleteCustomerRequest = new DeleteCustomerRequest(tckn);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(customerService.delete
-                        (CustomerMapper.INSTANCE.deleteCustomerRequestToCustomerModel(DeleteCustomerRequest)));
+                        (CustomerMapper.INSTANCE.deleteCustomerRequestToCustomerModel(deleteCustomerRequest)));
     }
 
-
-
     @GetMapping("/list")
-    public ResponseEntity<List<GetCustomerResponse>> getCustomerPolicies()
+    public ResponseEntity<List<GetCustomerResponse>> getCustomers()
     {
         return ResponseEntity.status(HttpStatus.OK).body(customerService.getList());
     }

@@ -2,6 +2,7 @@ package PolicyProject.policyService.application.usecases;
 
 import PolicyProject.policyService.application.gateways.CustomerGateway;
 import PolicyProject.policyService.domain.model.CustomerModel;
+import PolicyProject.policyService.infrastructure.exception.DuplicateTcknException;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
@@ -24,9 +25,10 @@ public class ExecuteCustomer {
         return CustomerMapper.INSTANCE.customerEntityToCustomerModel(customerEntity);
     }
 
-    public CustomerModel executeCreate(CustomerModel CustomerModel)
+    public CustomerModel executeCreate(CustomerModel customerModel)
     {
-        Customer EnityObject = customerGateway.create(CustomerMapper.INSTANCE.customerModelToCustomerEntity(CustomerModel));
+        Customer EnityObject = customerGateway.create(CustomerMapper.INSTANCE.customerModelToCustomerEntity(customerModel));
+
         return CustomerMapper.INSTANCE.customerEntityToCustomerModel(EnityObject);
     }
 
