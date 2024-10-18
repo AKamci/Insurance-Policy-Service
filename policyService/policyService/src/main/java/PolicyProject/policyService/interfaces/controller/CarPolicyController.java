@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class CarPolicyController {
 
 
     @PostMapping
-    public ResponseEntity<CreateCarPolicyResponse> createPolicy(@RequestBody CreateCarPolicyRequest createCarPolicyRequest)
+    public ResponseEntity<CreateCarPolicyResponse> createPolicy(@Valid @RequestBody CreateCarPolicyRequest createCarPolicyRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -33,16 +34,16 @@ public class CarPolicyController {
     }
 
     @GetMapping
-    public ResponseEntity<GetCarPolicyResponse> getPolicy(@RequestBody GetCarPolicyRequest getCarPolicyRequest)
+    public ResponseEntity<GetCarPolicyResponse> getPolicy(@Valid @ModelAttribute GetCarPolicyRequest getCarPolicyRequest)
     {
      return ResponseEntity
-                .status(HttpStatus.FOUND)
+                .status(HttpStatus.OK)
                 .body(carPolicyService.get
                         (CarPolicyMapper.INSTANCE.getCarPolicyRequestTocarPolicyModel(getCarPolicyRequest)));
     }
 
     @GetMapping("/byPlate")
-    public ResponseEntity<List<GetCarPolicyResponse>> getPolicy(@RequestBody GetCarPolicyWPlateRequest getCarPolicyWPlateRequest)
+    public ResponseEntity<List<GetCarPolicyResponse>> getPolicyByPlate(@Valid @RequestBody GetCarPolicyWPlateRequest getCarPolicyWPlateRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.FOUND)
@@ -53,7 +54,7 @@ public class CarPolicyController {
 
 
     @PutMapping
-    public  ResponseEntity<UpdateCarPolicyResponse> policyRejectionOrApproval(@RequestBody UpdateCarPolicyRequest updateCarPolicyRequest)
+    public  ResponseEntity<UpdateCarPolicyResponse> updateCarPolicy(@Valid @RequestBody UpdateCarPolicyRequest updateCarPolicyRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -62,14 +63,24 @@ public class CarPolicyController {
     }
 
 
+
+
     @GetMapping("/list")
-    public ResponseEntity<List<GetCarPolicyResponse>> getCustomerPolicies()
+    public ResponseEntity<List<GetCarPolicyResponse>> getPolicies(@Valid @ModelAttribute GetCarPolicyListRequest getCarPolicyListRequest)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(carPolicyService.getList());
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(carPolicyService.getList
+                        (CarPolicyMapper.INSTANCE.getCarPoliciesToCarPolicyModel(getCarPolicyListRequest)));
     }
 
+
+
+
+
     @DeleteMapping
-    public ResponseEntity<DeleteCarPolicyResponse> deletePolicy(@RequestBody DeleteCarPolicyRequest deleteCarPolicyRequest)
+    public ResponseEntity<DeleteCarPolicyResponse> deletePolicy(@Valid @ModelAttribute DeleteCarPolicyRequest deleteCarPolicyRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -79,7 +90,7 @@ public class CarPolicyController {
 
 
     @GetMapping("/customerPolicies")
-    public ResponseEntity<List<GetCustomerCarPoliciesResponse>> deletePolicy(@RequestBody GetCustomerCarPoliciesRequest getCustomerCarPoliciesRequest)
+    public ResponseEntity<List<GetCustomerCarPoliciesResponse>> customerPolicies(@Valid @RequestBody GetCustomerCarPoliciesRequest getCustomerCarPoliciesRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -88,12 +99,18 @@ public class CarPolicyController {
     }
 
     @GetMapping("/customerPoliciesBetweenDate")
-    public ResponseEntity<List<GetCustomerCarPoliciesResponse>> deletePolicy(@RequestBody GetCarPolicyBetweenDateRequest getCarPolicyBetweenDateRequest)
+    public ResponseEntity<List<GetCustomerCarPoliciesResponse>> customerPoliciesBetweenDate(@Valid @RequestBody GetCarPolicyBetweenDateRequest getCarPolicyBetweenDateRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(carPolicyService.get_Policies_BetweenDate
                         (CarPolicyMapper.INSTANCE.getCustomerCarPoliciesBetweenDateToCarPolicyModel(getCarPolicyBetweenDateRequest)));
+    }
+
+    @GetMapping("/totalRecord")
+    public ResponseEntity<Integer> getTotalRecord()
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(carPolicyService.getTotalRecord());
     }
 
 

@@ -7,6 +7,7 @@ import PolicyProject.policyService.application.service.Service.CarPolicyService;
 import PolicyProject.policyService.application.usecases.ExecuteCarPolicy;
 import PolicyProject.policyService.application.usecases.ExecuteCustomer;
 import PolicyProject.policyService.infrastructure.gateways.CarPolicyRepositoryGateway;
+import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CarPolicySpecificationBuild;
 import PolicyProject.policyService.infrastructure.persistence.repository.CarPolicyRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +16,11 @@ import org.springframework.context.annotation.Configuration;
 public class CarPolicyDependecyInjection {
 
     @Bean
-    ExecuteCarPolicy executeCarPolicy(CarPolicyGateway carPolicyGateway, ExecuteCustomer executeCustomer) {
-        return new ExecuteCarPolicy(carPolicyGateway, executeCustomer);
+    ExecuteCarPolicy executeCarPolicy(CarPolicyGateway carPolicyGateway,
+                                      ExecuteCustomer executeCustomer,
+                                      CarPolicySpecificationBuild carPolicySpecificationBuild)
+    {
+        return new ExecuteCarPolicy(carPolicyGateway, executeCustomer, carPolicySpecificationBuild);
     }
 
     @Bean

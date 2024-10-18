@@ -607,16 +607,18 @@ public class DatabaseSeed implements CommandLineRunner {
             if (optionalCustomer.isPresent() && optionalLicensePlate.isPresent()) {
                 Customer customer = optionalCustomer.get();
                 LicensePlate licensePlate = optionalLicensePlate.get();
+
+
                 LocalDate startDate = LocalDate.of(2023, 10, 1);
                 LocalDate policyLocalDate = startDate.plusDays(i);
-                Date policyDate = Date.valueOf(policyLocalDate);
 
                 CarPolicy policy = CarPolicy.builder()
                         .policyName("Poliçe " + i)
                         .policyDescription("Açıklama " + i)
                         .policyType(i % 2 == 0 ? "Kasko" : "Trafik")
                         .policyStatus(i % 2 == 0)
-                        .policyDate(policyDate)
+                        .policyStartDate(policyLocalDate)
+                        .policyEndDate(policyLocalDate.plusDays(10*i))
                         .policyAmount(1000.0 + (i * 100))
                         .licensePlate(licensePlate)
                         .customer(customer)

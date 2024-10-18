@@ -21,30 +21,29 @@ public interface CarPolicyMapper {
     CarPolicyModel deleteCarPolicyRequestToCarPolicyModel(DeleteCarPolicyRequest deleteCarPolicyRequest);
     CarPolicyModel getCustomerCarPoliciesToCarPolicyModel(GetCustomerCarPoliciesRequest getCustomerCarPoliciesRequest);
     CarPolicyModel getCustomerCarPoliciesBetweenDateToCarPolicyModel(GetCarPolicyBetweenDateRequest getCarPolicyBetweenDateRequest);
+    CarPolicyModel getCarPoliciesToCarPolicyModel(GetCarPolicyListRequest getCarPolicyListRequest);
 
 
-    GetCustomerCarPoliciesResponse carPolicyModelToCustomerCarPoliciesResponse(CarPolicyModel carPolicyModel);
     CreateCarPolicyResponse carPolicyModelToCreateCarPolicyResponse(CarPolicyModel carPolicyModel);
     UpdateCarPolicyResponse cartPolicyModelToUpdateCarPolicyResponse(CarPolicyModel carPolicyModel);
     GetCarPolicyResponse cartPolicyModelToGetCarPolicyResponse(CarPolicyModel carPolicyModel);
     List<GetCarPolicyResponse> cartPolicyModelListToGetCarPolicyResponseList(List<CarPolicyModel> carPolicyModel);
-
     DeleteCarPolicyResponse cartPolicyModelToDeleteCarPolicyResponse(CarPolicyModel carPolicyModel);
 
-    List<CarPolicyModel> CarpolicyEntityListToCarpolicyModelList(List<CarPolicy> carPolicy);
 
-    List<GetCarPolicyResponse> CarPolicyModelListToCarPolicyResponseList(List<CarPolicyModel> carPolicyModel);
 
     List<CarPolicyModel> carPolicyEntityListToCarPolicyModelList(List<CarPolicy> carPolicies);
 
 
     List<GetCustomerCarPoliciesResponse> customerModelToGetCarPoliciesByCustomer(List<CarPolicyModel> carPolicyModelList);
 
-
-
     CarPolicy carPolicyModelToCarPolicyEntity(CarPolicyModel carPolicyModel);
 
+    //CarPolicy carPolicyModelToCarPolicyEntity(CarPolicyModel carPolicyModel);
+
     @Mapping(source = "customer.id", target = "customerId")
+    @Mapping(source = "licensePlate.plate", target = "licensePlateNumber")
+    @Mapping(source = "customer.tckn", target = "tckn")
     CarPolicyModel carPolicyEntityToCarPolicyModel(CarPolicy carPolicy);
 
 

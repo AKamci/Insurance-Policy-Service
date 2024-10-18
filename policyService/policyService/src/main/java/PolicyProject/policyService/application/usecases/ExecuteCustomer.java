@@ -4,9 +4,13 @@ import PolicyProject.policyService.application.gateways.CustomerGateway;
 import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.infrastructure.exception.DuplicateTcknException;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
+import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CustomerSpecificationBuild;
+import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
+import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +19,8 @@ import java.util.Optional;
 public class ExecuteCustomer {
 
 
-    private final CustomerGateway customerGateway ;
+    private final CustomerGateway customerGateway;
+    private final CustomerSpecificationBuild customerSpecificationBuild;
 
     public CustomerModel executeUpdate(CustomerModel CustomerModel)
     {
@@ -49,10 +54,22 @@ public class ExecuteCustomer {
         return CustomerMapper.INSTANCE.customerEntityToCustomerModel(customerEntity);
     }
 
-    public List<CustomerModel> executeGetList()
+    public List<CustomerModel> executeGetList(CustomerModel customerModel)
     {
-        var CustomerList = customerGateway.getList();
+        Specification<Customer> specification = customerSpecificationBuild.CustomerBuild(CustomerMapper.INSTANCE.customerModelToCustomerEntity(customerModel));
+        int page = customerModel.page();
+        int size = customerModel.size();
+
+
+        Optional<List<Customer>> EntityList = Optional.ofNullable
+                (customerGateway.getList(specification, page, size));
+        List<Customer> CustomerList = EntityList.orElseThrow(() -> new EntityNotFoundException(customerModel.id(),"Entity not found"));
         return CustomerMapper.INSTANCE.CustomerEntityListToCustomerModelList(CustomerList);
+    }
+
+    public int executeGetTotalRecord()
+    {
+        return customerGateway.getTotal();
     }
 
 

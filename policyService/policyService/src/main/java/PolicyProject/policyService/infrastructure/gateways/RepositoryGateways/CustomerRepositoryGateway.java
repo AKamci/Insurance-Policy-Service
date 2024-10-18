@@ -1,4 +1,4 @@
-package PolicyProject.policyService.infrastructure.gateways;
+package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
 
 import PolicyProject.policyService.application.gateways.CustomerGateway;
 import PolicyProject.policyService.infrastructure.exception.DuplicateTcknException;
@@ -6,10 +6,12 @@ import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
 public class CustomerRepositoryGateway implements CustomerGateway {
@@ -54,11 +56,15 @@ public class CustomerRepositoryGateway implements CustomerGateway {
     }
 
     @Override
-    public List<Customer> getList() {
+    public List<Customer> getList(Specification<Customer> specification, int page, int size) {
 
-        Iterable<Customer> iterable = customerRepository.findAll();
-        return StreamSupport.stream(iterable.spliterator(), false)
-                .collect(Collectors.toList());
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Customer> customerPage = customerRepository.findAll(specification, pageable);
+        return customerPage.getContent();
+    }
+
+    public int getTotal() {
+        return (int) customerRepository.count();
     }
 
 

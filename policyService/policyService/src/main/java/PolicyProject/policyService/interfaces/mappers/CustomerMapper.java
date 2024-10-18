@@ -21,7 +21,7 @@ public interface CustomerMapper{
     CustomerModel updateCustomerRequestToCustomerModel(UpdateCustomerRequest updateCustomerRequest);
     CustomerModel getCustomerRequestToCustomerModel(GetCustomerRequest getCustomerRequest);
     CustomerModel deleteCustomerRequestToCustomerModel(DeleteCustomerRequest deleteCustomerRequest);
-    CustomerModel getCustomersRequestToCustomerModel(GetCustomersRequest GetCustomersRequest);
+    CustomerModel getCustomerListRequestToCustomerModel(GetCustomerListRequest getCustomerListRequest);
 
 
 

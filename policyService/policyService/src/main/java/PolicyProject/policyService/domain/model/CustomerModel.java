@@ -19,6 +19,8 @@ public record CustomerModel(
         String password,
         LocalDate birthDay,
         String gender,
+        int page,
+        int size,
 
         List<CarPolicy> carPolicies
 

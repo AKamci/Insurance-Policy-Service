@@ -44,8 +44,9 @@ public DeleteCarPolicyResponse delete(CarPolicyModel carPolicyModel)
 
 
     @Override
-    public List<GetCarPolicyResponse> getList() {
-        return CarPolicyMapper.INSTANCE.CarPolicyModelListToCarPolicyResponseList(executeCarPolicy.executeGetList());
+    public List<GetCarPolicyResponse> getList(CarPolicyModel carPolicyModel) {
+        return CarPolicyMapper.INSTANCE.cartPolicyModelListToGetCarPolicyResponseList
+                (executeCarPolicy.executeGetList(carPolicyModel));
     }
 
     @Override
@@ -76,7 +77,9 @@ public DeleteCarPolicyResponse delete(CarPolicyModel carPolicyModel)
     }
 
 
-
+    public int getTotalRecord() {
+        return executeCarPolicy.executeGetTotalRecord();
+    }
 
 
 

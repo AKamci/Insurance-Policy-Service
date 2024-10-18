@@ -7,6 +7,7 @@ public interface ICarPolicyService extends IBaseService<
         CreateCarPolicyResponse,
         UpdateCarPolicyResponse,
         DeleteCarPolicyResponse,
+
         GetCarPolicyResponse,
         GetCarPolicyResponse,
         CarPolicyModel

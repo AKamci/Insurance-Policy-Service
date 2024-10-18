@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Builder
 @Entity
@@ -26,7 +26,8 @@ public class CarPolicy {
     private String policyDescription; //
     private String policyType; //
     private boolean policyStatus;
-    private Date policyDate; //
+    private LocalDate policyStartDate;
+    private LocalDate policyEndDate;
     private Double policyAmount;
 
     @ManyToOne

@@ -41,8 +41,9 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public List<GetCustomerResponse> getList() {
-        return CustomerMapper.INSTANCE.customersModelToGetCustomerResponse(executeCustomer.executeGetList());
+    public List<GetCustomerResponse> getList(CustomerModel customerModel) {
+        return CustomerMapper.INSTANCE.customersModelToGetCustomerResponse
+                (executeCustomer.executeGetList(customerModel));
     }
 
     @Override
@@ -51,4 +52,10 @@ public class CustomerService implements ICustomerService {
         return CustomerMapper.INSTANCE.customerModelToGetCustomerResponse
                 (executeCustomer.executeGet(CustomerModel));
     }
+
+
+    public int getTotalRecord() {
+        return executeCustomer.executeGetTotalRecord();
+    }
+
 }

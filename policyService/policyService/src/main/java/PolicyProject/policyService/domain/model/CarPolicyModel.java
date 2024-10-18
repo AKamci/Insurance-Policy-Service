@@ -4,6 +4,7 @@ import PolicyProject.policyService.infrastructure.persistence.entity.Car;
 import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public record CarPolicyModel(
 
@@ -11,14 +12,15 @@ public record CarPolicyModel(
         String policyName, //
         String policyDescription, //
         String policyType, //
-        boolean policyStatus,
-        Date policyDate, //
+        boolean policyStatus,//
         Double policyAmount,
         Long customerId,
         String licensePlateNumber,
         String tckn,
-        Date startDate,
-        Date endDate,
+        LocalDate policyStartDate,
+        LocalDate policyEndDate,
+        int page,
+        int size,
 
         //Navigation Properties
         CustomerModel CustomerModel,

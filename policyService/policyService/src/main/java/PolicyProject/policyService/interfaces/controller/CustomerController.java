@@ -4,9 +4,16 @@ import PolicyProject.policyService.application.service.Service.CustomerService;
 import PolicyProject.policyService.domain.dto.request.CustomerRequest.*;
 import PolicyProject.policyService.domain.dto.response.CustomerResponse.*;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +28,7 @@ public class CustomerController
 
 
     @PostMapping
-    public ResponseEntity<CreateCustomerResponse> createCustomer(@RequestBody CreateCustomerRequest CreateCustomerRequest )
+    public ResponseEntity<CreateCustomerResponse> createCustomer(@Valid @RequestBody CreateCustomerRequest CreateCustomerRequest )
     {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -31,9 +38,8 @@ public class CustomerController
     }
 
     @GetMapping
-    public ResponseEntity<GetCustomerResponse> getCustomer(@RequestParam String tckn)
+    public ResponseEntity<GetCustomerResponse> getCustomer(@Valid @ModelAttribute GetCustomerRequest getCustomerRequest )
     {
-        GetCustomerRequest getCustomerRequest = new GetCustomerRequest(tckn);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(customerService.get
@@ -41,7 +47,7 @@ public class CustomerController
     }
 
     @PutMapping
-    public  ResponseEntity<UpdateCustomerResponse> updateCustomer(@RequestBody UpdateCustomerRequest UpdateCustomerRequest)
+    public  ResponseEntity<UpdateCustomerResponse> updateCustomer(@Valid @RequestBody UpdateCustomerRequest UpdateCustomerRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -51,10 +57,8 @@ public class CustomerController
 
 
     @DeleteMapping
-    public ResponseEntity<DeleteCustomerResponse> deletePolicy(@RequestParam String tckn)
+    public ResponseEntity<DeleteCustomerResponse> deletePolicy(@Valid @ModelAttribute DeleteCustomerRequest deleteCustomerRequest )
     {
-        DeleteCustomerRequest deleteCustomerRequest = new DeleteCustomerRequest(tckn);
-
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(customerService.delete
@@ -62,11 +66,19 @@ public class CustomerController
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<GetCustomerResponse>> getCustomers()
+    public ResponseEntity<List<GetCustomerResponse>> getCustomers(@Valid @ModelAttribute GetCustomerListRequest getCustomerListRequest)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(customerService.getList());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(customerService.getList
+                        (CustomerMapper.INSTANCE.getCustomerListRequestToCustomerModel(getCustomerListRequest)));
     }
 
+    @GetMapping("/totalRecord")
+    public ResponseEntity<Integer> getTotalRecord()
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(customerService.getTotalRecord());
+    }
 
 
 

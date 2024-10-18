@@ -1,15 +1,18 @@
 package PolicyProject.policyService.infrastructure.gateways;
 
 import PolicyProject.policyService.application.gateways.CarPolicyGateway;
+import PolicyProject.policyService.infrastructure.config.Specifications.CarPolicySpecification;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.repository.CarPolicyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 
 @RequiredArgsConstructor
@@ -29,9 +32,6 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
 
     @Override
     public CarPolicy get(CarPolicy carPolicy) {
-        //Customer ı çek eşitle.
-        var Tckn = carPolicy.getCustomer().getTckn();
-        var Plate = carPolicy.getLicensePlate().getPlate();
 
         var EntityObject = carPolicyRepository.findById(carPolicy.getId());
         return EntityObject.orElse(null);
@@ -57,12 +57,16 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
         return null;
     }
 
-    @Override
-    public List<CarPolicy> getList() {
-        Iterable<CarPolicy> iterable = carPolicyRepository.findAll();
-        return StreamSupport.stream(iterable.spliterator(), false)
-                .collect(Collectors.toList());
-    }
+
+
+   @Override
+   public List<CarPolicy> getList(Specification<CarPolicy> specification, int page, int size) {
+       Pageable pageable = PageRequest.of(page, size);
+       Page<CarPolicy> carPolicyPage = carPolicyRepository.findAll(specification, pageable);
+       return carPolicyPage.getContent();
+   }
+
+
 
     @Override
     public List<CarPolicy> getCarPoliciesByCustomer(String tckn) {
@@ -85,8 +89,8 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
     }
 
     @Override
-    public List<CarPolicy> getCarPoliciesBetweenDate(Date startDate, Date endDate) {
-        var PolicyList = carPolicyRepository.findByPolicyDateBetween(startDate, endDate);
+    public List<CarPolicy> getCarPoliciesBetweenDate(LocalDate startDate, LocalDate endDate) {
+        var PolicyList = carPolicyRepository.findByPolicyStartDateBetween(startDate, endDate);
         if (PolicyList.isEmpty() )
         {
             return null;
@@ -94,6 +98,9 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
         return PolicyList;
     }
 
+    public int getTotal() {
+        return (int) carPolicyRepository.count();
+    }
 
 
 }

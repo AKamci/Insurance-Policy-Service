@@ -13,7 +13,7 @@ public class Calculator {
         double kilometersFactor = (car.getKilometers() / 10000) * 50;
         double priceFactor = car.getPrice() * 0.01;
 
-        return basePremium + ageFactor + engineFactor + kilometersFactor + priceFactor;
+        return basePremium + ageFactor + engineFactor + kilometersFactor + priceFactor * 1;
 
     }
 }

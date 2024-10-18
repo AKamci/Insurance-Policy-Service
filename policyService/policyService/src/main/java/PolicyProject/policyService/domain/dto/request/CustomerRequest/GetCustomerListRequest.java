@@ -1,50 +1,44 @@
 package PolicyProject.policyService.domain.dto.request.CustomerRequest;
 
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import jakarta.validation.constraints.*;
-import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
-public record UpdateCustomerRequest(
-        @Pattern(regexp = "\\d{11}", message = "TCKN must be 11 digits")
-        @NotBlank(message = "TCKN cannot be blank")
-        String tckn,
+public record GetCustomerListRequest(
+        @Positive(message = "ID must be a positive number")
+        Long id,
 
-        @NotBlank(message = "Name cannot be blank")
         @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
         String name,
 
-        @NotBlank(message = "Address cannot be blank")
+        @Pattern(regexp = "\\d{11}", message = "TCKN must be 11 digits")
+        String tckn,
+
         @Size(min = 5, max = 255, message = "Address must be between 5 and 255 characters")
         String address,
 
         @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Phone number must be valid")
-        @NotBlank(message = "Phone cannot be blank")
         String phone,
 
         @Email(message = "Email must be valid")
-        @NotBlank(message = "Email cannot be blank")
         String email,
 
         @Size(min = 6, max = 100, message = "Password must be between 6 and 100 characters")
-        @NotBlank(message = "Password cannot be blank")
         String password,
 
         @Past(message = "Birth date must be in the past")
-        @NotNull(message = "Birth date cannot be null")
         LocalDate birthDay,
 
-        @NotBlank(message = "Gender cannot be blank")
         @Pattern(regexp = "^(Male|Female|Other)$", message = "Gender must be Male, Female, or Other")
         String gender,
 
-        @NotNull(message = "Car policies cannot be null")
-        List<CarPolicy> carPolicies
+        @Min(value = 0, message = "Page number cannot be negative")
+        int page,
 
-
-
+        @Min(value = 1, message = "Size must be at least 1")
+        @Max(value = 100, message = "Size cannot be greater than 100")
+        int size
 ) implements ICustomerRequest{
+
 }

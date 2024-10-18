@@ -12,7 +12,7 @@ public interface IBaseService<
         ListResponse,
         T
         > {
-    List<ListResponse> getList();
+    List<ListResponse> getList(T entity);
     GetResponse get(T entity);
     CreateResponse create(T entity);
     UpdateResponse update(T entity);

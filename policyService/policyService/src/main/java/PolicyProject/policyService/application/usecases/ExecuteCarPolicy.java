@@ -3,14 +3,18 @@ package PolicyProject.policyService.application.usecases;
 import PolicyProject.policyService.application.gateways.CarPolicyGateway;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.domain.model.CustomerModel;
+import PolicyProject.policyService.infrastructure.config.Specifications.CarPolicySpecification;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
+import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CarPolicySpecificationBuild;
 import PolicyProject.policyService.infrastructure.persistence.entity.Calculator;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +24,8 @@ public class ExecuteCarPolicy {
 
     private final CarPolicyGateway carPolicyGateway;
     private final ExecuteCustomer executeCustomer;
+    private final CarPolicySpecificationBuild carPolicySpecificationBuild;
+
 
     public CarPolicyModel executeUpdate(CarPolicyModel carPolicyModel)
     {
@@ -32,7 +38,7 @@ public class ExecuteCarPolicy {
     public CarPolicyModel executeCreate(CarPolicyModel carPolicyModel)
     {
         CustomerModel customerModel = new CustomerModel(carPolicyModel.customerId(),
-                null,null,null,null,null, null,null,null, null);
+                null,null,null,null,null, null,null,null, 0, 0, null );
         //Get a CUSTOMER
         Customer customer = CustomerMapper.INSTANCE.customerModelToCustomerEntity
                 (executeCustomer.executeGet(customerModel));
@@ -48,9 +54,7 @@ public class ExecuteCarPolicy {
         Optional<CarPolicy> optionalEntity = Optional.ofNullable
                 (carPolicyGateway.get(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel)));
         CarPolicy carPolicyEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.customerId(),"Entity not found"));
-        carPolicyEntity.getCustomer().getId();
         return (CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(carPolicyEntity));
-
     }
 
     public List<CarPolicyModel> executeGetWPlate(CarPolicyModel carPolicyModel)
@@ -84,16 +88,22 @@ public class ExecuteCarPolicy {
         return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
     }
 
-    public List<CarPolicyModel> executeGetList()
+    public List<CarPolicyModel> executeGetList(CarPolicyModel carPolicyModel)
     {
-        var EnityObject = carPolicyGateway.getList();
-        return CarPolicyMapper.INSTANCE.CarpolicyEntityListToCarpolicyModelList(EnityObject);
+        Specification<CarPolicy> specification = carPolicySpecificationBuild.CarPolicyBuild(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel));
+        int page = carPolicyModel.page();
+        int size = carPolicyModel.size();
+        Optional<List<CarPolicy>> EntityList = Optional.ofNullable
+                (carPolicyGateway.getList(specification, page, size));
+
+        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.id(),"Entity not found"));
+        return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
     }
 
     public List<CarPolicyModel> executeGet_BetweenDate(CarPolicyModel carPolicyModel)
     {
-        Date startDate = carPolicyModel.startDate();
-        Date endDate = carPolicyModel.endDate();
+        LocalDate startDate = carPolicyModel.policyStartDate();
+        LocalDate endDate = carPolicyModel.policyEndDate();
 
         Optional<List<CarPolicy>> EntityList = Optional.ofNullable
                 (carPolicyGateway.getCarPoliciesBetweenDate(startDate, endDate));
@@ -102,7 +112,10 @@ public class ExecuteCarPolicy {
         return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
     }
 
-
+    public int executeGetTotalRecord()
+    {
+        return carPolicyGateway.getTotal();
+    }
 
 
 }

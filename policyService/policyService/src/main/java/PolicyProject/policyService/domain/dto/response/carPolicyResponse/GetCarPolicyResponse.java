@@ -1,6 +1,7 @@
 package PolicyProject.policyService.domain.dto.response.carPolicyResponse;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public record GetCarPolicyResponse(
 
@@ -8,8 +9,11 @@ public record GetCarPolicyResponse(
         String policyName,
         String policyDescription,
         String policyType,
-        Date policyDate,
         Double policyAmount,
-        Long customerId
+        Long customerId,
+        LocalDate policyStartDate,
+        LocalDate policyEndDate,
+        String licensePlateNumber,
+        String tckn
 ) implements ICarPolicyResponse {
 }
