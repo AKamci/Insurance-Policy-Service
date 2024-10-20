@@ -14,7 +14,7 @@ public record UpdateCustomerRequest(
         String tckn,
 
         @NotBlank(message = "Name cannot be blank")
-        @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
+        @Size(min = 2, max = 255, message = "Name must be between 2 and 100 characters")
         String name,
 
         @NotBlank(message = "Address cannot be blank")
@@ -29,20 +29,13 @@ public record UpdateCustomerRequest(
         @NotBlank(message = "Email cannot be blank")
         String email,
 
-        @Size(min = 6, max = 100, message = "Password must be between 6 and 100 characters")
-        @NotBlank(message = "Password cannot be blank")
-        String password,
-
         @Past(message = "Birth date must be in the past")
         @NotNull(message = "Birth date cannot be null")
         LocalDate birthDay,
 
         @NotBlank(message = "Gender cannot be blank")
-        @Pattern(regexp = "^(Male|Female|Other)$", message = "Gender must be Male, Female, or Other")
-        String gender,
-
-        @NotNull(message = "Car policies cannot be null")
-        List<CarPolicy> carPolicies
+        @Pattern(regexp = "^(Erkek|Kadın|Belirtmek İstemiyorum)$", message = "Gender must be Erkek, Kadın, or Belirtmek İstemiyorum")
+        String gender
 
 
 

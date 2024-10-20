@@ -2,7 +2,7 @@ services:
   database:
     image: 'postgres:15.2'
     ports:
-      - '5432'
+      - '5432:5432'  # Eksik port düzeltildi
     environment:
       - 'POSTGRES_USER=kadir123'
       - 'POSTGRES_DB=InsurancePostgreSQL'
@@ -10,5 +10,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  redis:
+    image: 'redis:latest'
+    ports:
+      - '6379:6379'
+    container_name: 'redis-server'
+
 volumes:
-    postgres_data:
+  postgres_data:

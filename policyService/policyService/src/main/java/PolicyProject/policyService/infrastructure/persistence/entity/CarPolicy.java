@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Builder
@@ -17,8 +18,10 @@ import java.time.LocalDate;
 @Data
 
 
-public class CarPolicy {
+public class CarPolicy implements Serializable {
 
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

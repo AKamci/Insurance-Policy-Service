@@ -47,12 +47,12 @@ public class CustomerController
     }
 
     @PutMapping
-    public  ResponseEntity<UpdateCustomerResponse> updateCustomer(@Valid @RequestBody UpdateCustomerRequest UpdateCustomerRequest)
+    public  ResponseEntity<UpdateCustomerResponse> updateCustomer(@Valid @RequestBody UpdateCustomerRequest updateCustomerRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(customerService.update
-                        (CustomerMapper.INSTANCE.updateCustomerRequestToCustomerModel(UpdateCustomerRequest)));
+                        (CustomerMapper.INSTANCE.updateCustomerRequestToCustomerModel(updateCustomerRequest)));
     }
 
 

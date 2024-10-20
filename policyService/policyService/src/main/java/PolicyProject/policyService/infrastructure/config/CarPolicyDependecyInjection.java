@@ -6,7 +6,7 @@ import PolicyProject.policyService.application.service.ObjectValidation;
 import PolicyProject.policyService.application.service.Service.CarPolicyService;
 import PolicyProject.policyService.application.usecases.ExecuteCarPolicy;
 import PolicyProject.policyService.application.usecases.ExecuteCustomer;
-import PolicyProject.policyService.infrastructure.gateways.CarPolicyRepositoryGateway;
+import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.CarPolicyRepositoryGateway;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CarPolicySpecificationBuild;
 import PolicyProject.policyService.infrastructure.persistence.repository.CarPolicyRepository;
 import org.springframework.context.annotation.Bean;
