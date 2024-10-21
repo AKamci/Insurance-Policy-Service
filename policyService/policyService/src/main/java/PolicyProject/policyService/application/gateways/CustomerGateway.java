@@ -5,14 +5,15 @@ import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface CustomerGateway {
 
-    Customer create(Customer Customer);
-    Customer get(Customer Customer);
-    Customer update(Customer Customer);
-    Customer delete(Customer Customer);
-    List<Customer> getList(Specification<Customer> specification, int page, int size);
+    CompletableFuture<Customer> create(Customer Customer);
+    CompletableFuture<Customer> get(Customer Customer);
+    CompletableFuture<Customer> update(Customer Customer);
+    CompletableFuture<Customer> delete(Customer Customer);
+    CompletableFuture<List<Customer>> getList(Specification<Customer> specification, int page, int size);
     int getTotal();
 
 

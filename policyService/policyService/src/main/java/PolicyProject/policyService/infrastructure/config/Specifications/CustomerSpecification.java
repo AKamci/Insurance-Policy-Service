@@ -5,6 +5,8 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
 
+import static org.springframework.data.jpa.domain.Specification.where;
+
 public class CustomerSpecification {
 
     public static Specification<Customer> build(

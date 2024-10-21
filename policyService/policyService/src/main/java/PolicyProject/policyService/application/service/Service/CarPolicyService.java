@@ -5,10 +5,14 @@ import PolicyProject.policyService.application.service.ObjectValidation;
 import PolicyProject.policyService.application.usecases.ExecuteCarPolicy;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
+import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
+import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 
 @RequiredArgsConstructor
@@ -18,44 +22,48 @@ private final ExecuteCarPolicy executeCarPolicy;
 private final ObjectValidation objectValidation;
 
 @Override
-public CreateCarPolicyResponse create (CarPolicyModel carPolicyModel)
+@Async
+public CompletableFuture<CreateCarPolicyResponse> create (CarPolicyModel carPolicyModel)
 {
     objectValidation.carPolicyModelValidations(carPolicyModel);
-    return CarPolicyMapper.INSTANCE.carPolicyModelToCreateCarPolicyResponse
-                (executeCarPolicy.executeCreate(carPolicyModel));
+    CompletableFuture<CarPolicyModel> createdCarPolicyModelFuture = executeCarPolicy.executeCreate(carPolicyModel);
+    return createdCarPolicyModelFuture.thenApply(createdModel ->
+            CarPolicyMapper.INSTANCE.carPolicyModelToCreateCarPolicyResponse(carPolicyModel));
 }
 
 @Override
-public UpdateCarPolicyResponse update (CarPolicyModel carPolicyModel)
+public CompletableFuture<UpdateCarPolicyResponse> update (CarPolicyModel carPolicyModel)
 {
     objectValidation.carPolicyModelValidations(carPolicyModel);
-    return CarPolicyMapper.INSTANCE.cartPolicyModelToUpdateCarPolicyResponse
-            (executeCarPolicy.executeUpdate(carPolicyModel));
+    CompletableFuture<CarPolicyModel> updatedCarPolicyModelFuture = executeCarPolicy.executeUpdate(carPolicyModel);
+    return updatedCarPolicyModelFuture.thenApply(createdModel ->
+            CarPolicyMapper.INSTANCE.cartPolicyModelToUpdateCarPolicyResponse(carPolicyModel));
 }
 
 
 @Override
-public DeleteCarPolicyResponse delete(CarPolicyModel carPolicyModel)
+public CompletableFuture<DeleteCarPolicyResponse> delete(CarPolicyModel carPolicyModel)
 {
     objectValidation.carPolicyModelValidations(carPolicyModel);
-    return CarPolicyMapper.INSTANCE.cartPolicyModelToDeleteCarPolicyResponse
-            (executeCarPolicy.executeDelete(carPolicyModel));
+    CompletableFuture<CarPolicyModel> deletedCarPolicyModelFuture = executeCarPolicy.executeDelete(carPolicyModel);
+    return deletedCarPolicyModelFuture.thenApply(createdModel ->
+            CarPolicyMapper.INSTANCE.cartPolicyModelToDeleteCarPolicyResponse(carPolicyModel));
 }
 
+@Override
+public CompletableFuture<List<GetCarPolicyResponse>> getList(CarPolicyModel carPolicyModel) {
+  CompletableFuture<List<CarPolicyModel>> listCarPolicyModelFuture = executeCarPolicy.executeGetList(carPolicyModel);
+  return listCarPolicyModelFuture.thenApply(CarPolicyMapper.INSTANCE::cartPolicyModelListToGetCarPolicyResponseList);
+}
 
-    @Override
-    public List<GetCarPolicyResponse> getList(CarPolicyModel carPolicyModel) {
-        return CarPolicyMapper.INSTANCE.cartPolicyModelListToGetCarPolicyResponseList
-                (executeCarPolicy.executeGetList(carPolicyModel));
-    }
-
-    @Override
-    public GetCarPolicyResponse get (CarPolicyModel carPolicyModel)
-    {
-        objectValidation.carPolicyModelValidations(carPolicyModel);
-        return CarPolicyMapper.INSTANCE.cartPolicyModelToGetCarPolicyResponse
-                (executeCarPolicy.executeGet(carPolicyModel));
-    }
+@Override
+public CompletableFuture<GetCarPolicyResponse> get (CarPolicyModel carPolicyModel)
+{
+    objectValidation.carPolicyModelValidations(carPolicyModel);
+    CompletableFuture<CarPolicyModel> getCarPolicyModelFuture = executeCarPolicy.executeGet(carPolicyModel);
+    return getCarPolicyModelFuture.thenApply(createdModel ->
+            CarPolicyMapper.INSTANCE.cartPolicyModelToGetCarPolicyResponse(carPolicyModel));
+}
 
 
     public List<GetCarPolicyResponse> getByPlate (CarPolicyModel carPolicyModel)

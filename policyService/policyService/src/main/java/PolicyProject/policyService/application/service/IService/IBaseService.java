@@ -3,6 +3,7 @@ package PolicyProject.policyService.application.service.IService;
 import PolicyProject.policyService.domain.dto.response.CustomerResponse.GetCustomerResponse;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface IBaseService<
         CreateResponse,
