@@ -17,9 +17,8 @@ public class LicensePlateService {
     private final ExecuteLicensePlate executeLicensePlate;
     private final ObjectValidation objectValidation;
 
-    @Async
-    public CompletableFuture<GetPlateWithCustomerResponse> getWCustomer(LicensePlateModel licensePlateModel) {
-        CompletableFuture<LicensePlateModel> getLicensePlateModelFuture = executeLicensePlate.executeGetWithCustomer(licensePlateModel);
-        return getLicensePlateModelFuture.thenApply(LicensePlateMapper.INSTANCE::LicensePlateModelToGetPlateWithCustomerResponse);
+    public GetPlateWithCustomerResponse getWCustomer(LicensePlateModel licensePlateModel) {
+        LicensePlateModel licensePlateModelResult = executeLicensePlate.ExecuteGetLicensePlate(licensePlateModel);
+        return LicensePlateMapper.INSTANCE.LicensePlateModelToGetPlateWithCustomerResponse(licensePlateModelResult);
     }
 }

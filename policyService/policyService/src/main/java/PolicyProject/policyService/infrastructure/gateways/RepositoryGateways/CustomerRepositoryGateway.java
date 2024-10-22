@@ -24,69 +24,55 @@ public class CustomerRepositoryGateway implements CustomerGateway {
     private final CustomerRepository customerRepository;
 
     @Override
-    public CompletableFuture<Customer> create(Customer customer) {
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                Customer entity = customerRepository.save(customer);
-                updateTotalCount();
-                cacheCustomer(entity);
-                return entity;
-            } catch (DataIntegrityViolationException e) {
-                throw new DuplicateTcknException("TCKN is Duplicate", customer.getTckn());
-            }
-        });
+    @CachePut(value = "customerCache", key = "#customer.tckn")
+    public Customer create(Customer customer) {
+        try {
+            var entity = customerRepository.save(customer);
+            updateTotalCount();
+            return entity;
+        } catch (DataIntegrityViolationException e) {
+            throw new DuplicateTcknException("TCKN is Duplicate", customer.getTckn());
+        }
     }
 
-
+    @Override
     @Cacheable(value = "customerCache", key = "#customer.tckn")
-    public Customer findByTckn(String tckn) {
-        return customerRepository.findByTckn(tckn)
-                .orElseThrow(() -> new DuplicateTcknException("TCKN not found", tckn));
+    public Customer get(Customer Customer) {
+        var customer = customerRepository.findByTckn(Customer.getTckn());
+        return customer;
     }
 
     @Override
-    public CompletableFuture<Customer> get(Customer customer) {
-        Customer foundCustomer = findByTckn(customer.getTckn());
-        return CompletableFuture.completedFuture(foundCustomer);
-    }
-
-    @Override
-    public CompletableFuture<Customer> update(Customer newCustomer) {
-        return get(newCustomer).thenCompose(existingCustomer -> {
-            if (existingCustomer != null) {
-                newCustomer.setId(existingCustomer.getId());
-                newCustomer.setCarPolicies(existingCustomer.getCarPolicies());
-                Customer updatedCustomer = customerRepository.save(newCustomer);
-                cacheCustomer(updatedCustomer);
-                return CompletableFuture.completedFuture(updatedCustomer);
-            } else {
-                return CompletableFuture.completedFuture(null);
-            }
-        }).exceptionally(e -> {
-            throw new DuplicateTcknException("TCKN is Duplicate", newCustomer.getTckn());
-        });
-    }
-
-    @Override
-    public CompletableFuture<Customer> delete(Customer customer) {
-        return get(customer).thenApply(existingCustomer -> {
-            if (existingCustomer != null) {
-                customerRepository.delete(existingCustomer);
-                updateTotalCount();
-                evictCustomerCache(existingCustomer.getTckn());
-                return existingCustomer;
-            }
+    @CachePut(value = "customerCache", key = "#customer.tckn")
+    public Customer update(Customer newCustomer) {
+        var customer = get(newCustomer);
+        if (customer == null) {
             return null;
-        });
+        }
+        newCustomer.setId(customer.getId());
+        newCustomer.setCarPolicies(customer.getCarPolicies());
+        return customerRepository.save(newCustomer);
     }
 
     @Override
-    public CompletableFuture<List<Customer>> getList(Specification<Customer> specification, int page, int size) {
-        return CompletableFuture.supplyAsync(() -> {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Customer> customerPage = customerRepository.findAll(specification, pageable);
-            return customerPage.getContent();
-        });
+    @CacheEvict(value = "customerCache", key = "#customer.tckn")
+    public Customer delete(Customer Customer) {
+        var customer = get(Customer);
+        if (customer == null) {
+            return null;
+        }
+        customerRepository.delete(customer);
+        updateTotalCount();
+        return customer;
+    }
+
+    @Override
+    @Cacheable(value = "customerCache", key = "#page + '-' + #size")
+    public List<Customer> getList(Specification<Customer> specification, int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Customer> customerPage = customerRepository.findAll(specification, pageable);
+        return customerPage.getContent();
     }
 
     @Cacheable("totalCustomer")
@@ -97,13 +83,4 @@ public class CustomerRepositoryGateway implements CustomerGateway {
     @CacheEvict(value = "totalCustomer", allEntries = true)
     public void updateTotalCount() {}
 
-
-    @CachePut(value = "customerCache", key = "#customer.tckn")
-    public Customer cacheCustomer(Customer customer) {
-        return customer;
-    }
-
-
-    @CacheEvict(value = "customerCache", key = "#tckn")
-    public void evictCustomerCache(String tckn) {}
 }

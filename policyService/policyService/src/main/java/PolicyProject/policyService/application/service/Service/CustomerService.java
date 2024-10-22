@@ -16,70 +16,52 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 
+@Service
 @RequiredArgsConstructor
 public class CustomerService implements ICustomerService {
+
 
     private final ExecuteCustomer executeCustomer;
     private final ObjectValidation objectValidation;
 
     @Override
-    @Async
-    public CompletableFuture<CreateCustomerResponse> create(CustomerModel customerModel) {
-        objectValidation.CustomerModelValidations(customerModel);
-        CompletableFuture<CustomerModel> createdCustomerModelFuture = executeCustomer.executeCreate(customerModel);
-        return createdCustomerModelFuture.thenApply(createdModel ->
-                CustomerMapper.INSTANCE.customerModelToCreateCustomerResponse(customerModel));
+    public CreateCustomerResponse create(CustomerModel CustomerModel) {
+
+        objectValidation.CustomerModelValidations(CustomerModel);
+        return CustomerMapper.INSTANCE.customerModelToCreateCustomerResponse
+                (executeCustomer.executeCreate(CustomerModel));
     }
 
     @Override
-    @Async
-    public CompletableFuture<UpdateCustomerResponse> update(CustomerModel customerModel) {
-        objectValidation.CustomerModelValidations(customerModel);
-        CompletableFuture<CustomerModel> updatedCustomerModelFuture = executeCustomer.executeUpdate(customerModel);
-        return updatedCustomerModelFuture.thenApply(updatedModel ->
-                CustomerMapper.INSTANCE.customerModelToUpdateCustomerResponse(customerModel));
+    public UpdateCustomerResponse update(CustomerModel CustomerModel) {
+        objectValidation.CustomerModelValidations(CustomerModel);
+        return CustomerMapper.INSTANCE.customerModelToUpdateCustomerResponse
+                (executeCustomer.executeUpdate(CustomerModel));
     }
 
     @Override
-    @Async
-    public CompletableFuture<DeleteCustomerResponse> delete(CustomerModel customerModel) {
-        objectValidation.CustomerModelValidations(customerModel);
-        CompletableFuture<CustomerModel> deletedCustomerModelFuture = executeCustomer.executeDelete(customerModel);
-        return deletedCustomerModelFuture.thenApply(deletedModel ->
-                CustomerMapper.INSTANCE.customerModelToDeleteCustomerResponse(customerModel));
+    public DeleteCustomerResponse delete(CustomerModel CustomerModel) {
+        objectValidation.CustomerModelValidations(CustomerModel);
+        return CustomerMapper.INSTANCE.customerModelToDeleteCustomerResponse
+                (executeCustomer.executeDelete(CustomerModel));
     }
 
     @Override
-    @Async
-    public CompletableFuture<List<GetCustomerResponse>> getList(CustomerModel customerModel) {
-        return executeCustomer.executeGetList(customerModel)
-                .thenCompose(customerModels -> {
-                    List<CompletableFuture<GetCustomerResponse>> futures = customerModels.stream()
-                            .map(customerModelItem ->
-                                    CompletableFuture.supplyAsync(() ->
-                                            CustomerMapper.INSTANCE.customerModelToGetCustomerResponse(customerModelItem)
-                                    )
-                            )
-                            .collect(Collectors.toList());
-                    return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                            .thenApply(v -> futures.stream()
-                                    .map(CompletableFuture::join)
-                                    .collect(Collectors.toList()));
-                });
+    public List<GetCustomerResponse> getList(CustomerModel customerModel) {
+        return CustomerMapper.INSTANCE.customersModelToGetCustomerResponse
+                (executeCustomer.executeGetList(customerModel));
     }
 
     @Override
-    @Async
-    public CompletableFuture<GetCustomerResponse> get(CustomerModel customerModel) {
-        objectValidation.CustomerModelValidations(customerModel);
-        CompletableFuture<CustomerModel> getCustomerModelFuture = executeCustomer.executeGet(customerModel);
-        return getCustomerModelFuture.thenApply(deletedModel ->
-                CustomerMapper.INSTANCE.customerModelToGetCustomerResponse(customerModel));
+    public GetCustomerResponse get(CustomerModel CustomerModel) {
+        objectValidation.CustomerModelValidations(CustomerModel);
+        return CustomerMapper.INSTANCE.customerModelToGetCustomerResponse
+                (executeCustomer.executeGet(CustomerModel));
     }
 
-    @Async
-    public CompletableFuture<Integer> getTotalRecord() {
-        return CompletableFuture.supplyAsync(() -> executeCustomer.executeGetTotalRecord());
+
+    public int getTotalRecord() {
+        return executeCustomer.executeGetTotalRecord();
     }
 
 }

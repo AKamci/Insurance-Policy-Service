@@ -17,65 +17,65 @@ import java.util.concurrent.CompletableFuture;
 @RestController
 @RequestMapping("api/v1/customer")
 @RequiredArgsConstructor
-public class CustomerController_V1 {
+public class CustomerController_V1
+{
 
-    private final ICustomerService customerService;
+    private final CustomerService customerService;
+
 
     @PostMapping
-    public CompletableFuture<ResponseEntity<CreateCustomerResponse>> createCustomer(
-            @Valid @RequestBody CreateCustomerRequest createCustomerRequest) {
-        return customerService.create(
-                        CustomerMapper.INSTANCE.createCustomerRequestToCustomerModel(createCustomerRequest))
-                .thenApply(createdCustomer -> ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(createdCustomer));
+    public ResponseEntity<CreateCustomerResponse> createCustomer(@Valid @RequestBody CreateCustomerRequest CreateCustomerRequest )
+    {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(customerService.create
+                        (CustomerMapper.INSTANCE.createCustomerRequestToCustomerModel(CreateCustomerRequest)));
+
     }
 
-
     @GetMapping
-    public CompletableFuture<ResponseEntity<GetCustomerResponse>> getCustomer(
-            @Valid @ModelAttribute GetCustomerRequest getCustomerRequest) {
-        return customerService.get(
-                        CustomerMapper.INSTANCE.getCustomerRequestToCustomerModel(getCustomerRequest))
-                .thenApply(createdCustomer -> ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(createdCustomer));
+    public ResponseEntity<GetCustomerResponse> getCustomer(@Valid @ModelAttribute GetCustomerRequest getCustomerRequest )
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(customerService.get
+                        (CustomerMapper.INSTANCE.getCustomerRequestToCustomerModel(getCustomerRequest)));
     }
 
     @PutMapping
-    public CompletableFuture<ResponseEntity<UpdateCustomerResponse>> updateCustomer(
-            @Valid @RequestBody UpdateCustomerRequest updateCustomerRequest) {
-        return customerService.update(
-                        CustomerMapper.INSTANCE.updateCustomerRequestToCustomerModel(updateCustomerRequest))
-                .thenApply(createdCustomer -> ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(createdCustomer));
+    public  ResponseEntity<UpdateCustomerResponse> updateCustomer(@Valid @RequestBody UpdateCustomerRequest updateCustomerRequest)
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(customerService.update
+                        (CustomerMapper.INSTANCE.updateCustomerRequestToCustomerModel(updateCustomerRequest)));
     }
 
+
     @DeleteMapping
-    public CompletableFuture<ResponseEntity<DeleteCustomerResponse>> deleteCustomer(
-            @Valid @ModelAttribute DeleteCustomerRequest deleteCustomerRequest) {
-        return customerService.delete(
-                        CustomerMapper.INSTANCE.deleteCustomerRequestToCustomerModel(deleteCustomerRequest))
-                .thenApply(createdCustomer -> ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(createdCustomer));
+    public ResponseEntity<DeleteCustomerResponse> deletePolicy(@Valid @ModelAttribute DeleteCustomerRequest deleteCustomerRequest )
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(customerService.delete
+                        (CustomerMapper.INSTANCE.deleteCustomerRequestToCustomerModel(deleteCustomerRequest)));
     }
 
     @GetMapping("/list")
-    public CompletableFuture<ResponseEntity<List<GetCustomerResponse>>> getCustomers(
-            @Valid @ModelAttribute GetCustomerListRequest getCustomerListRequest) {
-        return customerService.getList(
-                        CustomerMapper.INSTANCE.getCustomerListRequestToCustomerModel(getCustomerListRequest))
-                .thenApply(createdCustomer -> ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(createdCustomer));
+    public ResponseEntity<List<GetCustomerResponse>> getCustomers(@Valid @ModelAttribute GetCustomerListRequest getCustomerListRequest)
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(customerService.getList
+                        (CustomerMapper.INSTANCE.getCustomerListRequestToCustomerModel(getCustomerListRequest)));
     }
-
 
     @GetMapping("/totalRecord")
-    public CompletableFuture<ResponseEntity<Integer>> getTotalRecord() {
-        return customerService.getTotalRecord()
-                .thenApply(totalRecord -> ResponseEntity.status(HttpStatus.OK).body(totalRecord));
+    public ResponseEntity<Integer> getTotalRecord()
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(customerService.getTotalRecord());
     }
+
+
+
 }

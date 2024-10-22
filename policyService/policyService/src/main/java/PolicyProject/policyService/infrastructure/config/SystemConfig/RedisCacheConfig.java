@@ -1,4 +1,4 @@
-package PolicyProject.policyService.infrastructure.config;
+package PolicyProject.policyService.infrastructure.config.SystemConfig;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;

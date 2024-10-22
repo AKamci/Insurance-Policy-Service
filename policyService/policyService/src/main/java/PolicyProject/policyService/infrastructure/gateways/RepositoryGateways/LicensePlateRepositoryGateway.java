@@ -18,34 +18,16 @@ import java.util.concurrent.CompletableFuture;
 public class LicensePlateRepositoryGateway implements LicensePlateGateway {
     private final LicensePlateRepository licensePlateRepository;
 
-//    @Override
-//    @Cacheable(value = "customerCache", key = "#licensePlate.plate")
-//    public CompletableFuture<LicensePlate> get(LicensePlate licensePlate) {
-//        return CompletableFuture.supplyAsync(() -> {
-//            try {
-//                return licensePlateRepository.findByPlate(licensePlate.getPlate());
-//            } catch (Exception e) {
-//                throw new RuntimeException("Error", e);
-//            }
-//        });
-//    }
 
-    @Async
-    public CompletableFuture<LicensePlate> get(LicensePlate licensePlate) {
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                // Veritabanından plakayı al
-                return licensePlateRepository.findByPlate(licensePlate.getPlate());
-            } catch (Exception e) {
-                throw new RuntimeException("Error", e);
-            }
-        }).thenApply(this::cacheLicensePlate); // Sonucu önbelleğe kaydet
-    }
 
-    // Önbelleğe almak için yardımcı metot
-    @CachePut(value = "customerCache", key = "#licensePlate.plate")
-    public LicensePlate cacheLicensePlate(LicensePlate licensePlate) {
-        return licensePlate; // Burada sadece geri döndürüyoruz, önbelleğe alınacak
+    @Override
+    @Cacheable(value = "customerCache", key = "#licensePlate.plate")
+    public LicensePlate get(LicensePlate licensePlate) {
+        try {
+            return licensePlateRepository.findByPlate(licensePlate.getPlate());
+        } catch (Exception e) {
+            throw new RuntimeException("Error", e);
+        }
     }
 
 }

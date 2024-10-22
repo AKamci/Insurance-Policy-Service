@@ -11,14 +11,14 @@ import java.util.concurrent.CompletableFuture;
 
 public interface CarPolicyGateway {
 
-    CompletableFuture<CarPolicy> create(CarPolicy carPolicy, double amount, Customer customer);
-    CompletableFuture<CarPolicy> get(CarPolicy carPolicy);
-    CompletableFuture<CarPolicy> update(CarPolicy carPolicy);
-    CompletableFuture<CarPolicy> delete(CarPolicy carPolicy);
-    CompletableFuture<List<CarPolicy>> getList(Specification<CarPolicy> carPolicy, int page, int size);
-    CompletableFuture<List<CarPolicy>> getCarPoliciesByCustomer(String tckn);
-    CompletableFuture<List<CarPolicy>> getCarPoliciesByPlateAndTckn(String plate, String tckn);
-    CompletableFuture<List<CarPolicy>> getCarPoliciesBetweenDate (LocalDate startDate, LocalDate endDate);
+CarPolicy create(CarPolicy carPolicy, Customer customer);
+   CarPolicy get(CarPolicy carPolicy);
+   CarPolicy update(CarPolicy carPolicy);
+   CarPolicy delete(CarPolicy carPolicy);
+    List<CarPolicy> getList(Specification<CarPolicy> carPolicy, int page, int size);
+    List<CarPolicy> getCarPoliciesByCustomer(String tckn);
+    List<CarPolicy> getCarPoliciesByPlateAndTckn(String plate, String tckn);
+    List<CarPolicy> getCarPoliciesBetweenDate (LocalDate startDate, LocalDate endDate);
     int getTotal();
 
 }

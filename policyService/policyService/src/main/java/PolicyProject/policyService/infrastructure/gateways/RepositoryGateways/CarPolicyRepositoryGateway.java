@@ -19,85 +19,90 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-@Service
 @RequiredArgsConstructor
-public class CarPolicyRepositoryGateway implements CarPolicyGateway {
+public class CarPolicyRepositoryGateway implements CarPolicyGateway
+{
 
     private final CarPolicyRepository carPolicyRepository;
 
+
     @Override
     @CachePut(value = "carPolicyCache", key = "#carPolicy.id")
-    public CompletableFuture<CarPolicy> create(CarPolicy carPolicy, double amount, Customer customer) {
+    public CarPolicy create(CarPolicy carPolicy, Customer customer) {
         carPolicy.setCustomer(customer);
-        carPolicy.setPolicyAmount(amount);
-        return CompletableFuture.supplyAsync(() -> {
-            CarPolicy savedEntity = carPolicyRepository.save(carPolicy);
-            updateTotalCount();
-            return savedEntity;
-        });
+        var entity = carPolicyRepository.save(carPolicy);
+        updateTotalCount();
+        return entity;
     }
 
     @Override
     @Cacheable(value = "carPolicyCache", key = "#carPolicy.id")
-    public CompletableFuture<CarPolicy> get(CarPolicy carPolicy) {
-        return CompletableFuture.supplyAsync(() ->
-                carPolicyRepository.findById(carPolicy.getId()).orElse(null)
-        );
+    public CarPolicy get(CarPolicy carPolicy) {
+        var entityObject = carPolicyRepository.findById(carPolicy.getId());
+        return entityObject.orElse(null);
     }
 
     @Override
     @CachePut(value = "carPolicyCache", key = "#carPolicy.id")
-    public CompletableFuture<CarPolicy> update(CarPolicy carPolicy) {
-        return get(carPolicy).thenApply(existingEntity -> {
-            if (existingEntity != null) {
-                return carPolicyRepository.save(carPolicy);
-            }
-            return null;
-        });
+    public CarPolicy update(CarPolicy carPolicy) {
+        var entityObject = get(carPolicy);
+        if (entityObject != null) {
+            return carPolicyRepository.save(carPolicy);
+        }
+        return null;
     }
 
     @Override
     @CacheEvict(value = "carPolicyCache", key = "#carPolicy.id")
-    public CompletableFuture<CarPolicy> delete(CarPolicy carPolicy) {
-        return get(carPolicy).thenApply(existingEntity -> {
-            if (existingEntity != null) {
-                carPolicyRepository.delete(carPolicy);
-                updateTotalCount();
-                return existingEntity;
-            }
-            return null;
-        });
+    public CarPolicy delete(CarPolicy carPolicy) {
+        var entityObject = get(carPolicy);
+        if (entityObject != null) {
+            carPolicyRepository.delete(carPolicy);
+            updateTotalCount();
+            return entityObject;
+        }
+        return null;
     }
 
-    @Override
+
     @Cacheable(value = "carPolicyCache", key = "#page + '-' + #size")
-    public CompletableFuture<List<CarPolicy>> getList(Specification<CarPolicy> specification, int page, int size) {
+    @Override
+    public List<CarPolicy> getList(Specification<CarPolicy> specification, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return CompletableFuture.supplyAsync(() -> {
-            Page<CarPolicy> carPolicyPage = carPolicyRepository.findAll(specification, pageable);
-            return carPolicyPage.getContent();
-        });
+        Page<CarPolicy> carPolicyPage = carPolicyRepository.findAll(specification, pageable);
+        return carPolicyPage.getContent();
+    }
+
+
+
+    @Override
+    public List<CarPolicy> getCarPoliciesByCustomer(String tckn) {
+        var PolicyList = carPolicyRepository.findByCustomerTckn(tckn).stream().toList();
+        if (PolicyList.isEmpty() )
+        {
+            return null;
+        }
+        return PolicyList;
     }
 
     @Override
-    public CompletableFuture<List<CarPolicy>> getCarPoliciesByCustomer(String tckn) {
-        return CompletableFuture.supplyAsync(() ->
-                carPolicyRepository.findByCustomerTckn(tckn)
-        );
+    public List<CarPolicy> getCarPoliciesByPlateAndTckn(String plate, String tckn) {
+        var PolicyList = carPolicyRepository.findByCustomerTcknAndLicensePlatePlate(tckn, plate);
+        if (PolicyList.isEmpty() )
+        {
+            return null;
+        }
+        return PolicyList;
     }
 
     @Override
-    public CompletableFuture<List<CarPolicy>> getCarPoliciesByPlateAndTckn(String plate, String tckn) {
-        return CompletableFuture.supplyAsync(() ->
-                carPolicyRepository.findByCustomerTcknAndLicensePlatePlate(tckn, plate)
-        );
-    }
-
-    @Override
-    public CompletableFuture<List<CarPolicy>> getCarPoliciesBetweenDate(LocalDate startDate, LocalDate endDate) {
-        return CompletableFuture.supplyAsync(() ->
-                carPolicyRepository.findByPolicyStartDateBetween(startDate, endDate)
-        );
+    public List<CarPolicy> getCarPoliciesBetweenDate(LocalDate startDate, LocalDate endDate) {
+        var PolicyList = carPolicyRepository.findByPolicyStartDateBetween(startDate, endDate);
+        if (PolicyList.isEmpty() )
+        {
+            return null;
+        }
+        return PolicyList;
     }
 
     @Cacheable("totalCarPolicies")
@@ -106,9 +111,6 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway {
     }
 
     @CacheEvict(value = "totalCarPolicies", allEntries = true)
-    public CompletableFuture<Void> updateTotalCount() {
-        return CompletableFuture.runAsync(() -> {
-            // Logic for updating total count if necessary
-        });
-    }
+    public void updateTotalCount() {}
+
 }

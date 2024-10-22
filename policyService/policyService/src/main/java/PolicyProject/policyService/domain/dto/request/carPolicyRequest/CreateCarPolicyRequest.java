@@ -33,6 +33,9 @@ public record CreateCarPolicyRequest(
         @NotNull(message = "Customer ID cannot be null")
         Long customerId,
 
+        @NotNull(message = "policyAmount cannot be null")
+        Long policyAmount,
+
         @NotNull(message = "Car information cannot be null")
         Car car
 

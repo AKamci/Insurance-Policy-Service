@@ -28,104 +28,95 @@ public class ExecuteCarPolicy {
     private final ExecuteCustomer executeCustomer;
     private final CarPolicySpecificationBuild carPolicySpecificationBuild;
 
-    @Async
-    public CompletableFuture<CarPolicyModel> executeUpdate(CarPolicyModel carPolicyModel)
-    {
-        return CompletableFuture.supplyAsync(() ->
-                        CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel))
-                .thenCompose(entity ->  (Optional.ofNullable(carPolicyGateway.update(entity))).orElseThrow(() ->
-                                new EntityNotFoundException(carPolicyModel.id(),"Entity not found"))
-                        .thenApply(CarPolicyMapper.INSTANCE::carPolicyEntityToCarPolicyModel));
-    }
-    @Async
-    public CompletableFuture<CarPolicyModel> executeCreate(CarPolicyModel carPolicyModel) {
-        return CompletableFuture.supplyAsync(() -> {
 
-            CustomerModel customerModel = new CustomerModel(
-                    carPolicyModel.customerId(), null, null, null, null, null, null, null, null, 0, 0, null);
-
-            return executeCustomer.executeGet(customerModel)
-                    .thenApply(CustomerMapper.INSTANCE::customerModelToCustomerEntity)
-                    .join();
-        }).thenCompose(customer -> {
-            return carPolicyGateway.create(
-                    CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel),
-                    carPolicyModel.policyAmount(), customer);
-        }).thenApply(CarPolicyMapper.INSTANCE::carPolicyEntityToCarPolicyModel);
-    }
-    @Async
-    public CompletableFuture<CarPolicyModel> executeGet(CarPolicyModel carPolicyModel)
+    public CarPolicyModel executeUpdate(CarPolicyModel carPolicyModel)
     {
-        return CompletableFuture.supplyAsync(() ->
-                        CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel))
-                .thenCompose(entity ->  (Optional.ofNullable(carPolicyGateway.get(entity))).orElseThrow(() ->
-                                new EntityNotFoundException(carPolicyModel.id(),"Entity not found"))
-                        .thenApply(CarPolicyMapper.INSTANCE::carPolicyEntityToCarPolicyModel));
-    }
-    @Async
-    public CompletableFuture<CarPolicyModel> executeDelete(CarPolicyModel carPolicyModel)
-    {
-        return CompletableFuture.supplyAsync(() ->
-                        CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel))
-                .thenCompose(entity ->  (Optional.ofNullable(carPolicyGateway.delete(entity))).orElseThrow(() ->
-                                new EntityNotFoundException(carPolicyModel.id(),"Entity not found"))
-                        .thenApply(CarPolicyMapper.INSTANCE::carPolicyEntityToCarPolicyModel));
+        Optional<CarPolicy> optionalEntity = Optional.ofNullable
+                (carPolicyGateway.update(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel)));
+        CarPolicy carPolicyEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.customerId(),"Entity not found"));
+        return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(carPolicyEntity);
     }
 
-    @Async
-    public CompletableFuture<List<CarPolicyModel>> executeGetList(CarPolicyModel carPolicyModel) {
+    public CarPolicyModel executeCreate(CarPolicyModel carPolicyModel)
+    {
+        CustomerModel customerModel = new CustomerModel(carPolicyModel.customerId(),
+                null,null,null,null,null, null,null,null, 0, 0, null );
+        //Get a CUSTOMER
+        Customer customer = CustomerMapper.INSTANCE.customerModelToCustomerEntity
+                (executeCustomer.executeGet(customerModel));
+
+        CarPolicy EnityObject = carPolicyGateway.create
+                (CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel),customer);
+        return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(EnityObject);
+    }
+
+    public CarPolicyModel executeGet(CarPolicyModel carPolicyModel)
+    {
+        Optional<CarPolicy> optionalEntity = Optional.ofNullable
+                (carPolicyGateway.get(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel)));
+        CarPolicy carPolicyEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.customerId(),"Entity not found"));
+        return (CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(carPolicyEntity));
+    }
+
+    public List<CarPolicyModel> executeGetWPlate(CarPolicyModel carPolicyModel)
+    {
+        String plate = carPolicyModel.licensePlateNumber();
+        String tckn = carPolicyModel.tckn();
+        Optional<List<CarPolicy>> EntityList = Optional.ofNullable
+                (carPolicyGateway.getCarPoliciesByPlateAndTckn(plate, tckn));
+
+        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.id(),"Entity not found"));
+        return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
+
+    }
+
+    public CarPolicyModel executeDelete(CarPolicyModel carPolicyModel)
+    {
+        Optional<CarPolicy> optionalEntity = Optional.ofNullable
+                (carPolicyGateway.delete(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel)));
+        CarPolicy carPolicyEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.customerId(),"Entity not found"));
+        return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(carPolicyEntity);
+    }
+
+    public List<CarPolicyModel> executeGet_wPolicy(CarPolicyModel carPolicyModel)
+    {
+        String tckn = carPolicyModel.tckn();
+
+        Optional<List<CarPolicy>> EntityList = Optional.ofNullable
+                (carPolicyGateway.getCarPoliciesByCustomer(tckn));
+
+        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.id(),"Entity not found"));
+        return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
+    }
+
+    public List<CarPolicyModel> executeGetList(CarPolicyModel carPolicyModel)
+    {
+        Specification<CarPolicy> specification = carPolicySpecificationBuild.CarPolicyBuild(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel));
         int page = carPolicyModel.page();
         int size = carPolicyModel.size();
+        Optional<List<CarPolicy>> EntityList = Optional.ofNullable
+                (carPolicyGateway.getList(specification, page, size));
 
-        return CompletableFuture.supplyAsync(() ->
-                        CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel))
-                .thenApply(carPolicySpecificationBuild::CarPolicyBuild)
-                .thenCompose(specification -> carPolicyGateway.getList(specification, page, size))
-                .thenApply(CarPolicyMapper.INSTANCE::carPolicyEntityListToCarPolicyModelList); // List dönüşümü
+        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.id(),"Entity not found"));
+        return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
     }
 
+    public List<CarPolicyModel> executeGet_BetweenDate(CarPolicyModel carPolicyModel)
+    {
+        LocalDate startDate = carPolicyModel.policyStartDate();
+        LocalDate endDate = carPolicyModel.policyEndDate();
 
-    public CompletableFuture<Integer> executeGetTotalRecord() {
-        // Asenkron işlemi başlatır
-        return CompletableFuture.supplyAsync(() -> carPolicyGateway.getTotal());
+        Optional<List<CarPolicy>> EntityList = Optional.ofNullable
+                (carPolicyGateway.getCarPoliciesBetweenDate(startDate, endDate));
+
+        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.id(),"Entity not found"));
+        return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
     }
 
-
-//    public List<CarPolicyModel> executeGet_BetweenDate(CarPolicyModel carPolicyModel)
-//    {
-//        LocalDate startDate = carPolicyModel.policyStartDate();
-//        LocalDate endDate = carPolicyModel.policyEndDate();
-//
-//        Optional<List<CarPolicy>> EntityList = Optional.ofNullable
-//                (carPolicyGateway.getCarPoliciesBetweenDate(startDate, endDate));
-//
-//        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.id(),"Entity not found"));
-//        return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
-//    }
-//    public List<CarPolicyModel> executeGetWPlate(CarPolicyModel carPolicyModel)
-//    {
-//        String plate = carPolicyModel.licensePlateNumber();
-//        String tckn = carPolicyModel.tckn();
-//        Optional<List<CarPolicy>> EntityList = Optional.ofNullable
-//                (carPolicyGateway.getCarPoliciesByPlateAndTckn(plate, tckn));
-//
-//        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.id(),"Entity not found"));
-//        return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
-//
-//    }
-//
-//
-//    public List<CarPolicyModel> executeGet_wPolicy(CarPolicyModel carPolicyModel)
-//    {
-//        String tckn = carPolicyModel.tckn();
-//
-//        Optional<List<CarPolicy>> EntityList = Optional.ofNullable
-//                (carPolicyGateway.getCarPoliciesByCustomer(tckn));
-//
-//        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.id(),"Entity not found"));
-//        return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
-//    }
-
+    public int executeGetTotalRecord()
+    {
+        return carPolicyGateway.getTotal();
+    }
 
 
 }

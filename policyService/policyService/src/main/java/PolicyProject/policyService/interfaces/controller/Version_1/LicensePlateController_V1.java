@@ -28,13 +28,12 @@ public class LicensePlateController_V1 {
     private final LicensePlateService licensePlateService;
 
     @GetMapping("/WCustomer")
-    public CompletableFuture<ResponseEntity<GetPlateWithCustomerResponse>> getWCustomer(
+    public ResponseEntity<GetPlateWithCustomerResponse> getWCustomer(
             @Valid @ModelAttribute GetPlateWithCustomerRequest getPlateWithCustomerRequest) {
-        return licensePlateService.getWCustomer(
-                        LicensePlateMapper.INSTANCE.getPlateWithCustomerRequestToLicensePlateModel(getPlateWithCustomerRequest))
-                .thenApply(getPlateWithCustomer -> ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(getPlateWithCustomer));
+        GetPlateWithCustomerResponse getPlateWithCustomer = licensePlateService.getWCustomer(
+                LicensePlateMapper.INSTANCE.getPlateWithCustomerRequestToLicensePlateModel(getPlateWithCustomerRequest));
+
+        return ResponseEntity.status(HttpStatus.OK).body(getPlateWithCustomer);
     }
 
 }

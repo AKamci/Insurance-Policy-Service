@@ -19,101 +19,72 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CarPolicyService implements ICarPolicyService {
 
-private final ExecuteCarPolicy executeCarPolicy;
-private final ObjectValidation objectValidation;
+    private final ExecuteCarPolicy executeCarPolicy;
+    private final ObjectValidation objectValidation;
 
-@Override
-@Async
-public CompletableFuture<CreateCarPolicyResponse> create (CarPolicyModel carPolicyModel)
-{
-    objectValidation.carPolicyModelValidations(carPolicyModel);
-    CompletableFuture<CarPolicyModel> createdCarPolicyModelFuture = executeCarPolicy.executeCreate(carPolicyModel);
-    return createdCarPolicyModelFuture.thenApply(createdModel ->
-            CarPolicyMapper.INSTANCE.carPolicyModelToCreateCarPolicyResponse(carPolicyModel));
-}
-
-@Override
-@Async
-public CompletableFuture<UpdateCarPolicyResponse> update (CarPolicyModel carPolicyModel)
-{
-    objectValidation.carPolicyModelValidations(carPolicyModel);
-    CompletableFuture<CarPolicyModel> updatedCarPolicyModelFuture = executeCarPolicy.executeUpdate(carPolicyModel);
-    return updatedCarPolicyModelFuture.thenApply(createdModel ->
-            CarPolicyMapper.INSTANCE.cartPolicyModelToUpdateCarPolicyResponse(carPolicyModel));
-}
-
-
-@Override
-@Async
-public CompletableFuture<DeleteCarPolicyResponse> delete(CarPolicyModel carPolicyModel)
-{
-    objectValidation.carPolicyModelValidations(carPolicyModel);
-    CompletableFuture<CarPolicyModel> deletedCarPolicyModelFuture = executeCarPolicy.executeDelete(carPolicyModel);
-    return deletedCarPolicyModelFuture.thenApply(createdModel ->
-            CarPolicyMapper.INSTANCE.cartPolicyModelToDeleteCarPolicyResponse(carPolicyModel));
-}
-
-@Override
-@Async
-public CompletableFuture<List<GetCarPolicyResponse>> getList(CarPolicyModel carPolicyModel) {
-    return executeCarPolicy.executeGetList(carPolicyModel)
-            .thenCompose(customerModels -> {
-                List<CompletableFuture<GetCarPolicyResponse>> futures = customerModels.stream()
-                        .map(customerModelItem ->
-                                CompletableFuture.supplyAsync(() ->
-                                        CarPolicyMapper.INSTANCE.cartPolicyModelToGetCarPolicyResponse(customerModelItem)
-                                )
-                        )
-                        .toList();
-                return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                        .thenApply(v -> futures.stream()
-                                .map(CompletableFuture::join)
-                                .collect(Collectors.toList()));
-            });
-
-}
-@Override
-@Async
-public CompletableFuture<GetCarPolicyResponse> get(CarPolicyModel carPolicyModel)
-{
-    objectValidation.carPolicyModelValidations(carPolicyModel);
-    CompletableFuture<CarPolicyModel> getCarPolicyModelFuture = executeCarPolicy.executeGet(carPolicyModel);
-    return getCarPolicyModelFuture.thenApply(createdModel ->
-            CarPolicyMapper.INSTANCE.cartPolicyModelToGetCarPolicyResponse(carPolicyModel));
-}
-
-
-    @Async
     @Override
-    public CompletableFuture<Integer> getTotalRecord() {
-        return executeCarPolicy.executeGetTotalRecord();
+    public CreateCarPolicyResponse create (CarPolicyModel carPolicyModel)
+    {
+        objectValidation.carPolicyModelValidations(carPolicyModel);
+        return CarPolicyMapper.INSTANCE.carPolicyModelToCreateCarPolicyResponse
+                (executeCarPolicy.executeCreate(carPolicyModel));
+    }
+
+    @Override
+    public UpdateCarPolicyResponse update (CarPolicyModel carPolicyModel)
+    {
+        objectValidation.carPolicyModelValidations(carPolicyModel);
+        return CarPolicyMapper.INSTANCE.cartPolicyModelToUpdateCarPolicyResponse
+                (executeCarPolicy.executeUpdate(carPolicyModel));
     }
 
 
+    @Override
+    public DeleteCarPolicyResponse delete(CarPolicyModel carPolicyModel)
+    {
+        objectValidation.carPolicyModelValidations(carPolicyModel);
+        return CarPolicyMapper.INSTANCE.cartPolicyModelToDeleteCarPolicyResponse
+                (executeCarPolicy.executeDelete(carPolicyModel));
+    }
 
 
+    @Override
+    public List<GetCarPolicyResponse> getList(CarPolicyModel carPolicyModel) {
+        return CarPolicyMapper.INSTANCE.cartPolicyModelListToGetCarPolicyResponseList
+                (executeCarPolicy.executeGetList(carPolicyModel));
+    }
+
+    @Override
+    public GetCarPolicyResponse get (CarPolicyModel carPolicyModel)
+    {
+        objectValidation.carPolicyModelValidations(carPolicyModel);
+        return CarPolicyMapper.INSTANCE.cartPolicyModelToGetCarPolicyResponse
+                (executeCarPolicy.executeGet(carPolicyModel));
+    }
 
 
-
-//    public List<GetCarPolicyResponse> getByPlate (CarPolicyModel carPolicyModel)
-//    {
-//        //objectValidation.carPolicyModelValidations(carPolicyModel);
-//        return CarPolicyMapper.INSTANCE.cartPolicyModelListToGetCarPolicyResponseList
-//                (executeCarPolicy.executeGetWPlate(carPolicyModel));
-//    }
-//
-//
-//    public List<GetCustomerCarPoliciesResponse> get_wPolicy(CarPolicyModel carPolicyModel) {
-//        return CarPolicyMapper.INSTANCE.customerModelToGetCarPoliciesByCustomer
-//                (executeCarPolicy.executeGet_wPolicy(carPolicyModel));
-//    }
-//
-//    public List<GetCustomerCarPoliciesResponse> get_Policies_BetweenDate(CarPolicyModel carPolicyModel) {
-//        return CarPolicyMapper.INSTANCE.customerModelToGetCarPoliciesByCustomer
-//                (executeCarPolicy.executeGet_BetweenDate(carPolicyModel));
-//    }
+    public List<GetCarPolicyResponse> getByPlate (CarPolicyModel carPolicyModel)
+    {
+        //objectValidation.carPolicyModelValidations(carPolicyModel);
+        return CarPolicyMapper.INSTANCE.cartPolicyModelListToGetCarPolicyResponseList
+                (executeCarPolicy.executeGetWPlate(carPolicyModel));
+    }
 
 
+    public List<GetCustomerCarPoliciesResponse> get_wPolicy(CarPolicyModel carPolicyModel) {
+        return CarPolicyMapper.INSTANCE.customerModelToGetCarPoliciesByCustomer
+                (executeCarPolicy.executeGet_wPolicy(carPolicyModel));
+    }
+
+    public List<GetCustomerCarPoliciesResponse> get_Policies_BetweenDate(CarPolicyModel carPolicyModel) {
+        return CarPolicyMapper.INSTANCE.customerModelToGetCarPoliciesByCustomer
+                (executeCarPolicy.executeGet_BetweenDate(carPolicyModel));
+    }
+
+
+    public int getTotalRecord() {
+        return executeCarPolicy.executeGetTotalRecord();
+    }
 
 
 
