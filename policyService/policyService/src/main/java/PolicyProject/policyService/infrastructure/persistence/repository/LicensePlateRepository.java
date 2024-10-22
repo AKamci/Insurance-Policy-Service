@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LicensePlateRepository extends CrudRepository<LicensePlate, Long> {
+    LicensePlate findByPlate(String plate);
 }

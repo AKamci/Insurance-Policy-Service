@@ -1,5 +1,6 @@
 package PolicyProject.policyService.interfaces.controller.Version_2;
 
+import PolicyProject.policyService.application.service.IService.ICarPolicyService;
 import PolicyProject.policyService.application.service.Service.CarPolicyService;
 import PolicyProject.policyService.domain.dto.request.carPolicyRequest.*;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
@@ -21,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class CarPolicyController_V2 {
 
-    private final CarPolicyService carPolicyService;
+    private final ICarPolicyService carPolicyService;
 
     @PostMapping
     public CompletableFuture<ResponseEntity<CreateCarPolicyResponse>> createPolicy(
@@ -74,9 +75,9 @@ public class CarPolicyController_V2 {
     }
 
     @GetMapping("/totalRecord")
-    public ResponseEntity<Integer> getTotalRecord()
-    {
-        return ResponseEntity.status(HttpStatus.OK).body(carPolicyService.getTotalRecord());
+    public CompletableFuture<ResponseEntity<Integer>> getTotalRecord() {
+        return carPolicyService.getTotalRecord()
+                .thenApply(totalRecord -> ResponseEntity.status(HttpStatus.OK).body(totalRecord));
     }
 
 

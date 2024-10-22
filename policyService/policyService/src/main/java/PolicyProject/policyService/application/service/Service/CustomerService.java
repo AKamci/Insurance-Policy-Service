@@ -5,6 +5,7 @@ import PolicyProject.policyService.application.service.ObjectValidation;
 import PolicyProject.policyService.application.usecases.ExecuteCustomer;
 import PolicyProject.policyService.domain.dto.response.CustomerResponse.*;
 import PolicyProject.policyService.domain.model.CustomerModel;
+import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
@@ -12,8 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
-@Service
+
 @RequiredArgsConstructor
 public class CustomerService implements ICustomerService {
 
@@ -50,8 +52,20 @@ public class CustomerService implements ICustomerService {
     @Override
     @Async
     public CompletableFuture<List<GetCustomerResponse>> getList(CustomerModel customerModel) {
-        CompletableFuture<List<CustomerModel>> listCustomerModelFuture = executeCustomer.executeGetList(customerModel);
-        return listCustomerModelFuture.thenApply(CustomerMapper.INSTANCE::customersModelToGetCustomerResponse);
+        return executeCustomer.executeGetList(customerModel)
+                .thenCompose(customerModels -> {
+                    List<CompletableFuture<GetCustomerResponse>> futures = customerModels.stream()
+                            .map(customerModelItem ->
+                                    CompletableFuture.supplyAsync(() ->
+                                            CustomerMapper.INSTANCE.customerModelToGetCustomerResponse(customerModelItem)
+                                    )
+                            )
+                            .collect(Collectors.toList());
+                    return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                            .thenApply(v -> futures.stream()
+                                    .map(CompletableFuture::join)
+                                    .collect(Collectors.toList()));
+                });
     }
 
     @Override
@@ -64,14 +78,8 @@ public class CustomerService implements ICustomerService {
     }
 
     @Async
-    public int getTotalRecord() {
-
-        return executeCustomer.executeGetTotalRecord();
+    public CompletableFuture<Integer> getTotalRecord() {
+        return CompletableFuture.supplyAsync(() -> executeCustomer.executeGetTotalRecord());
     }
 
-
-    @Override
-    public CreateCustomerResponse create(CompletableFuture<CustomerModel> entity) {
-        return null;
-    }
 }

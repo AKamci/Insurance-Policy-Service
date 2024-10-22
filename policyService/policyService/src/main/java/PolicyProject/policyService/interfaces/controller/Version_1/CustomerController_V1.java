@@ -1,5 +1,6 @@
 package PolicyProject.policyService.interfaces.controller.Version_1;
 
+import PolicyProject.policyService.application.service.IService.ICustomerService;
 import PolicyProject.policyService.application.service.Service.CustomerService;
 import PolicyProject.policyService.domain.dto.request.CustomerRequest.*;
 import PolicyProject.policyService.domain.dto.response.CustomerResponse.*;
@@ -12,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+
 @RestController
 @RequestMapping("api/v1/customer")
 @RequiredArgsConstructor
 public class CustomerController_V1 {
 
-    private final CustomerService customerService;
+    private final ICustomerService customerService;
 
     @PostMapping
     public CompletableFuture<ResponseEntity<CreateCustomerResponse>> createCustomer(
@@ -51,7 +53,7 @@ public class CustomerController_V1 {
     }
 
     @DeleteMapping
-    public CompletableFuture<ResponseEntity<DeleteCustomerResponse>> deletePolicy(
+    public CompletableFuture<ResponseEntity<DeleteCustomerResponse>> deleteCustomer(
             @Valid @ModelAttribute DeleteCustomerRequest deleteCustomerRequest) {
         return customerService.delete(
                         CustomerMapper.INSTANCE.deleteCustomerRequestToCustomerModel(deleteCustomerRequest))
@@ -70,9 +72,10 @@ public class CustomerController_V1 {
                         .body(createdCustomer));
     }
 
-    @GetMapping("/totalRecord")
-    public ResponseEntity<Integer> getTotalRecord() {
-        return ResponseEntity.status(HttpStatus.OK).body(customerService.getTotalRecord());
 
+    @GetMapping("/totalRecord")
+    public CompletableFuture<ResponseEntity<Integer>> getTotalRecord() {
+        return customerService.getTotalRecord()
+                .thenApply(totalRecord -> ResponseEntity.status(HttpStatus.OK).body(totalRecord));
     }
 }

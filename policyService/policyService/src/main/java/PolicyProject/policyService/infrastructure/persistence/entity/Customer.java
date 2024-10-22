@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -51,5 +52,11 @@ public class Customer implements Serializable {
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
     private List<CarPolicy> carPolicies;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
+    private Set<LicensePlate> licensePlates;
 
 }

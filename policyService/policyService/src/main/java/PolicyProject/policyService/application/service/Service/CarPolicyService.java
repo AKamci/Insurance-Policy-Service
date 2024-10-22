@@ -3,9 +3,9 @@ package PolicyProject.policyService.application.service.Service;
 import PolicyProject.policyService.application.service.IService.ICarPolicyService;
 import PolicyProject.policyService.application.service.ObjectValidation;
 import PolicyProject.policyService.application.usecases.ExecuteCarPolicy;
+import PolicyProject.policyService.domain.dto.response.CustomerResponse.GetCustomerResponse;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
-import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -32,6 +33,7 @@ public CompletableFuture<CreateCarPolicyResponse> create (CarPolicyModel carPoli
 }
 
 @Override
+@Async
 public CompletableFuture<UpdateCarPolicyResponse> update (CarPolicyModel carPolicyModel)
 {
     objectValidation.carPolicyModelValidations(carPolicyModel);
@@ -42,6 +44,7 @@ public CompletableFuture<UpdateCarPolicyResponse> update (CarPolicyModel carPoli
 
 
 @Override
+@Async
 public CompletableFuture<DeleteCarPolicyResponse> delete(CarPolicyModel carPolicyModel)
 {
     objectValidation.carPolicyModelValidations(carPolicyModel);
@@ -51,13 +54,27 @@ public CompletableFuture<DeleteCarPolicyResponse> delete(CarPolicyModel carPolic
 }
 
 @Override
+@Async
 public CompletableFuture<List<GetCarPolicyResponse>> getList(CarPolicyModel carPolicyModel) {
-  CompletableFuture<List<CarPolicyModel>> listCarPolicyModelFuture = executeCarPolicy.executeGetList(carPolicyModel);
-  return listCarPolicyModelFuture.thenApply(CarPolicyMapper.INSTANCE::cartPolicyModelListToGetCarPolicyResponseList);
-}
+    return executeCarPolicy.executeGetList(carPolicyModel)
+            .thenCompose(customerModels -> {
+                List<CompletableFuture<GetCarPolicyResponse>> futures = customerModels.stream()
+                        .map(customerModelItem ->
+                                CompletableFuture.supplyAsync(() ->
+                                        CarPolicyMapper.INSTANCE.cartPolicyModelToGetCarPolicyResponse(customerModelItem)
+                                )
+                        )
+                        .toList();
+                return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                        .thenApply(v -> futures.stream()
+                                .map(CompletableFuture::join)
+                                .collect(Collectors.toList()));
+            });
 
+}
 @Override
-public CompletableFuture<GetCarPolicyResponse> get (CarPolicyModel carPolicyModel)
+@Async
+public CompletableFuture<GetCarPolicyResponse> get(CarPolicyModel carPolicyModel)
 {
     objectValidation.carPolicyModelValidations(carPolicyModel);
     CompletableFuture<CarPolicyModel> getCarPolicyModelFuture = executeCarPolicy.executeGet(carPolicyModel);
@@ -66,28 +83,37 @@ public CompletableFuture<GetCarPolicyResponse> get (CarPolicyModel carPolicyMode
 }
 
 
-    public List<GetCarPolicyResponse> getByPlate (CarPolicyModel carPolicyModel)
-    {
-        //objectValidation.carPolicyModelValidations(carPolicyModel);
-        return CarPolicyMapper.INSTANCE.cartPolicyModelListToGetCarPolicyResponseList
-                (executeCarPolicy.executeGetWPlate(carPolicyModel));
-    }
-
-
-    public List<GetCustomerCarPoliciesResponse> get_wPolicy(CarPolicyModel carPolicyModel) {
-        return CarPolicyMapper.INSTANCE.customerModelToGetCarPoliciesByCustomer
-                (executeCarPolicy.executeGet_wPolicy(carPolicyModel));
-    }
-
-    public List<GetCustomerCarPoliciesResponse> get_Policies_BetweenDate(CarPolicyModel carPolicyModel) {
-        return CarPolicyMapper.INSTANCE.customerModelToGetCarPoliciesByCustomer
-                (executeCarPolicy.executeGet_BetweenDate(carPolicyModel));
-    }
-
-
-    public int getTotalRecord() {
+    @Async
+    @Override
+    public CompletableFuture<Integer> getTotalRecord() {
         return executeCarPolicy.executeGetTotalRecord();
     }
+
+
+
+
+
+
+
+//    public List<GetCarPolicyResponse> getByPlate (CarPolicyModel carPolicyModel)
+//    {
+//        //objectValidation.carPolicyModelValidations(carPolicyModel);
+//        return CarPolicyMapper.INSTANCE.cartPolicyModelListToGetCarPolicyResponseList
+//                (executeCarPolicy.executeGetWPlate(carPolicyModel));
+//    }
+//
+//
+//    public List<GetCustomerCarPoliciesResponse> get_wPolicy(CarPolicyModel carPolicyModel) {
+//        return CarPolicyMapper.INSTANCE.customerModelToGetCarPoliciesByCustomer
+//                (executeCarPolicy.executeGet_wPolicy(carPolicyModel));
+//    }
+//
+//    public List<GetCustomerCarPoliciesResponse> get_Policies_BetweenDate(CarPolicyModel carPolicyModel) {
+//        return CarPolicyMapper.INSTANCE.customerModelToGetCarPoliciesByCustomer
+//                (executeCarPolicy.executeGet_BetweenDate(carPolicyModel));
+//    }
+
+
 
 
 

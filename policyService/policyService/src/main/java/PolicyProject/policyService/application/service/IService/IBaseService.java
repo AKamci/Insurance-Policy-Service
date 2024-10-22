@@ -13,9 +13,10 @@ public interface IBaseService<
         ListResponse,
         T
         > {
-    List<ListResponse> getList(T entity);
-    GetResponse get(T entity);
-    CreateResponse create(T entity);
-    UpdateResponse update(T entity);
-    DeleteResponse delete(T entity);
+    CompletableFuture<List<ListResponse>> getList(T entity);
+    CompletableFuture<GetResponse> get(T entity);
+    CompletableFuture<CreateResponse> create(T entity);
+    CompletableFuture<UpdateResponse> update(T entity);
+    CompletableFuture<DeleteResponse> delete(T entity);
+    CompletableFuture<Integer> getTotalRecord();
 }

@@ -30,4 +30,9 @@ public class LicensePlate implements Serializable {
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    Customer customer;
+
 }

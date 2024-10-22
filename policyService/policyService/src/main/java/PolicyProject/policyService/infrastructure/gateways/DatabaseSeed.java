@@ -42,16 +42,17 @@ public class DatabaseSeed implements CommandLineRunner {
             seedCar();
             System.out.println("CAR SEED IS COMPLETED");
         }
-        if(licensePlateRepository.count()==0 || condition)
-        {
-            seedLicensePlate();
-            System.out.println("LICENSE_PLATE SEED IS COMPLETED");
-        }
         if (customerRepository.count() == 0 || condition)
         {
             seedDataCustomer();
             System.out.println("CUSTOMER SEED IS COMPLETED");
         }
+        if(licensePlateRepository.count()==0 || condition)
+        {
+            seedLicensePlate();
+            System.out.println("LICENSE_PLATE SEED IS COMPLETED");
+        }
+
         if (carPolicyrepository.count() == 0 || condition)
         {
            seedDataCarPolicies();
@@ -341,14 +342,18 @@ public class DatabaseSeed implements CommandLineRunner {
 
         for (int i = 1; i <= 100; i++) {
             Long carId = (long) (i % 20 + 1);
+            Long customerId = (long) (i % 20 + 1);
 
             Optional<Car> optionalCar = carRepository.findById(carId);
-            if (optionalCar.isPresent())
+            Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+            if (optionalCar.isPresent() && optionalCustomer.isPresent())
             {
                 Car car = optionalCar.get();
+                Customer customer = optionalCustomer.get();
                 licensePlates.add(LicensePlate.builder()
-                        .plate("34ABC" + String.format("%04d", i))  // Örnek plaka: ABC001, ABC002, ...
+                        .plate("34ABC" + String.format("%04d", i))
                         .car(car)
+                        .customer(customer)
                         .build());
             }
         }

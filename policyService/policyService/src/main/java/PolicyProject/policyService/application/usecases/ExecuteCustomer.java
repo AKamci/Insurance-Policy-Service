@@ -74,12 +74,8 @@ public class ExecuteCustomer {
                 .thenApply(CustomerMapper.INSTANCE::CustomerEntityListToCustomerModelList);
     }
 
-    public int executeGetTotalRecord()
-    {
+    public int executeGetTotalRecord() {
         return customerGateway.getTotal();
-
     }
-
-
 
 }

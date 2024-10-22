@@ -25,7 +25,7 @@ public class CustomerSpecification {
 
     public static Specification<Customer> hasName(String name) {
         return (root, query, criteriaBuilder) ->
-                name == null ? null : criteriaBuilder.equal(root.get("name"), name);
+                name == null ? null : criteriaBuilder.like(root.get("name"), name);
     }
 
     public static Specification<Customer> hasTckn(String tckn) {

@@ -1,4 +1,4 @@
-package PolicyProject.policyService.infrastructure.config;
+package PolicyProject.policyService.infrastructure.config.DependecyInjection;
 
 import PolicyProject.policyService.application.gateways.CustomerGateway;
 import PolicyProject.policyService.application.service.ObjectValidation;
