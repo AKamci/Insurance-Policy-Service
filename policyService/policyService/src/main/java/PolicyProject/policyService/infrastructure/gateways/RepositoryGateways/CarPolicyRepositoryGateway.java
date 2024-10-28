@@ -3,6 +3,7 @@ package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
 import PolicyProject.policyService.application.gateways.CarPolicyGateway;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
 import PolicyProject.policyService.infrastructure.persistence.repository.CarPolicyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,12 +26,13 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
 {
 
     private final CarPolicyRepository carPolicyRepository;
-
+    private Specification<CarPolicy> specification;
 
     @Override
     @CachePut(value = "carPolicyCache", key = "#carPolicy.id")
-    public CarPolicy create(CarPolicy carPolicy, Customer customer) {
+    public CarPolicy create(CarPolicy carPolicy, Customer customer, LicensePlate licensePlate) {
         carPolicy.setCustomer(customer);
+        carPolicy.setLicensePlate(licensePlate);
         var entity = carPolicyRepository.save(carPolicy);
         updateTotalCount();
         return entity;
@@ -47,7 +50,9 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
     public CarPolicy update(CarPolicy carPolicy) {
         var entityObject = get(carPolicy);
         if (entityObject != null) {
-            return carPolicyRepository.save(carPolicy);
+            carPolicy.setCustomer(entityObject.getCustomer());
+            carPolicy.setLicensePlate(entityObject.getLicensePlate());
+            return carPolicyRepository.save(entityObject);
         }
         return null;
     }
@@ -57,19 +62,20 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
     public CarPolicy delete(CarPolicy carPolicy) {
         var entityObject = get(carPolicy);
         if (entityObject != null) {
-            carPolicyRepository.delete(carPolicy);
+            carPolicyRepository.delete(entityObject);
             updateTotalCount();
-            return entityObject;
+            return carPolicy;
         }
         return null;
     }
 
 
-    @Cacheable(value = "carPolicyCache", key = "#page + '-' + #size")
+   // @Cacheable(value = "carPolicyCache", key = "#page + '-' + #size")
     @Override
-    public List<CarPolicy> getList(Specification<CarPolicy> specification, int page, int size) {
+    public List<CarPolicy> getList(Specification<CarPolicy> spec, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<CarPolicy> carPolicyPage = carPolicyRepository.findAll(specification, pageable);
+        Page<CarPolicy> carPolicyPage = carPolicyRepository.findAll(spec, pageable);
+        specification = spec;
         return carPolicyPage.getContent();
     }
 
@@ -105,9 +111,9 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
         return PolicyList;
     }
 
-    @Cacheable("totalCarPolicies")
+    //@Cacheable("totalCarPolicies")
     public int getTotal() {
-        return (int) carPolicyRepository.count();
+        return (int) carPolicyRepository.count(specification);
     }
 
     @CacheEvict(value = "totalCarPolicies", allEntries = true)

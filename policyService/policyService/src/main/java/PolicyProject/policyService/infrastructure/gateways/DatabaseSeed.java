@@ -376,7 +376,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Ahmet Yılmaz")
                 .tckn(uniqueTCKNs.toArray()[0].toString())
                 .address("İstanbul, Türkiye")
-                .phone("0532-123-4567")
+                .phone("5321234567")
                 .email("ahmet.yilmaz@example.com")
                 .password("password123")
                 .birthDay(LocalDate.of(1993, 1, 1)) // Doğum tarihi
@@ -387,7 +387,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Ayşe Demir")
                 .tckn(uniqueTCKNs.toArray()[1].toString())
                 .address("Ankara, Türkiye")
-                .phone("0532-234-5678")
+                .phone("5322345678")
                 .email("ayse.demir@example.com")
                 .password("password234")
                 .birthDay(LocalDate.of(1995, 2, 1)) // Doğum tarihi
@@ -398,7 +398,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Mehmet Öz")
                 .tckn(uniqueTCKNs.toArray()[2].toString())
                 .address("İzmir, Türkiye")
-                .phone("0532-345-6789")
+                .phone("5323456789")
                 .email("mehmet.oz@example.com")
                 .password("password345")
                 .birthDay(LocalDate.of(1988, 3, 1)) // Doğum tarihi
@@ -409,7 +409,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Fatma Korkmaz")
                 .tckn(uniqueTCKNs.toArray()[3].toString())
                 .address("Bursa, Türkiye")
-                .phone("0532-456-7890")
+                .phone("5324567890")
                 .email("fatma.korkmaz@example.com")
                 .password("password456")
                 .birthDay(LocalDate.of(1991, 4, 1)) // Doğum tarihi
@@ -420,7 +420,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Ali Can")
                 .tckn(uniqueTCKNs.toArray()[4].toString())
                 .address("Antalya, Türkiye")
-                .phone("0532-567-8901")
+                .phone("5325678901")
                 .email("ali.can@example.com")
                 .password("password567")
                 .birthDay(LocalDate.of(1983, 5, 1)) // Doğum tarihi
@@ -431,7 +431,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Emine Çelik")
                 .tckn(uniqueTCKNs.toArray()[5].toString())
                 .address("Konya, Türkiye")
-                .phone("0532-678-9012")
+                .phone("5326789012")
                 .email("emine.celik@example.com")
                 .password("password678")
                 .birthDay(LocalDate.of(1994, 6, 1)) // Doğum tarihi
@@ -442,7 +442,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Burak Yıldız")
                 .tckn(uniqueTCKNs.toArray()[6].toString())
                 .address("Adana, Türkiye")
-                .phone("0532-789-0123")
+                .phone("5327890123")
                 .email("burak.yildiz@example.com")
                 .password("password789")
                 .birthDay(LocalDate.of(1990, 7, 1)) // Doğum tarihi
@@ -453,7 +453,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Zeynep Arslan")
                 .tckn(uniqueTCKNs.toArray()[7].toString())
                 .address("Gaziantep, Türkiye")
-                .phone("0532-890-1234")
+                .phone("5328901234")
                 .email("zeynep.arslan@example.com")
                 .password("password890")
                 .birthDay(LocalDate.of(1998, 8, 1)) // Doğum tarihi
@@ -464,7 +464,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Cemal Akman")
                 .tckn(uniqueTCKNs.toArray()[8].toString())
                 .address("Kayseri, Türkiye")
-                .phone("0532-901-2345")
+                .phone("5329012345")
                 .email("cemal.akman@example.com")
                 .password("password901")
                 .birthDay(LocalDate.of(1986, 9, 1)) // Doğum tarihi
@@ -475,7 +475,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Merve Koç")
                 .tckn(uniqueTCKNs.toArray()[9].toString())
                 .address("Sakarya, Türkiye")
-                .phone("0532-012-3456")
+                .phone("5320123456")
                 .email("merve.koc@example.com")
                 .password("password012")
                 .birthDay(LocalDate.of(2001, 10, 1)) // Doğum tarihi
@@ -486,7 +486,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Oğuzhan Şahin")
                 .tckn(uniqueTCKNs.toArray()[10].toString())
                 .address("Trabzon, Türkiye")
-                .phone("0532-123-4568")
+                .phone("5321234568")
                 .email("oguzhan.sahin@example.com")
                 .password("password1234")
                 .birthDay(LocalDate.of(1996, 11, 1)) // Doğum tarihi
@@ -497,7 +497,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Seda Eren")
                 .tckn(uniqueTCKNs.toArray()[11].toString())
                 .address("Eskişehir, Türkiye")
-                .phone("0532-234-5679")
+                .phone("5322345679")
                 .email("seda.eren@example.com")
                 .password("password2345")
                 .birthDay(LocalDate.of(1992, 12, 1)) // Doğum tarihi
@@ -508,7 +508,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Ali Rıza Polat")
                 .tckn(uniqueTCKNs.toArray()[12].toString())
                 .address("Kocaeli, Türkiye")
-                .phone("0532-345-6780")
+                .phone("5323456780")
                 .email("ali.riza.polat@example.com")
                 .password("password3456")
                 .birthDay(LocalDate.of(1989, 1, 1)) // Doğum tarihi
@@ -519,7 +519,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Nihal Aydın")
                 .tckn(uniqueTCKNs.toArray()[13].toString())
                 .address("Manisa, Türkiye")
-                .phone("0532-456-7891")
+                .phone("5324567891")
                 .email("nihayl.aydin@example.com")
                 .password("password4567")
                 .birthDay(LocalDate.of(1997, 2, 1)) // Doğum tarihi
@@ -530,7 +530,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Ege Şimşek")
                 .tckn(uniqueTCKNs.toArray()[14].toString())
                 .address("Samsun, Türkiye")
-                .phone("0532-567-8902")
+                .phone("5325678902")
                 .email("ege.simsek@example.com")
                 .password("password5678")
                 .birthDay(LocalDate.of(2000, 3, 1)) // Doğum tarihi
@@ -541,7 +541,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Büşra Kaplan")
                 .tckn(uniqueTCKNs.toArray()[15].toString())
                 .address("Diyarbakır, Türkiye")
-                .phone("0532-678-9013")
+                .phone("5326789013")
                 .email("busra.kaplan@example.com")
                 .password("password6789")
                 .birthDay(LocalDate.of(1999, 4, 1)) // Doğum tarihi
@@ -552,7 +552,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Mert Çetin")
                 .tckn(uniqueTCKNs.toArray()[16].toString())
                 .address("Malatya, Türkiye")
-                .phone("0532-789-0124")
+                .phone("5327890124")
                 .email("mert.cetin@example.com")
                 .password("password7890")
                 .birthDay(LocalDate.of(1985, 5, 1)) // Doğum tarihi
@@ -563,10 +563,10 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Eylül Aksu")
                 .tckn(uniqueTCKNs.toArray()[17].toString())
                 .address("Rize, Türkiye")
-                .phone("0532-890-1235")
+                .phone("5328901235")
                 .email("eylul.aksu@example.com")
                 .password("password8901")
-                .birthDay(LocalDate.of(1993, 6, 1)) // Doğum tarihi
+                .birthDay(LocalDate.of(1993, 6, 1))
                 .gender("Kadın")
                 .build());
 
@@ -574,10 +574,10 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Deniz Özdemir")
                 .tckn(uniqueTCKNs.toArray()[18].toString())
                 .address("Aydın, Türkiye")
-                .phone("0532-901-2346")
+                .phone("5329012346")
                 .email("deniz.ozdemir@example.com")
                 .password("password9012")
-                .birthDay(LocalDate.of(1981, 7, 1)) // Doğum tarihi
+                .birthDay(LocalDate.of(1981, 7, 1))
                 .gender("Erkek")
                 .build());
 
@@ -585,10 +585,10 @@ public class DatabaseSeed implements CommandLineRunner {
                 .name("Şeyma Korkut")
                 .tckn(uniqueTCKNs.toArray()[19].toString())
                 .address("Aksaray, Türkiye")
-                .phone("0532-012-3457")
+                .phone("5320123457")
                 .email("seyma.korkut@example.com")
                 .password("password0123")
-                .birthDay(LocalDate.of(1994, 8, 1)) // Doğum tarihi
+                .birthDay(LocalDate.of(1994, 8, 1))
                 .gender("Kadın")
                 .build());
 
@@ -618,13 +618,13 @@ public class DatabaseSeed implements CommandLineRunner {
                 LocalDate policyLocalDate = startDate.plusDays(i);
 
                 CarPolicy policy = CarPolicy.builder()
-                        .policyName("Poliçe " + i)
                         .policyDescription("Açıklama " + i)
                         .policyType(i % 2 == 0 ? "Kasko" : "Trafik")
-                        .policyStatus(i % 2 == 0)
+                        .policyStatus(i % 3 == 0)
                         .policyStartDate(policyLocalDate)
                         .policyEndDate(policyLocalDate.plusDays(10*i))
                         .policyAmount(1000.0 + (i * 100))
+                        .policyOfferDate(policyLocalDate)
                         .licensePlate(licensePlate)
                         .customer(customer)
                         .build();

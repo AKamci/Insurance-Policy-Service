@@ -21,13 +21,25 @@ public class LicensePlateRepositoryGateway implements LicensePlateGateway {
 
 
     @Override
-    @Cacheable(value = "customerCache", key = "#licensePlate.plate")
-    public LicensePlate get(LicensePlate licensePlate) {
+   // @Cacheable(value = "customerCache", key = "#licensePlate != null ? #licensePlate.plate : 'unknown'")
+    public LicensePlate getWCustomer(LicensePlate licensePlate) {
+        if (licensePlate == null || licensePlate.getPlate() == null) {
+            throw new IllegalArgumentException("LicensePlate veya plate alanı null olamaz");
+        }
         try {
             return licensePlateRepository.findByPlate(licensePlate.getPlate());
         } catch (Exception e) {
             throw new RuntimeException("Error", e);
         }
     }
+    public LicensePlate get(String plate) {
+        try {
+            return licensePlateRepository.findByPlate(plate);
+        } catch (Exception e) {
+            throw new RuntimeException("Error", e);
+        }
+    }
+
+
 
 }

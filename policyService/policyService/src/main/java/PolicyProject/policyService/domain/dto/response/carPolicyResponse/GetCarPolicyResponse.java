@@ -5,8 +5,9 @@ import java.time.LocalDate;
 
 public record GetCarPolicyResponse(
 
-        Long id,
-        String policyName,
+        Long policyId,
+        LocalDate policyOfferDate,
+        Boolean policyStatus,
         String policyDescription,
         String policyType,
         Double policyAmount,

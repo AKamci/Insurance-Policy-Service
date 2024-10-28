@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -37,37 +38,39 @@ public class CustomerRepositoryGateway implements CustomerGateway {
 
     @Override
     @Cacheable(value = "customerCache", key = "#customer.tckn")
-    public Customer get(Customer Customer) {
-        var customer = customerRepository.findByTckn(Customer.getTckn());
-        return customer;
+    public Customer get(Customer customer) {
+
+        var entityCustomer = customerRepository.findByTckn(customer.getTckn());
+        return entityCustomer;
     }
 
     @Override
-    @CachePut(value = "customerCache", key = "#customer.tckn")
+    @Transactional
+    @CachePut(value = "customerCache", key = "#newCustomer.tckn")
     public Customer update(Customer newCustomer) {
-        var customer = get(newCustomer);
-        if (customer == null) {
+        Customer existingCustomer = customerRepository.findByTckn(newCustomer.getTckn());
+        if (existingCustomer == null) {
             return null;
         }
-        newCustomer.setId(customer.getId());
-        newCustomer.setCarPolicies(customer.getCarPolicies());
+        newCustomer.setId(existingCustomer.getId());
+        newCustomer.setCarPolicies(existingCustomer.getCarPolicies());
         return customerRepository.save(newCustomer);
     }
 
     @Override
     @CacheEvict(value = "customerCache", key = "#customer.tckn")
-    public Customer delete(Customer Customer) {
-        var customer = get(Customer);
-        if (customer == null) {
+    public Customer delete(Customer customer) {
+        Customer existingCustomer = get(customer);
+        if (existingCustomer == null) {
             return null;
         }
-        customerRepository.delete(customer);
+        customerRepository.delete(existingCustomer);
         updateTotalCount();
-        return customer;
+        return existingCustomer;
     }
 
     @Override
-    @Cacheable(value = "customerCache", key = "#page + '-' + #size")
+   // @Cacheable(value = "customerCache", key = "#page + '-' + #size")
     public List<Customer> getList(Specification<Customer> specification, int page, int size) {
 
         Pageable pageable = PageRequest.of(page, size);

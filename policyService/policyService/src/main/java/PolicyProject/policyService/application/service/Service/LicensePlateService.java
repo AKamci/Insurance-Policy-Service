@@ -18,7 +18,7 @@ public class LicensePlateService {
     private final ObjectValidation objectValidation;
 
     public GetPlateWithCustomerResponse getWCustomer(LicensePlateModel licensePlateModel) {
-        LicensePlateModel licensePlateModelResult = executeLicensePlate.ExecuteGetLicensePlate(licensePlateModel);
+        LicensePlateModel licensePlateModelResult = executeLicensePlate.ExecuteGetLicensePlateWithCustomer(licensePlateModel);
         return LicensePlateMapper.INSTANCE.LicensePlateModelToGetPlateWithCustomerResponse(licensePlateModelResult);
     }
 }

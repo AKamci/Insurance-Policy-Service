@@ -1,6 +1,10 @@
 package PolicyProject.policyService.infrastructure.config.Specifications;
 
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
@@ -9,26 +13,22 @@ public class CarPolicySpecification {
 
 
     public static Specification<CarPolicy> build(
-            String policyName, String policyDescription, String policyType,
+           String policyDescription, String policyType,
             Boolean policyStatus, LocalDate startDate, LocalDate endDate,
             Double Amount, String plate, String tckn) {
 
         return Specification
-                .where(hasPolicyName(policyName))
-                .and(hasPolicyDescription(policyDescription))
-                .and(hasPolicyType(policyType))
-                .and(hasPolicyStatus(policyStatus))
+                .where(hasPolicyDescription(policyDescription))
                 .and(hasPolicyStartDate(startDate))
                 .and(hasPolicyEndDate(endDate))
+                .and(hasPolicyType(policyType))
+                .and(isActiveBetween(startDate, endDate))
                 .and(hasPolicyAmount(Amount))
+                .and(hasPolicyStatus(policyStatus))
                 .and(hasLicensePlateNumber(plate))
                 .and(hasCustomerTckn(tckn));
     }
 
-    public static Specification<CarPolicy> hasPolicyName(String policyName) {
-        return (root, query, criteriaBuilder) ->
-                policyName == null ? null : criteriaBuilder.equal(root.get("policyName"), policyName);
-    }
 
     public static Specification<CarPolicy> hasPolicyDescription(String policyDescription) {
         return (root, query, criteriaBuilder) ->
@@ -36,8 +36,13 @@ public class CarPolicySpecification {
     }
 
     public static Specification<CarPolicy> hasPolicyType(String policyType) {
-        return (root, query, criteriaBuilder) ->
-                policyType == null ? null : criteriaBuilder.equal(root.get("policyType"), policyType);
+        return (root, query, criteriaBuilder) -> {
+            if (policyType == null) {
+                return criteriaBuilder.conjunction();
+            } else {
+                return criteriaBuilder.equal(root.get("policyType"), policyType);
+            }
+        };
     }
 
     public static Specification<CarPolicy> hasPolicyStatus(Boolean policyStatus) {
@@ -67,9 +72,23 @@ public class CarPolicySpecification {
     }
 
     public static Specification<CarPolicy> hasCustomerTckn(String tckn) {
-        return (root, query, criteriaBuilder) ->
-                tckn == null ? null : criteriaBuilder.equal(root.get("customer").get("tckn"), tckn);
+        return (root, query, criteriaBuilder) -> {
+            if (tckn == null) {
+                return criteriaBuilder.conjunction();
+            }
+            return criteriaBuilder.equal(root.get("customer").get("tckn"), tckn);
+        };
     }
 
+    public static Specification<CarPolicy> isActiveBetween(LocalDate startDate, LocalDate endDate) {
+        return (Root<CarPolicy> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
+            if (startDate == null || endDate == null) {
+                return criteriaBuilder.conjunction();
+            }
+            Predicate activeStartDate = criteriaBuilder.lessThanOrEqualTo(root.get("policyEndDate"), endDate);
+            Predicate activeEndDate = criteriaBuilder.greaterThanOrEqualTo(root.get("policyStartDate"), startDate);
+            return criteriaBuilder.and(activeStartDate, activeEndDate);
+        };
+    }
 
 }

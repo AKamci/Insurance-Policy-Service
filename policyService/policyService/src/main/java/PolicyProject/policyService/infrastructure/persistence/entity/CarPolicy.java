@@ -25,13 +25,14 @@ public class CarPolicy implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String policyName; //
-    private String policyDescription; //
-    private String policyType; //
-    private boolean policyStatus;
+    private String policyDescription;
+    private String policyType;
+    private Boolean policyStatus;
     private LocalDate policyStartDate;
     private LocalDate policyEndDate;
     private Double policyAmount;
+
+    private LocalDate policyOfferDate;
 
     @ManyToOne
     @JoinColumn(name = "license_plate_id", nullable = false)

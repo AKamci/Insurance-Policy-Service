@@ -19,19 +19,17 @@ public class CarPolicySpecificationBuild {
 
     private Specification<CarPolicy> spec;
 
-     public Specification<CarPolicy> CarPolicyBuild(CarPolicy carPolicy) {
+     public Specification<CarPolicy> CarPolicyBuild(CarPolicy carPolicy, String tckn, String plate) {
          setSpec(
          CarPolicySpecification.build(
-                 carPolicy.getPolicyName(),
                  carPolicy.getPolicyDescription(),
                  carPolicy.getPolicyType(),
-                 carPolicy.isPolicyStatus(),
+                 carPolicy.getPolicyStatus(),
                  carPolicy.getPolicyStartDate(),
                  carPolicy.getPolicyEndDate(),
                  carPolicy.getPolicyAmount(),
-                 carPolicy.getLicensePlate() != null ? carPolicy.getLicensePlate().getPlate() : null,
-                 carPolicy.getCustomer() != null ? carPolicy.getCustomer().getTckn() : null));
-
+                 plate,
+                 tckn));
          return spec;
 
      }

@@ -9,10 +9,10 @@ import java.util.concurrent.CompletableFuture;
 
 public interface CustomerGateway {
 
-    Customer create(Customer Customer);
-    Customer get(Customer Customer);
-    Customer update(Customer Customer);
-    Customer delete(Customer Customer);
+    Customer create(Customer customer);
+    Customer get(Customer customer);
+    Customer update(Customer customer);
+    Customer delete(Customer customer);
     List<Customer> getList(Specification<Customer> specification, int page, int size);
     int getTotal();
 

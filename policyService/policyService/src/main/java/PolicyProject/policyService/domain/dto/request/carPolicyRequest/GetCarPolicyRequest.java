@@ -8,6 +8,6 @@ public record GetCarPolicyRequest(
 
 
      @NotNull(message = "ID cannot be null")
-    Long id
+    Long policyId
 )implements ICarPolicyRequest {
 }

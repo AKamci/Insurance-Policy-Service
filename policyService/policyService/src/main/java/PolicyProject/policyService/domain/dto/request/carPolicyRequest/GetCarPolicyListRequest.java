@@ -8,8 +8,8 @@ public record GetCarPolicyListRequest(
 
         int size,
         int page,
-        Long id,
-        String policyName,
+        Long policyId,
+        LocalDate policyOfferDate,
         String policyDescription,
         String policyType,
         Boolean policyStatus,

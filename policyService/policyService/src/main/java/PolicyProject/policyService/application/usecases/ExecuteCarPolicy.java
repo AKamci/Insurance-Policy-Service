@@ -3,14 +3,17 @@ package PolicyProject.policyService.application.usecases;
 import PolicyProject.policyService.application.gateways.CarPolicyGateway;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.domain.model.CustomerModel;
+import PolicyProject.policyService.domain.model.LicensePlateModel;
 import PolicyProject.policyService.infrastructure.config.Specifications.CarPolicySpecification;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CarPolicySpecificationBuild;
 import PolicyProject.policyService.infrastructure.persistence.entity.Calculator;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
 import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
+import PolicyProject.policyService.interfaces.mappers.LicensePlateMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.scheduling.annotation.Async;
@@ -21,11 +24,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+import static PolicyProject.policyService.infrastructure.config.Specifications.CarPolicySpecification.hasPolicyType;
+
 @RequiredArgsConstructor
 public class ExecuteCarPolicy {
 
     private final CarPolicyGateway carPolicyGateway;
     private final ExecuteCustomer executeCustomer;
+    private final ExecuteLicensePlate executeLicensePlate;
     private final CarPolicySpecificationBuild carPolicySpecificationBuild;
 
 
@@ -39,14 +45,13 @@ public class ExecuteCarPolicy {
 
     public CarPolicyModel executeCreate(CarPolicyModel carPolicyModel)
     {
-        CustomerModel customerModel = new CustomerModel(carPolicyModel.customerId(),
-                null,null,null,null,null, null,null,null, 0, 0, null );
-        //Get a CUSTOMER
+        CustomerModel customerModel = new CustomerModel(null,
+                null,carPolicyModel.tckn(),null,null,null, null,null,null, 0, 0, null );
         Customer customer = CustomerMapper.INSTANCE.customerModelToCustomerEntity
                 (executeCustomer.executeGet(customerModel));
-
+       LicensePlate licensePlate = LicensePlateMapper.INSTANCE.LicensePlateModelToCustomerEntity(executeLicensePlate.ExecuteGetLicensePlate(carPolicyModel.licensePlateNumber()));
         CarPolicy EnityObject = carPolicyGateway.create
-                (CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel),customer);
+                (CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel),customer, licensePlate);
         return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(EnityObject);
     }
 
@@ -65,7 +70,7 @@ public class ExecuteCarPolicy {
         Optional<List<CarPolicy>> EntityList = Optional.ofNullable
                 (carPolicyGateway.getCarPoliciesByPlateAndTckn(plate, tckn));
 
-        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.id(),"Entity not found"));
+        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.policyId(),"Entity not found"));
         return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
 
     }
@@ -85,19 +90,21 @@ public class ExecuteCarPolicy {
         Optional<List<CarPolicy>> EntityList = Optional.ofNullable
                 (carPolicyGateway.getCarPoliciesByCustomer(tckn));
 
-        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.id(),"Entity not found"));
+        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.policyId(),"Entity not found"));
         return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
     }
 
     public List<CarPolicyModel> executeGetList(CarPolicyModel carPolicyModel)
     {
-        Specification<CarPolicy> specification = carPolicySpecificationBuild.CarPolicyBuild(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel));
+        Specification<CarPolicy> specification = carPolicySpecificationBuild.CarPolicyBuild(CarPolicyMapper
+                .INSTANCE.carPolicyModelToCarPolicyEntity
+                        (carPolicyModel),carPolicyModel.tckn(),carPolicyModel.licensePlateNumber());
         int page = carPolicyModel.page();
         int size = carPolicyModel.size();
         Optional<List<CarPolicy>> EntityList = Optional.ofNullable
                 (carPolicyGateway.getList(specification, page, size));
 
-        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.id(),"Entity not found"));
+        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.policyId(),"Entity not found"));
         return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
     }
 
@@ -109,7 +116,7 @@ public class ExecuteCarPolicy {
         Optional<List<CarPolicy>> EntityList = Optional.ofNullable
                 (carPolicyGateway.getCarPoliciesBetweenDate(startDate, endDate));
 
-        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.id(),"Entity not found"));
+        List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.policyId(),"Entity not found"));
         return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
     }
 

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,6 +27,12 @@ public class LicensePlate implements Serializable {
     @Column(name = "plate", nullable = false, unique = true)
     private String plate;
 
+
+
+
+    @OneToMany(mappedBy = "licensePlate", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    private List<CarPolicy> carPolicies;
+
     @ManyToOne
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
@@ -34,5 +41,9 @@ public class LicensePlate implements Serializable {
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     Customer customer;
+
+
+
+
 
 }

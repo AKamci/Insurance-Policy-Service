@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record DeleteCarPolicyRequest(
 
-            @NotNull(message = "ID cannot be null")
-            Long id
+            @NotNull(message = "policyId cannot be null")
+            Long policyId
 ) implements ICarPolicyRequest{
 }

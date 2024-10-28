@@ -10,6 +10,7 @@ import org.apache.logging.log4j.core.config.plugins.validation.constraints.Requi
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,35 +29,41 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-    @Required
     private String name;
     @Column(unique = true, nullable = false)
-    @Required @Size(min = 11, max = 11)
     private String tckn;
-    @Required
     private String address;
     @Column(unique = true, nullable = false)
     private String phone;
-    @Email @Required
+    @Email
     private String email;
     private String password;
-    @Required
     private LocalDate birthDay;
-    @Required
     private String gender;
 
 
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.REMOVE}, orphanRemoval = true , fetch = FetchType.EAGER)
     private List<CarPolicy> carPolicies;
 
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
-    private Set<LicensePlate> licensePlates;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL ,orphanRemoval = false)
+    private Set<LicensePlate> licensePlates = new HashSet<>();
+
+
+
+    public void setLicensePlate(Set<LicensePlate> licensePlateSet) {
+        this.licensePlates.clear();
+        if (licensePlateSet != null) {
+            this.licensePlates.addAll(licensePlateSet);
+        }
+    }
+
+
+
 
 }

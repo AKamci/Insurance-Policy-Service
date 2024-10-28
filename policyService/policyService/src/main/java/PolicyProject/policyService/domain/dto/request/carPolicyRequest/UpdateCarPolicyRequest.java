@@ -11,11 +11,14 @@ public record UpdateCarPolicyRequest(
         @Positive(message = "Policy ID must be a positive number")
         Long policyId,
 
-        @NotBlank(message = "Policy name cannot be blank")
-        String policyName,
+        @NotBlank(message = "Policy Offer Date cannot be blank")
+        LocalDate policyOfferDate,
 
         @NotBlank(message = "Policy description cannot be blank")
         String policyDescription,
+
+        @NotBlank(message = "Policy Status type cannot be blank")
+        String policyStatus,
 
         @NotBlank(message = "Policy type cannot be blank")
         String policyType,

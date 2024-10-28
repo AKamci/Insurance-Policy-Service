@@ -39,12 +39,12 @@ public class ExecuteCustomer {
         return CustomerMapper.INSTANCE.customerEntityToCustomerModel(EnityObject);
     }
 
-    public CustomerModel executeGet(CustomerModel CustomerModel)
+    public CustomerModel executeGet(CustomerModel customerModel)
     {
         Optional<Customer> optionalEntity = Optional.ofNullable
-                (customerGateway.get(CustomerMapper.INSTANCE.customerModelToCustomerEntity(CustomerModel)));
+                (customerGateway.get(CustomerMapper.INSTANCE.customerModelToCustomerEntity(customerModel)));
 
-        Customer customerEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(CustomerModel.id(),"Entity not found"));
+        Customer customerEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(Long.parseLong(customerModel.tckn()),"Entity not found"));
         return CustomerMapper.INSTANCE.customerEntityToCustomerModel(customerEntity);
     }
 

@@ -37,10 +37,11 @@ public interface CarPolicyMapper {
 
     List<GetCustomerCarPoliciesResponse> customerModelToGetCarPoliciesByCustomer(List<CarPolicyModel> carPolicyModelList);
 
+    @Mapping(source = "policyId", target = "id")
     CarPolicy carPolicyModelToCarPolicyEntity(CarPolicyModel carPolicyModel);
 
     //CarPolicy carPolicyModelToCarPolicyEntity(CarPolicyModel carPolicyModel);
-
+    @Mapping(source = "id", target = "policyId")
     @Mapping(source = "customer.id", target = "customerId")
     @Mapping(source = "licensePlate.plate", target = "licensePlateNumber")
     @Mapping(source = "customer.tckn", target = "tckn")

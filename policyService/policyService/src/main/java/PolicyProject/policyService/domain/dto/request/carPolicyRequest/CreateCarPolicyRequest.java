@@ -10,8 +10,9 @@ import java.time.LocalDate;
 
 public record CreateCarPolicyRequest(
 
-        @NotBlank(message = "Policy name cannot be blank")
-        String policyName,
+        @FutureOrPresent(message = "Policy Offer date must be in the present or future")
+        @NotNull(message = "Policy Offer date cannot be null")
+        LocalDate policyOfferDate,
 
         @NotBlank(message = "Policy description cannot be blank")
         String policyDescription,
@@ -20,7 +21,7 @@ public record CreateCarPolicyRequest(
         String policyType,
 
         @NotNull(message = "Policy status must be specified")
-        boolean policyStatus,
+        Boolean policyStatus,
 
         @FutureOrPresent(message = "Policy date must be in the present or future")
         @NotNull(message = "Policy date cannot be null")
@@ -30,14 +31,15 @@ public record CreateCarPolicyRequest(
         @NotNull(message = "Policy date cannot be null")
         LocalDate policyEndDate,
 
-        @NotNull(message = "Customer ID cannot be null")
-        Long customerId,
+        @NotNull(message = "TCKN cannot be null")
+        String tckn,
 
         @NotNull(message = "policyAmount cannot be null")
         Long policyAmount,
 
-        @NotNull(message = "Car information cannot be null")
-        Car car
+        @NotNull(message = "licensePlateNumber cannot be null")
+        String licensePlateNumber
+
 
 ) implements ICarPolicyRequest{
 }

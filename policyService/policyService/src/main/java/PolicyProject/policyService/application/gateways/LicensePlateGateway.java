@@ -7,6 +7,7 @@ import java.util.concurrent.CompletableFuture;
 
 public interface LicensePlateGateway {
 
-    LicensePlate get(LicensePlate licensePlate);
+    LicensePlate getWCustomer(LicensePlate licensePlate);
+    LicensePlate get(String plate);
 
 }

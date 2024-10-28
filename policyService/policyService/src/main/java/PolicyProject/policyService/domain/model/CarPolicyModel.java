@@ -8,11 +8,11 @@ import java.time.LocalDate;
 
 public record CarPolicyModel(
 
-        Long id,
-        String policyName, //
+        Long policyId,
+        LocalDate policyOfferDate, //
         String policyDescription, //
         String policyType, //
-        boolean policyStatus,//
+        Boolean policyStatus,//
         Double policyAmount,
         Long customerId,
         String licensePlateNumber,

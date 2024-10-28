@@ -10,6 +10,9 @@ import java.time.temporal.ChronoUnit;
 public class Calculator {
 
     public static LicensePlateModel Calculate(LicensePlateModel licensePlateModel, LicensePlateModel licensePlateModel_Rq) {
+
+     //Poliçe sonrası hesap
+
         Car car = licensePlateModel.car();
         Customer customer = licensePlateModel.customer();
 
