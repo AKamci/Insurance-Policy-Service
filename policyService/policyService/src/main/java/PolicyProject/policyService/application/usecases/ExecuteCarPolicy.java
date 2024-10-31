@@ -3,11 +3,8 @@ package PolicyProject.policyService.application.usecases;
 import PolicyProject.policyService.application.gateways.CarPolicyGateway;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.domain.model.CustomerModel;
-import PolicyProject.policyService.domain.model.LicensePlateModel;
-import PolicyProject.policyService.infrastructure.config.Specifications.CarPolicySpecification;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CarPolicySpecificationBuild;
-import PolicyProject.policyService.infrastructure.persistence.entity.Calculator;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
@@ -16,15 +13,10 @@ import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import PolicyProject.policyService.interfaces.mappers.LicensePlateMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.scheduling.annotation.Async;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-
-import static PolicyProject.policyService.infrastructure.config.Specifications.CarPolicySpecification.hasPolicyType;
 
 @RequiredArgsConstructor
 public class ExecuteCarPolicy {

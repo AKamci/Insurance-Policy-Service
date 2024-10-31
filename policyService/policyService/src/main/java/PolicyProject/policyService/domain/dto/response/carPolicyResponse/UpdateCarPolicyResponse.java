@@ -2,7 +2,7 @@ package PolicyProject.policyService.domain.dto.response.carPolicyResponse;
 
 public record UpdateCarPolicyResponse(
 
-       Long PolicyId
+       Long policyId
 
 ) implements ICarPolicyResponse {
 }

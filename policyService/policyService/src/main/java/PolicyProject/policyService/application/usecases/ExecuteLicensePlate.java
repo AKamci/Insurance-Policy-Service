@@ -1,19 +1,14 @@
 package PolicyProject.policyService.application.usecases;
 
-import PolicyProject.policyService.application.gateways.CustomerGateway;
 import PolicyProject.policyService.application.gateways.LicensePlateGateway;
-import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.domain.model.LicensePlateModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
-import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CustomerSpecificationBuild;
-import PolicyProject.policyService.infrastructure.persistence.entity.Calculator;
+import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
 import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
-import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import PolicyProject.policyService.interfaces.mappers.LicensePlateMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 @RequiredArgsConstructor
 public class ExecuteLicensePlate {
@@ -27,9 +22,9 @@ public class ExecuteLicensePlate {
 
         var licenseModel = LicensePlateMapper.INSTANCE.licensePlateEntityToLicensePlateModel(licensePlateEntity);
 
-        var PlateWCustomer = Calculator.Calculate(licenseModel,licensePlateModel);
+        var PlateWCustomer = 444.44;//Weights.Calculate(licenseModel,licensePlateModel);
 
-        return PlateWCustomer;
+        return null;
     }
 
     public LicensePlateModel ExecuteGetLicensePlate(String plate) {

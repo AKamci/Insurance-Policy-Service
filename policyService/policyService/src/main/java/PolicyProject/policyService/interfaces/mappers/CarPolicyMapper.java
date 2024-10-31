@@ -40,6 +40,8 @@ public interface CarPolicyMapper {
     @Mapping(source = "policyId", target = "id")
     CarPolicy carPolicyModelToCarPolicyEntity(CarPolicyModel carPolicyModel);
 
+    CarPolicy CarPolicyToCarPolicy(CarPolicy carPolicy);
+
     //CarPolicy carPolicyModelToCarPolicyEntity(CarPolicyModel carPolicyModel);
     @Mapping(source = "id", target = "policyId")
     @Mapping(source = "customer.id", target = "customerId")

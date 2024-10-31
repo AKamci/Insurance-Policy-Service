@@ -46,13 +46,14 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
     }
 
     @Override
+    @Transactional
     @CachePut(value = "carPolicyCache", key = "#carPolicy.id")
     public CarPolicy update(CarPolicy carPolicy) {
-        var entityObject = get(carPolicy);
-        if (entityObject != null) {
-            carPolicy.setCustomer(entityObject.getCustomer());
-            carPolicy.setLicensePlate(entityObject.getLicensePlate());
-            return carPolicyRepository.save(entityObject);
+        var existingCarPolicy = get(carPolicy);
+        if (existingCarPolicy != null) {
+            carPolicy.setCustomer(existingCarPolicy.getCustomer());
+            carPolicy.setLicensePlate(existingCarPolicy.getLicensePlate());
+            return carPolicyRepository.save(carPolicy);
         }
         return null;
     }

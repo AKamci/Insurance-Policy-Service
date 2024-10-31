@@ -50,3 +50,7 @@ tasks.withType(JavaCompile).configureEach {
 test {
 	useJUnitPlatform()
 }
+
+springBoot {
+	mainClass = 'PolicyProject.policyService.PolicyServiceApplication'
+}

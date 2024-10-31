@@ -1,10 +1,8 @@
 package PolicyProject.policyService.infrastructure.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 import java.io.Serializable;
@@ -34,6 +32,10 @@ public class CarPolicy implements Serializable {
 
     private LocalDate policyOfferDate;
 
+
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name = "license_plate_id", nullable = false)
     private LicensePlate licensePlate;

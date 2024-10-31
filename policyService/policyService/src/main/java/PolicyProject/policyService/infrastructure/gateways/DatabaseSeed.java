@@ -4,10 +4,7 @@ import PolicyProject.policyService.infrastructure.persistence.entity.Car;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
-import PolicyProject.policyService.infrastructure.persistence.repository.CarRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.CustomerRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.LicensePlateRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.CarPolicyRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -22,13 +19,19 @@ public class DatabaseSeed implements CommandLineRunner {
     private final CustomerRepository customerRepository;
     private final CarRepository carRepository;
     private final LicensePlateRepository licensePlateRepository;
+    private final WeightsRepository weightsRepository;
 
     // Constructor
-    public DatabaseSeed(CarPolicyRepository carPolicyrepository, CustomerRepository customerRepository, CarRepository carRepository, LicensePlateRepository licensePlateRepository) {
+    public DatabaseSeed(CarPolicyRepository carPolicyrepository,
+                        CustomerRepository customerRepository,
+                        CarRepository carRepository,
+                        LicensePlateRepository licensePlateRepository,
+                        WeightsRepository weightsRepository) {
         this.carPolicyrepository = carPolicyrepository;
         this.customerRepository = customerRepository;
         this.carRepository = carRepository;
         this.licensePlateRepository = licensePlateRepository;
+        this.weightsRepository = weightsRepository;
     }
 
 
@@ -52,12 +55,17 @@ public class DatabaseSeed implements CommandLineRunner {
             seedLicensePlate();
             System.out.println("LICENSE_PLATE SEED IS COMPLETED");
         }
-
         if (carPolicyrepository.count() == 0 || condition)
         {
            seedDataCarPolicies();
             System.out.println("CAR_POLICY SEED IS COMPLETED");
         }
+        if(weightsRepository.count()==0 || condition)
+        {
+            seedDataWeights();
+            System.out.println("WEIGHTS SEED IS COMPLETED");
+        }
+
         System.out.println("DATABASE SEED IS COMPLETED");
     }
 
@@ -614,7 +622,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 LicensePlate licensePlate = optionalLicensePlate.get();
 
 
-                LocalDate startDate = LocalDate.of(2023, 10, 1);
+                LocalDate startDate = LocalDate.of(2024, 10, 1);
                 LocalDate policyLocalDate = startDate.plusDays(i);
 
                 CarPolicy policy = CarPolicy.builder()
@@ -622,7 +630,7 @@ public class DatabaseSeed implements CommandLineRunner {
                         .policyType(i % 2 == 0 ? "Kasko" : "Trafik")
                         .policyStatus(i % 3 == 0)
                         .policyStartDate(policyLocalDate)
-                        .policyEndDate(policyLocalDate.plusDays(10*i))
+                        .policyEndDate(policyLocalDate.plusYears(1))
                         .policyAmount(1000.0 + (i * 100))
                         .policyOfferDate(policyLocalDate)
                         .licensePlate(licensePlate)
@@ -634,6 +642,10 @@ public class DatabaseSeed implements CommandLineRunner {
 
                 carPolicyrepository.saveAll(carPolicies);
         }
+    }
+    private void seedDataWeights()
+    {
+
     }
 }
 

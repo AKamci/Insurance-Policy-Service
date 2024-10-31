@@ -11,7 +11,7 @@ public record UpdateCarPolicyRequest(
         @Positive(message = "Policy ID must be a positive number")
         Long policyId,
 
-        @NotBlank(message = "Policy Offer Date cannot be blank")
+        @NotNull(message = "Policy Offer date cannot be null")
         LocalDate policyOfferDate,
 
         @NotBlank(message = "Policy description cannot be blank")
