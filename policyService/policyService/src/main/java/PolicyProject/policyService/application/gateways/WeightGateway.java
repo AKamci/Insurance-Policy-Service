@@ -4,5 +4,10 @@ import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
 
 public interface WeightGateway {
 
-    Weights getWeights(String key);
+    Weights get(String key);
+    Weights create(Weights weights);
+    Weights update(Weights weights);
+    void delete(String key);
+    Iterable<Weights> list();
+
 }

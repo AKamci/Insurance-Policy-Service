@@ -32,6 +32,8 @@ public class Car implements Serializable {
     private int price;
 
 
+
+
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

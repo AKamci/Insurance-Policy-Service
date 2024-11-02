@@ -5,6 +5,8 @@ import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeigh
 
 
 public class CarAge_0_1_Strategy implements  IWeightStrategy{
+
+
     @Override
     public Weights getWeights(String key) {
         return null;
