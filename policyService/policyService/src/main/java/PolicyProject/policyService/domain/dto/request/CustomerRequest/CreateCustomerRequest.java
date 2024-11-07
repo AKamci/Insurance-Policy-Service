@@ -34,8 +34,7 @@ public record CreateCustomerRequest(
         LocalDate birthDay,
 
         @NotBlank(message = "Gender cannot be blank")
-        @Pattern(regexp = "^(Erkek|Kadın|Diğer)$", message = "Gender must be Erkek, Kadın, or Diğer")
-        String gender
+        Integer gender
 
 
 ) implements ICustomerRequest{

@@ -1,5 +1,6 @@
 package PolicyProject.policyService.domain.dto.request.carPolicyRequest;
 
+import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import jakarta.validation.constraints.*;
 
 import java.sql.Date;
@@ -18,10 +19,10 @@ public record UpdateCarPolicyRequest(
         String policyDescription,
 
         @NotBlank(message = "Policy Status type cannot be blank")
-        String policyStatus,
+        CarPolicyState state,
 
         @NotBlank(message = "Policy type cannot be blank")
-        String policyType,
+        int policyType,
 
         @PastOrPresent(message = "Policy start date must be in the past or present")
         @NotNull(message = "Policy start date cannot be null")

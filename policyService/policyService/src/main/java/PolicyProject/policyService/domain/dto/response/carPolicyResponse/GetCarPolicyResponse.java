@@ -1,5 +1,7 @@
 package PolicyProject.policyService.domain.dto.response.carPolicyResponse;
 
+import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
+
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -7,9 +9,9 @@ public record GetCarPolicyResponse(
 
         Long policyId,
         LocalDate policyOfferDate,
-        Boolean policyStatus,
+        CarPolicyState state,
         String policyDescription,
-        String policyType,
+        int policyType,
         Double policyAmount,
         Long customerId,
         LocalDate policyStartDate,

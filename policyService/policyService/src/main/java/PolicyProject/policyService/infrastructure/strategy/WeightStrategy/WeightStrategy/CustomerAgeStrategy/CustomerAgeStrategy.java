@@ -5,15 +5,26 @@ import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Period;
 
-public class CustomerAgeStrategy implements IWeightStrategy {
+public class CustomerAgeStrategy  implements IWeightStrategy {
     @Override
     public BigDecimal calculate(LicensePlateModel model, Weights parameter) {
-        return parameter.getValue().multiply(getValue(model));
+        return parameter.getWeight().multiply(getValue(model));
     }
 
     @Override
     public BigDecimal getValue(LicensePlateModel model) {
-        return BigDecimal.valueOf(model.customer().getId());
+
+        LocalDate birthDate = model.customer().getBirthDay();
+        LocalDate currentDate = LocalDate.now();
+
+        if (birthDate != null) {
+            int age = Period.between(birthDate, currentDate).getYears();
+            return BigDecimal.valueOf(age);
+        } else {
+            return BigDecimal.ZERO;
+        }
     }
 }

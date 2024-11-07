@@ -6,7 +6,7 @@ public record GetCustomerCarPoliciesResponse(
 
         String policyName,
         String policyDescription,
-        String policyType,
+        int policyType,
         Date policyDate,
         Double policyAmount
 

@@ -1,5 +1,6 @@
 package PolicyProject.policyService.domain.dto.request.carPolicyRequest;
 
+import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -11,8 +12,8 @@ public record GetCarPolicyListRequest(
         Long policyId,
         LocalDate policyOfferDate,
         String policyDescription,
-        String policyType,
-        Boolean policyStatus,
+        Integer policyType,
+        CarPolicyState state,
         Double policyAmount,
         Long customerId,
         String licensePlateNumber,

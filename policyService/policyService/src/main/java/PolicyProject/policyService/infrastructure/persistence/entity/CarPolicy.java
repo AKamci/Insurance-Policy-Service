@@ -1,5 +1,6 @@
 package PolicyProject.policyService.infrastructure.persistence.entity;
 
+import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,6 +8,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Builder
 @Entity
@@ -24,14 +26,17 @@ public class CarPolicy implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String policyDescription;
-    private String policyType;
-    private Boolean policyStatus;
+    private Integer policyType;
+
     private LocalDate policyStartDate;
     private LocalDate policyEndDate;
     private Double policyAmount;
 
     private LocalDate policyOfferDate;
+    private LocalDate expiryDate;
 
+    @Enumerated(EnumType.STRING)
+    private CarPolicyState state;
 
     @JsonIgnore
     @ToString.Exclude
@@ -45,5 +50,11 @@ public class CarPolicy implements Serializable {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+
+
+
+
+
 
 }

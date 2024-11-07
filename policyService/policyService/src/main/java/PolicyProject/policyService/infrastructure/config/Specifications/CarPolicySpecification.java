@@ -1,5 +1,6 @@
 package PolicyProject.policyService.infrastructure.config.Specifications;
 
+import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -13,8 +14,8 @@ public class CarPolicySpecification {
 
 
     public static Specification<CarPolicy> build(
-           String policyDescription, String policyType,
-            Boolean policyStatus, LocalDate startDate, LocalDate endDate,
+            String policyDescription, Integer policyType,
+            CarPolicyState state, LocalDate startDate, LocalDate endDate,
             Double Amount, String plate, String tckn) {
 
         return Specification
@@ -24,7 +25,7 @@ public class CarPolicySpecification {
                 .and(hasPolicyType(policyType))
                 .and(isActiveBetween(startDate, endDate))
                 .and(hasPolicyAmount(Amount))
-                .and(hasPolicyStatus(policyStatus))
+                .and(hasPolicyStatus(state))
                 .and(hasLicensePlateNumber(plate))
                 .and(hasCustomerTckn(tckn));
     }
@@ -35,7 +36,7 @@ public class CarPolicySpecification {
                 policyDescription == null ? null : criteriaBuilder.equal(root.get("policyDescription"), policyDescription);
     }
 
-    public static Specification<CarPolicy> hasPolicyType(String policyType) {
+    public static Specification<CarPolicy> hasPolicyType(Integer policyType) {
         return (root, query, criteriaBuilder) -> {
             if (policyType == null) {
                 return criteriaBuilder.conjunction();
@@ -45,9 +46,9 @@ public class CarPolicySpecification {
         };
     }
 
-    public static Specification<CarPolicy> hasPolicyStatus(Boolean policyStatus) {
+    public static Specification<CarPolicy> hasPolicyStatus(CarPolicyState state) {
         return (root, query, criteriaBuilder) ->
-                policyStatus == null ? null : criteriaBuilder.equal(root.get("policyStatus"), policyStatus);
+                state == null ? null : criteriaBuilder.equal(root.get("state"), state);
     }
 
     public static Specification<CarPolicy> hasPolicyStartDate(LocalDate startDate) {

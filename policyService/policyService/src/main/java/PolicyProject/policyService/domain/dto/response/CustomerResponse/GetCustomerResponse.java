@@ -16,7 +16,7 @@ public record GetCustomerResponse(
         String phone,
         String email,
         LocalDate birthDay,
-        String gender
+        Integer gender
 
 
 ) implements ICustomerResponse{

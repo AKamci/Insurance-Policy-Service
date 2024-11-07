@@ -1,5 +1,6 @@
 package PolicyProject.policyService.application.gateways;
 
+import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
@@ -20,6 +21,8 @@ public interface CarPolicyGateway {
     List<CarPolicy> getCarPoliciesByCustomer(String tckn);
     List<CarPolicy> getCarPoliciesByPlateAndTckn(String plate, String tckn);
     List<CarPolicy> getCarPoliciesBetweenDate (LocalDate startDate, LocalDate endDate);
+    List<CarPolicy> findByStateAndExpiryDateBefore(CarPolicyState state, LocalDate currentDate);
+    CarPolicy SetStateCarPolicy(CarPolicy carPolicy, CarPolicyState carPolicyState);
     int getTotal();
 
 }

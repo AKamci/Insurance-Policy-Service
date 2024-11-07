@@ -62,6 +62,23 @@ public class CarPolicyController_V1 {
                         (CarPolicyMapper.INSTANCE.updateCarPolicyRequestToCarPolicyModel(updateCarPolicyRequest)));
     }
 
+    @PutMapping("/accepted")
+    public  ResponseEntity<SetCarPolicyStatusResponse> acceptCarPolicy(@Valid @ModelAttribute SetCarPolicyStatusRequest setCarPolicyStatusRequest)
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(carPolicyService.acceptCarPolicy
+                        (CarPolicyMapper.INSTANCE.setStateCarPolicyRequestToCarPolicyModel(setCarPolicyStatusRequest)));
+    }
+
+    @PutMapping("/rejected")
+    public  ResponseEntity<SetCarPolicyStatusResponse> rejectCarPolicy(@Valid @ModelAttribute SetCarPolicyStatusRequest setCarPolicyStatusRequest)
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(carPolicyService.rejectCarPolicy
+                        (CarPolicyMapper.INSTANCE.setStateCarPolicyRequestToCarPolicyModel(setCarPolicyStatusRequest)));
+    }
 
 
 

@@ -27,10 +27,10 @@ public class Car implements Serializable {
     private String make;
     private String model;
     private int year;
-    private String engine;
+    private double engine;
     private int kilometers;
     private int price;
-
+    private double type;
 
 
 

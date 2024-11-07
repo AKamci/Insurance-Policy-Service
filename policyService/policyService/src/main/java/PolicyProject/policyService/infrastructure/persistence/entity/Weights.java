@@ -6,10 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Builder
 @Entity
@@ -17,7 +20,7 @@ import java.time.temporal.ChronoUnit;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Weights {
+public class Weights implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,9 +29,17 @@ public class Weights {
     private Long id;
 
     private String key;
-    private BigDecimal value;
+    private BigDecimal weight;
     private BigDecimal minValue;
     private BigDecimal maxValue;
     private String type;
+
+
+    public void nullifyValuesIfNeeded(List<String> typesToNullify) {
+        if (typesToNullify.contains(this.type)) {
+            this.minValue = null;
+            this.maxValue = null;
+        }
+    }
 
 }

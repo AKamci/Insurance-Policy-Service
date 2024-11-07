@@ -19,6 +19,9 @@ public interface LicensePlateMapper {
 
     LicensePlateModel getPlateWithCustomerRequestToLicensePlateModel(GetPlateWithCustomerRequest getPlateWithCustomerRequest);
     GetPlateWithCustomerResponse LicensePlateModelToGetPlateWithCustomerResponse(LicensePlateModel licensePlateModel);
+
+//    @Mapping(source = "customer", target = "licensePlate.customer")
+//    @Mapping(source = "car", target = "licensePlate.car")
     LicensePlate LicensePlateModelToCustomerEntity(LicensePlateModel licensePlateModel);
 
 

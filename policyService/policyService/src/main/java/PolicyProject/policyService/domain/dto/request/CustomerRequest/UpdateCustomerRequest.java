@@ -34,8 +34,7 @@ public record UpdateCustomerRequest(
         LocalDate birthDay,
 
         @NotBlank(message = "Gender cannot be blank")
-        @Pattern(regexp = "^(Erkek|Kadın|Belirtmek İstemiyorum)$", message = "Gender must be Erkek, Kadın, or Belirtmek İstemiyorum")
-        String gender
+        Integer gender
 
 
 

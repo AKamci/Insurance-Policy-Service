@@ -16,6 +16,8 @@ public interface CarPolicyMapper {
 
     CarPolicyModel createCarPolicyRequestToCarPolicyModel(CreateCarPolicyRequest createCarPolicyRequest);
     CarPolicyModel updateCarPolicyRequestToCarPolicyModel(UpdateCarPolicyRequest createCarPolicyRequest);
+    CarPolicyModel setStateCarPolicyRequestToCarPolicyModel(SetCarPolicyStatusRequest createCarPolicyRequest);
+
     CarPolicyModel getCarPolicyRequestTocarPolicyModel(GetCarPolicyRequest getCarPolicyRequest);
     CarPolicyModel getCarPolicyRequestWPlateTocarPolicyModel(GetCarPolicyWPlateRequest getCarPolicyWPlateRequest);
     CarPolicyModel deleteCarPolicyRequestToCarPolicyModel(DeleteCarPolicyRequest deleteCarPolicyRequest);
@@ -26,6 +28,7 @@ public interface CarPolicyMapper {
 
     CreateCarPolicyResponse carPolicyModelToCreateCarPolicyResponse(CarPolicyModel carPolicyModel);
     UpdateCarPolicyResponse cartPolicyModelToUpdateCarPolicyResponse(CarPolicyModel carPolicyModel);
+    SetCarPolicyStatusResponse cartPolicyModelToSetStateCarPolicyResponse(CarPolicyModel carPolicyModel);
     GetCarPolicyResponse cartPolicyModelToGetCarPolicyResponse(CarPolicyModel carPolicyModel);
     List<GetCarPolicyResponse> cartPolicyModelListToGetCarPolicyResponseList(List<CarPolicyModel> carPolicyModel);
     DeleteCarPolicyResponse cartPolicyModelToDeleteCarPolicyResponse(CarPolicyModel carPolicyModel);

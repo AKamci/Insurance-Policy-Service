@@ -39,7 +39,8 @@ public class Customer implements Serializable {
     private String email;
     private String password;
     private LocalDate birthDay;
-    private String gender;
+    private Integer gender;
+    private Integer grade;
 
 
     @JsonIgnore

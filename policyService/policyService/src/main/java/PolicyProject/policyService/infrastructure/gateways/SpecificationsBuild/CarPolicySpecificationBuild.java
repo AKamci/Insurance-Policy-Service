@@ -24,7 +24,7 @@ public class CarPolicySpecificationBuild {
          CarPolicySpecification.build(
                  carPolicy.getPolicyDescription(),
                  carPolicy.getPolicyType(),
-                 carPolicy.getPolicyStatus(),
+                 carPolicy.getState(),
                  carPolicy.getPolicyStartDate(),
                  carPolicy.getPolicyEndDate(),
                  carPolicy.getPolicyAmount(),

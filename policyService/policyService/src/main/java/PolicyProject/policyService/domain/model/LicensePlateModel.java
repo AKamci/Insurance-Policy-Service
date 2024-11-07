@@ -12,7 +12,7 @@ public record LicensePlateModel(
         String plate,
         Car car,
         Customer customer,
-        String policyType,
+        double policyType,
         LocalDate policyStartDate,
         LocalDate policyEndDate,
         Long amount

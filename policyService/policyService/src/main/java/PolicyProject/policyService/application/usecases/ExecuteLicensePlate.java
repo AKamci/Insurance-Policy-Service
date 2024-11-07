@@ -8,12 +8,14 @@ import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlat
 import PolicyProject.policyService.interfaces.mappers.LicensePlateMapper;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 public class ExecuteLicensePlate {
 
     private final LicensePlateGateway licensePlateGateway;
+    private final ExecuteWeight executeWeight;
 
     public LicensePlateModel ExecuteGetLicensePlateWithCustomer(LicensePlateModel licensePlateModel) {
         LicensePlate entity = LicensePlateMapper.INSTANCE.LicensePlateModelToCustomerEntity(licensePlateModel);
@@ -22,9 +24,7 @@ public class ExecuteLicensePlate {
 
         var licenseModel = LicensePlateMapper.INSTANCE.licensePlateEntityToLicensePlateModel(licensePlateEntity);
 
-        var PlateWCustomer = 444.44;//Weights.Calculate(licenseModel,licensePlateModel);
-
-        return null;
+        return executeWeight.Get_ALicensePlateModel(licenseModel);
     }
 
     public LicensePlateModel ExecuteGetLicensePlate(String plate) {

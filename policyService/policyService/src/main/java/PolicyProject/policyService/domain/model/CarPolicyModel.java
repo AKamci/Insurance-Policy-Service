@@ -1,5 +1,6 @@
 package PolicyProject.policyService.domain.model;
 
+import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.Car;
 import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
 
@@ -11,14 +12,14 @@ public record CarPolicyModel(
         Long policyId,
         LocalDate policyOfferDate, //
         String policyDescription, //
-        String policyType, //
-        Boolean policyStatus,//
+        Integer policyType,
         Double policyAmount,
         Long customerId,
         String licensePlateNumber,
         String tckn,
         LocalDate policyStartDate,
         LocalDate policyEndDate,
+        CarPolicyState state,
         int page,
         int size,
 

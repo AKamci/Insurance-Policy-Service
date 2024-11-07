@@ -30,8 +30,7 @@ public record GetCustomerListRequest(
         @Past(message = "Birth date must be in the past")
         LocalDate birthDay,
 
-        @Pattern(regexp = "^(Male|Female|Other)$", message = "Gender must be Male, Female, or Other")
-        String gender,
+        Integer gender,
 
         @Min(value = 0, message = "Page number cannot be negative")
         int page,

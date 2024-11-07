@@ -11,7 +11,7 @@ public class CustomerSpecification {
 
     public static Specification<Customer> build(
             String name, String tckn, String address, String phone,
-            String email, LocalDate birthDay, String gender) {
+            String email, LocalDate birthDay, Integer gender) {
 
         return Specification
                 .where(hasName(name))
@@ -53,7 +53,7 @@ public class CustomerSpecification {
                 birthDay == null ? null : criteriaBuilder.equal(root.get("birthDay"), birthDay);
     }
 
-    public static Specification<Customer> hasGender(String gender) {
+    public static Specification<Customer> hasGender(Integer gender) {
         return (root, query, criteriaBuilder) ->
                 gender == null ? null : criteriaBuilder.equal(root.get("gender"), gender);
     }

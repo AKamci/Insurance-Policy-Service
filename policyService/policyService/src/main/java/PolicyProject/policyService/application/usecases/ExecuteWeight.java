@@ -2,75 +2,120 @@ package PolicyProject.policyService.application.usecases;
 
 import PolicyProject.policyService.application.gateways.WeightGateway;
 import PolicyProject.policyService.application.service.StrategyFactory.WeightStrategyFactory;
-import PolicyProject.policyService.domain.Enums.Enums.CAR_AGE;
-import PolicyProject.policyService.domain.Enums.Enums.CAR_PRICE;
-import PolicyProject.policyService.domain.Enums.Enums.POLICY_TYPE;
+import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.domain.model.LicensePlateModel;
+import PolicyProject.policyService.domain.model.WeightsModel;
+import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
+import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;
-import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.PolicyTypeStrategy.Kasko_Strategy;
+import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
+import PolicyProject.policyService.interfaces.mappers.WeightsMapper;
+import com.sun.jdi.LongValue;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 public class ExecuteWeight {
 
 
     private final WeightGateway weightGateway;
+    private final WeightStrategyFactory strategyFactory;
 
-    public double getStrategy(LicensePlateModel licensePlateModel) {
-
-        /// ... Stratejiler liste haline getirilmeli.
-
-        Map<IWeightStrategy, String> weightStrategies = new HashMap<>();
-
-       Kasko_Strategy kasko_strategy = (Kasko_Strategy) WeightStrategyFactory.getWeightStrategy(POLICY_TYPE.
-               valueOf(licensePlateModel.policyType().toUpperCase()));
-
-       weightStrategies.put(kasko_strategy, POLICY_TYPE.valueOf(licensePlateModel.policyType().toUpperCase()).name() );
-
-       /// ... Oluşturulan liste için veritabanı sorgusu başka fonkiyonda yapılmalı.
-        var parameters = getParameter(licensePlateModel);
-        return getWeight(weightStrategies, parameters);
+    public LicensePlateModel Get_ALicensePlateModel(LicensePlateModel licensePlateModel) {
+        BigDecimal Amount = calculatePolicyPrice(licensePlateModel);
+        LicensePlateModel newPlate = new LicensePlateModel(
+                null,
+                licensePlateModel.plate(),
+                licensePlateModel.car(),
+                licensePlateModel.customer(),
+                licensePlateModel.policyType(),
+                licensePlateModel.policyStartDate(),
+                licensePlateModel.policyEndDate(),
+                Amount.longValue()
+        );
+        return newPlate;
     }
 
-    private List<Double> getParameter(LicensePlateModel licensePlateModel)
-    {
-        List<Double> parameters = new ArrayList<>();
-        parameters.add(1.0);//licensePlateModel.policyType();
-        parameters.add(1.0);
-        /// ... Hesaplama için kullanılacak. Parametre değerleri.
-        /// ... Bu liste ağırlıklar ile çarpılarak regresyon hesabı sonucu bize fiyatı verecek.
-        return parameters;
-    }
-
-    private Double getWeight(Map<IWeightStrategy, String> weightStrategies, List<Double> parameters)
-    {
-        /// ... Gelen stratejiler ile veritabanı sorgusu yapılmalı ve ağırlıkları liste halinde dönmelidir.
-
-        List<Double> weightDoubleList = new ArrayList<>();
-
-        for (Map.Entry<IWeightStrategy, String> entry : weightStrategies.entrySet())
-        {
-            double weight = entry.getKey().getWeights(entry.getValue()).getValue();
-            weightDoubleList.add(weight);
-        }
-     return Calculate(weightDoubleList, parameters);
-    }
+        private BigDecimal calculatePolicyPrice(LicensePlateModel licensePlateModel) {
+        BigDecimal total = BigDecimal.ZERO;
+        List<Weights> parameters = weightGateway.list();
 
 
-    private double Calculate(List<Double> weightDoubleList, List<Double> parameters)
-    {
-        /// ... Gelen parametreler ile formül yardımı ile hesaplama yapılmalı. Hesaplanan değer dönmelidir.
-        /// ... Hesaplama regresyon ile yapılmalıdır.
-        double Amount = 0;
-        for (int i = 0; i < weightDoubleList.size(); i++)
-        {
-            Amount += parameters.get(i)*weightDoubleList.get(i);
+        for (Weights parameter : parameters) {
+            IWeightStrategy strategy = strategyFactory.getStrategy(parameter.getType());
+            BigDecimal valueToCheck = strategy.getValue(licensePlateModel);
+
+            if (parameter.getMinValue() != null && parameter.getMaxValue() != null) {
+                if (valueToCheck != null && parameter.getMinValue().compareTo(valueToCheck) <= 0
+                        && parameter.getMaxValue().compareTo(valueToCheck) >= 0) {
+                    total = total.add(strategy.calculate(licensePlateModel, parameter));
+                    System.out.println("Parametre :" + parameter );
+                    System.out.println("Total :" + total );
+                    System.out.println("Strategy :" + strategy );
+                    System.out.println();
+                    System.out.println();
+                }
+            } else {
+                total = total.add(strategy.calculate(licensePlateModel, parameter));
+            }
         }
 
-        return Amount;
+        return total;
     }
+
+    public WeightsModel executeUpdate(WeightsModel weightsModel)
+    {
+        Optional<Weights> optionalEntity = Optional.ofNullable
+                (weightGateway.update(WeightsMapper.INSTANCE.WeightsModelToWeightEntity(weightsModel)));
+        Weights weightsEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(weightsModel.id(),"Entity not found"));
+        return WeightsMapper.INSTANCE.WeightsEntityToWeightsModel(weightsEntity);
+    }
+
+    public WeightsModel executeCreate(WeightsModel weightsModel)
+    {
+        Weights EnityObject = weightGateway.create(WeightsMapper.INSTANCE.WeightsModelToWeightEntity(weightsModel));
+
+        return WeightsMapper.INSTANCE.WeightsEntityToWeightsModel(EnityObject);
+    }
+
+    public WeightsModel executeGet(WeightsModel weightsModel)
+    {
+        Optional<Weights> optionalEntity = Optional.ofNullable
+                (weightGateway.get(WeightsMapper.INSTANCE.WeightsModelToWeightEntity(weightsModel).getKey()));
+        Weights weightsEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(weightsModel.id(),"Entity not found"));
+        return WeightsMapper.INSTANCE.WeightsEntityToWeightsModel(weightsEntity);
+    }
+
+    public WeightsModel executeDelete(WeightsModel weightsModel)
+    {
+        System.out.println(weightsModel);
+        Optional<Weights> optionalEntity = Optional.ofNullable
+                (weightGateway.delete(WeightsMapper.INSTANCE.WeightsModelToWeightEntity(weightsModel).getKey()));
+        Weights weightsEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(weightsModel.id(),"Entity not found"));
+        return WeightsMapper.INSTANCE.WeightsEntityToWeightsModel(weightsEntity);
+    }
+
+    public List<WeightsModel> executeGetList()
+    {
+        Optional<List<Weights>> optionalEntity = Optional.ofNullable
+                (weightGateway.listFilter());
+        List<Weights> weightsEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(0L,"Entity not found"));
+        return WeightsMapper.INSTANCE.WeightsEntityListToWeightsModelList(weightsEntity);
+    }
+
+    public List<WeightsModel> executeUpdateList(List<WeightsModel> weightsModels) {
+        Optional<List<Weights>> optionalEntity = Optional.ofNullable
+                (weightGateway.updateOrSave(WeightsMapper.INSTANCE.WeightsModelListToWeightEntityList(weightsModels)));
+        List<Weights> weightsEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(0L,"Entity not found"));
+        return WeightsMapper.INSTANCE.WeightsEntityListToWeightsModelList(weightsEntity);
+    }
+
+
 }
+

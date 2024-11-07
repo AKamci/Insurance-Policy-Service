@@ -1,6 +1,7 @@
 package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
 
 import PolicyProject.policyService.application.gateways.CarPolicyGateway;
+import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
@@ -33,6 +34,7 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
     public CarPolicy create(CarPolicy carPolicy, Customer customer, LicensePlate licensePlate) {
         carPolicy.setCustomer(customer);
         carPolicy.setLicensePlate(licensePlate);
+        carPolicy.setState(CarPolicyState.CREATED);
         var entity = carPolicyRepository.save(carPolicy);
         updateTotalCount();
         return entity;
@@ -112,12 +114,31 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
         return PolicyList;
     }
 
-    //@Cacheable("totalCarPolicies")
+    @Override
+    public List<CarPolicy> findByStateAndExpiryDateBefore(CarPolicyState state, LocalDate currentDate) {
+        return carPolicyRepository.findByStateAndExpiryDateBefore(state, currentDate);
+    }
+
     public int getTotal() {
         return (int) carPolicyRepository.count(specification);
     }
 
     @CacheEvict(value = "totalCarPolicies", allEntries = true)
     public void updateTotalCount() {}
+
+
+    @Override
+    public CarPolicy SetStateCarPolicy(CarPolicy carPolicy, CarPolicyState carPolicyState) {
+        var existingCarPolicy = get(carPolicy);
+        if (existingCarPolicy != null) {
+            carPolicy.setCustomer(existingCarPolicy.getCustomer());
+            carPolicy.setLicensePlate(existingCarPolicy.getLicensePlate());
+            carPolicy.setState(carPolicyState);
+            return carPolicyRepository.save(carPolicy);
+        }
+        return null;
+    }
+
+
 
 }

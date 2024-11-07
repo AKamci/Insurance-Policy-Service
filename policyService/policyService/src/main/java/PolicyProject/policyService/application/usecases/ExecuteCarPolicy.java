@@ -1,6 +1,8 @@
 package PolicyProject.policyService.application.usecases;
 
 import PolicyProject.policyService.application.gateways.CarPolicyGateway;
+import PolicyProject.policyService.domain.Enums.Enums.CarPolicyEvent;
+import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
@@ -13,6 +15,8 @@ import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import PolicyProject.policyService.interfaces.mappers.LicensePlateMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.statemachine.StateMachine;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,6 +29,7 @@ public class ExecuteCarPolicy {
     private final ExecuteCustomer executeCustomer;
     private final ExecuteLicensePlate executeLicensePlate;
     private final CarPolicySpecificationBuild carPolicySpecificationBuild;
+    private StateMachine<CarPolicyState, CarPolicyEvent> stateMachine;
 
 
     public CarPolicyModel executeUpdate(CarPolicyModel carPolicyModel)
@@ -35,17 +40,17 @@ public class ExecuteCarPolicy {
         return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(carPolicyEntity);
     }
 
-    public CarPolicyModel executeCreate(CarPolicyModel carPolicyModel)
-    {
-        CustomerModel customerModel = new CustomerModel(null,
-                null,carPolicyModel.tckn(),null,null,null, null,null,null, 0, 0, null );
-        Customer customer = CustomerMapper.INSTANCE.customerModelToCustomerEntity
-                (executeCustomer.executeGet(customerModel));
-       LicensePlate licensePlate = LicensePlateMapper.INSTANCE.LicensePlateModelToCustomerEntity(executeLicensePlate.ExecuteGetLicensePlate(carPolicyModel.licensePlateNumber()));
-        CarPolicy EnityObject = carPolicyGateway.create
-                (CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel),customer, licensePlate);
-        return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(EnityObject);
-    }
+   public CarPolicyModel executeCreate(CarPolicyModel carPolicyModel)
+   {
+       CustomerModel customerModel = new CustomerModel(null,
+               null,carPolicyModel.tckn(),null,null,null, null,0,0, 0, 0, null );
+       Customer customer = CustomerMapper.INSTANCE.customerModelToCustomerEntity
+               (executeCustomer.executeGet(customerModel));
+      LicensePlate licensePlate = LicensePlateMapper.INSTANCE.LicensePlateModelToCustomerEntity(executeLicensePlate.ExecuteGetLicensePlate(carPolicyModel.licensePlateNumber()));
+       CarPolicy EnityObject = carPolicyGateway.create
+               (CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel),customer, licensePlate);
+       return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(EnityObject);
+   }
 
     public CarPolicyModel executeGet(CarPolicyModel carPolicyModel)
     {
@@ -117,5 +122,25 @@ public class ExecuteCarPolicy {
         return carPolicyGateway.getTotal();
     }
 
+
+    @Transactional
+    public CarPolicyModel changeCarPolicyState(CarPolicyModel carPolicyModel, CarPolicyEvent event) {
+
+        Optional<CarPolicy> optionalEntity = Optional.empty();
+        if (event == CarPolicyEvent.CANCEL)
+        {
+            optionalEntity = Optional.ofNullable
+                    (carPolicyGateway.SetStateCarPolicy(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel), CarPolicyState.CANCELLED));
+        }
+        else if (event == CarPolicyEvent.ACTIVATE) {
+            optionalEntity = Optional.ofNullable
+                    (carPolicyGateway.SetStateCarPolicy(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel), CarPolicyState.ACTIVE));
+        }
+        else
+        { new IllegalStateException();}
+        CarPolicy carPolicyEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.customerId(),"Entity not found"));
+        return CarPolicyMapper.INSTANCE.carPolicyEntityToCarPolicyModel(carPolicyEntity);
+
+    }
 
 }
