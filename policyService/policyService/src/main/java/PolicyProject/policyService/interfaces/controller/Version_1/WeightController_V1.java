@@ -87,4 +87,14 @@ public class WeightController_V1 {
                         (WeightsMapper.INSTANCE.UpdateWeightRequestListToWeightsModelList(updateWeightRequestList)));
     }
 
+    @GetMapping("/getPrice")
+    public ResponseEntity<GetWeightResponse> getPrice(@Valid @ModelAttribute GetWeightRequest getWeightRequest )
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(weightService.get
+                        (WeightsMapper.INSTANCE.GetWeightRequestToWeightsModel(getWeightRequest)));
+    }
+
+
 }

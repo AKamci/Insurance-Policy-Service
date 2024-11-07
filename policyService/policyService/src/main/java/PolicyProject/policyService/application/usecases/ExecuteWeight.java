@@ -9,6 +9,7 @@ import PolicyProject.policyService.infrastructure.exception.EntityNotFoundExcept
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;
+import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.ConstantStrategy.ConstantStrategy;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import PolicyProject.policyService.interfaces.mappers.WeightsMapper;
 import com.sun.jdi.LongValue;
@@ -42,26 +43,29 @@ public class ExecuteWeight {
         return newPlate;
     }
 
-        private BigDecimal calculatePolicyPrice(LicensePlateModel licensePlateModel) {
+    private BigDecimal calculatePolicyPrice(LicensePlateModel licensePlateModel) {
         BigDecimal total = BigDecimal.ZERO;
         List<Weights> parameters = weightGateway.list();
-
 
         for (Weights parameter : parameters) {
             IWeightStrategy strategy = strategyFactory.getStrategy(parameter.getType());
             BigDecimal valueToCheck = strategy.getValue(licensePlateModel);
 
-            if (parameter.getMinValue() != null && parameter.getMaxValue() != null) {
+            // ConstantStrategy'yi koşulsuz olarak hesaba dahil et
+            if (strategy instanceof ConstantStrategy) {
+                total = total.add(strategy.calculate(licensePlateModel, parameter));
+            } else if (parameter.getMinValue() != null && parameter.getMaxValue() != null) {
                 if (valueToCheck != null && parameter.getMinValue().compareTo(valueToCheck) <= 0
                         && parameter.getMaxValue().compareTo(valueToCheck) >= 0) {
                     total = total.add(strategy.calculate(licensePlateModel, parameter));
-                    System.out.println("Parametre :" + parameter );
-                    System.out.println("Total :" + total );
-                    System.out.println("Strategy :" + strategy );
-                    System.out.println();
+                    System.out.println("Parametre :" + parameter);
+                    System.out.println("Total :" + total);
+                    System.out.println("Strategy :" + strategy);
                     System.out.println();
                 }
             } else {
+                System.out.println("Doğru Aralığa girmedi");
+                System.out.println(strategy);
                 total = total.add(strategy.calculate(licensePlateModel, parameter));
             }
         }
