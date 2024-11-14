@@ -1,10 +1,8 @@
 package PolicyProject.policyService.infrastructure.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -29,7 +27,9 @@ public class LicensePlate implements Serializable {
 
 
 
-
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "licensePlate", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
     private List<CarPolicy> carPolicies;
 

@@ -18,4 +18,5 @@ public interface IBaseService<
     CreateResponse create(T entity);
     UpdateResponse update(T entity);
     DeleteResponse delete(T entity);
+
 }

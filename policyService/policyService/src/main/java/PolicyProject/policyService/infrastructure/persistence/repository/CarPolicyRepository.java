@@ -20,9 +20,11 @@ public interface CarPolicyRepository extends JpaRepository<CarPolicy, Long>, Jpa
 {
     List<CarPolicy> findByCustomerId(Long customerId);
 
+    List<CarPolicy> findByCustomer_Tckn(String tckn);
+
     List<CarPolicy> findByCustomerTcknAndLicensePlatePlate(String tckn, String plate);
 
-    List<CarPolicy> findByCustomerTckn(String tckn);
+    //List<CarPolicy> findByCustomerTckn(String tckn);
 
     List<CarPolicy> findByPolicyStartDateBetween(LocalDate startDate, LocalDate endDate);
 

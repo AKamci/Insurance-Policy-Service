@@ -12,7 +12,7 @@ public record CarPolicyModel(
         Long policyId,
         LocalDate policyOfferDate, //
         String policyDescription, //
-        Integer policyType,
+        Integer coverage,
         Double policyAmount,
         Long customerId,
         String licensePlateNumber,

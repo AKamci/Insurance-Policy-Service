@@ -42,27 +42,21 @@ public class Customer implements Serializable {
     private Integer gender;
     private Integer grade;
 
-
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "customer", cascade = {CascadeType.REMOVE}, orphanRemoval = true , fetch = FetchType.EAGER)
-    private List<CarPolicy> carPolicies;
-
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Policies> policies;
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL ,orphanRemoval = false)
-    private Set<LicensePlate> licensePlates = new HashSet<>();
-
-
-
-    public void setLicensePlate(Set<LicensePlate> licensePlateSet) {
-        this.licensePlates.clear();
-        if (licensePlateSet != null) {
-            this.licensePlates.addAll(licensePlateSet);
-        }
-    }
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<House> houses;
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LicensePlate> licensePlates;
 
 
 

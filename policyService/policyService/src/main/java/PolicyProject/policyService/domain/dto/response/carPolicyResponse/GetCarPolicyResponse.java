@@ -11,7 +11,7 @@ public record GetCarPolicyResponse(
         LocalDate policyOfferDate,
         CarPolicyState state,
         String policyDescription,
-        int policyType,
+        int coverage,
         Double policyAmount,
         Long customerId,
         LocalDate policyStartDate,

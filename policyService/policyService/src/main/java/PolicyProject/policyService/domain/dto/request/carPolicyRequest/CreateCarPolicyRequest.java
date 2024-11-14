@@ -18,7 +18,7 @@ public record CreateCarPolicyRequest(
         String policyDescription,
 
         @NotBlank(message = "Policy type cannot be blank")
-        int policyType,
+        Integer coverage,
 
         @FutureOrPresent(message = "Policy date must be in the present or future")
         @NotNull(message = "Policy date cannot be null")

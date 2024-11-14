@@ -5,7 +5,7 @@ import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
 
 import java.math.BigDecimal;
 
-public interface IWeightStrategy {
-    BigDecimal calculate(LicensePlateModel model, Weights parameter);
-    BigDecimal getValue(LicensePlateModel model);
+public interface IWeightStrategy<T, U> {
+    BigDecimal calculate(T model, U parameter);
+    BigDecimal getValue(T model);
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Data
 @RequiredArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Component
 
 public class CarPolicySpecificationBuild {
@@ -23,7 +23,7 @@ public class CarPolicySpecificationBuild {
          setSpec(
          CarPolicySpecification.build(
                  carPolicy.getPolicyDescription(),
-                 carPolicy.getPolicyType(),
+                 carPolicy.getCoverage(),
                  carPolicy.getState(),
                  carPolicy.getPolicyStartDate(),
                  carPolicy.getPolicyEndDate(),

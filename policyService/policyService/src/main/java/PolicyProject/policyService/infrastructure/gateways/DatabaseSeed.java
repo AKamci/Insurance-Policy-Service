@@ -1,6 +1,8 @@
 package PolicyProject.policyService.infrastructure.gateways;
 
 import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
+import PolicyProject.policyService.domain.Enums.Enums.CoverageType;
+import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.*;
 import PolicyProject.policyService.infrastructure.persistence.repository.*;
 import org.springframework.boot.CommandLineRunner;
@@ -19,18 +21,34 @@ public class DatabaseSeed implements CommandLineRunner {
     private final CarRepository carRepository;
     private final LicensePlateRepository licensePlateRepository;
     private final WeightsRepository weightsRepository;
+    private final CoverageRepository coverageRepository;
+    private final HouseRepository houseRepository;
+    private final BuildingRepository buildingRepository;
+    private final AddressRepository addressRepository;
+    private final EarthQuakeWeightsRepository earthQuakeWeightsRepository;
 
     // Constructor
     public DatabaseSeed(CarPolicyRepository carPolicyrepository,
                         CustomerRepository customerRepository,
                         CarRepository carRepository,
                         LicensePlateRepository licensePlateRepository,
-                        WeightsRepository weightsRepository) {
+                        WeightsRepository weightsRepository,
+                        CoverageRepository coverageRepository,
+                        HouseRepository houseRepository,
+                        BuildingRepository buildingRepository,
+                        AddressRepository addressRepository,
+                        EarthQuakeWeightsRepository earthQuakeWeightsRepository) {
         this.carPolicyrepository = carPolicyrepository;
         this.customerRepository = customerRepository;
         this.carRepository = carRepository;
         this.licensePlateRepository = licensePlateRepository;
         this.weightsRepository = weightsRepository;
+        this.coverageRepository = coverageRepository;
+        this.houseRepository = houseRepository;
+        this.buildingRepository = buildingRepository;
+        this.addressRepository = addressRepository;
+        this.earthQuakeWeightsRepository = earthQuakeWeightsRepository;
+
     }
 
 
@@ -39,36 +57,57 @@ public class DatabaseSeed implements CommandLineRunner {
 
         boolean condition = false;
 
-        if (carRepository.count()==0 || condition)
-        {
-            seedCar();
-            System.out.println("CAR SEED IS COMPLETED");
-        }
-        if (customerRepository.count() == 0 || condition)
-        {
+        if (customerRepository.count() == 0 || condition) {
             seedDataCustomer();
             System.out.println("CUSTOMER SEED IS COMPLETED");
         }
-        if(licensePlateRepository.count()==0 || condition)
-        {
+        if (addressRepository.count() == 0 || condition) {
+            seedAddress();
+            System.out.println("ADDRESS SEED IS COMPLETED");
+        }
+        if (buildingRepository.count() == 0 || condition) {
+            seedBuildings();
+            System.out.println("BUİLDİNG SEED IS COMPLETED");
+        }
+        if (houseRepository.count() == 0 || condition) {
+            seedHouse();
+            System.out.println("HOUSE SEED IS COMPLETED");
+        }
+        if (carRepository.count() == 0 || condition) {
+            seedCar();
+            System.out.println("CAR SEED IS COMPLETED");
+        }
+        if (licensePlateRepository.count() == 0 || condition) {
             seedLicensePlate();
             System.out.println("LICENSE_PLATE SEED IS COMPLETED");
         }
-        if (carPolicyrepository.count() == 0 || condition)
-        {
-           seedDataCarPolicies();
-            System.out.println("CAR_POLICY SEED IS COMPLETED");
+        if (coverageRepository.count() == 0 || condition) {
+            seedCoverage();
+            System.out.println("COVERAGE SEED IS COMPLETED");
         }
-        if(weightsRepository.count()==0 || condition)
-        {
+        if (carPolicyrepository.count() == 0 || condition) {
+            if (coverageRepository.count() != 0) {
+                seedDataCarPolicies();
+                System.out.println("CAR_POLICY SEED IS COMPLETED");
+            }
+
+        }
+        if (weightsRepository.count() == 0 || condition) {
             seedDataWeights();
             System.out.println("WEIGHTS SEED IS COMPLETED");
         }
+        if (earthQuakeWeightsRepository.count() == 0 || condition) {
+            seedEarthquakeWeight();
+            System.out.println("EARTHQUAKE_WEIGHTS SEED IS COMPLETED");
+        }
+
+
+
 
         System.out.println("DATABASE SEED IS COMPLETED");
     }
 
-    private void seedCar(){
+    private void seedCar() {
         List<Car> cars = new ArrayList<>();
 
         cars.add(Car.builder()
@@ -344,7 +383,8 @@ public class DatabaseSeed implements CommandLineRunner {
 
         carRepository.saveAll(cars);
     }
-    private void seedLicensePlate(){
+
+    private void seedLicensePlate() {
         List<LicensePlate> licensePlates = new ArrayList<>();
 
         for (int i = 1; i <= 100; i++) {
@@ -353,8 +393,7 @@ public class DatabaseSeed implements CommandLineRunner {
 
             Optional<Car> optionalCar = carRepository.findById(carId);
             Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-            if (optionalCar.isPresent() && optionalCustomer.isPresent())
-            {
+            if (optionalCar.isPresent() && optionalCustomer.isPresent()) {
                 Car car = optionalCar.get();
                 Customer customer = optionalCustomer.get();
                 licensePlates.add(LicensePlate.builder()
@@ -366,6 +405,7 @@ public class DatabaseSeed implements CommandLineRunner {
         }
         licensePlateRepository.saveAll(licensePlates);
     }
+
     private void seedDataCustomer() {
 
         List<Customer> customers = new ArrayList<>();
@@ -620,52 +660,54 @@ public class DatabaseSeed implements CommandLineRunner {
                 .build());
 
 
-
         customerRepository.saveAll(customers);
     }
+
     private void seedDataCarPolicies() {
 
-        CarPolicyState state;
+        PolicyState state;
         Random random = new Random();
+
         List<CarPolicy> carPolicies = new ArrayList<>();
         for (int i = 1; i <= 1000; i++) {
 
             Long customerId = (long) (i % 20 + 1);
             Long licensePlateId = (long) (i % 100 + 1);
+            Long coverageId = (long) (i % 2 == 0 ? 1 : 2);
 
-
+            Optional<Coverage> optionalCoverage = coverageRepository.findById(coverageId);
             Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
             Optional<LicensePlate> optionalLicensePlate = licensePlateRepository.findById(licensePlateId);
 
-            if (optionalCustomer.isPresent() && optionalLicensePlate.isPresent()) {
+            if (optionalCustomer.isPresent() && optionalLicensePlate.isPresent() && optionalCoverage.isPresent()) {
                 Customer customer = optionalCustomer.get();
                 LicensePlate licensePlate = optionalLicensePlate.get();
+                Coverage coverage = optionalCoverage.get();
                 LocalDate startDate = LocalDate.of(2024, 10, 1);
                 LocalDate policyLocalDate = startDate.plusDays(i);
 
-                state = CarPolicyState.values()[random.nextInt(CarPolicyState.values().length)];
-
+                state = PolicyState.values()[random.nextInt(PolicyState.values().length)];
 
                 CarPolicy policy = CarPolicy.builder()
                         .policyDescription("Açıklama " + i)
-                        .policyType(i % 2 == 0 ? 101 : 102)
+
                         .policyStartDate(policyLocalDate)
                         .policyEndDate(policyLocalDate.plusYears(1))
                         .policyAmount(1000.0 + (i * 100))
                         .policyOfferDate(policyLocalDate)
                         .licensePlate(licensePlate)
                         .customer(customer)
+                        .coverage(coverage)
                         .state(state)
                         .build();
 
                 carPolicies.add(policy);
             }
-
-                carPolicyrepository.saveAll(carPolicies);
         }
+        carPolicyrepository.saveAll(carPolicies);
     }
-    private void seedDataWeights()
-    {
+
+    private void seedDataWeights() {
         weightsRepository.saveAll(List.of(
                 // YAŞ
                 Weights.builder().key("AGE_18_25").weight(new BigDecimal("1.2")).minValue(new BigDecimal("18")).maxValue(new BigDecimal("25")).type("CUSTOMER_AGE").build(),
@@ -713,26 +755,187 @@ public class DatabaseSeed implements CommandLineRunner {
                 Weights.builder().key("CAR_AGE_20_UP").weight(new BigDecimal("2.5")).minValue(new BigDecimal("21")).maxValue(new BigDecimal("100")).type("CAR_AGE").build(),
 
                 // ARAÇ TONAJ ARALIĞI VE TİPİ
-                        Weights.builder().key("CAR_M1_CLASS").weight(new BigDecimal("1.1")).minValue(new BigDecimal("0.0")).maxValue(new BigDecimal("1.0")).type("CAR_TYPE").build(),
-                        Weights.builder().key("CAR_M2_CLASS").weight(new BigDecimal("1.3")).minValue(new BigDecimal("0.1")).maxValue(new BigDecimal("1.1")).type("CAR_TYPE").build(),
-                        Weights.builder().key("CAR_M3_CLASS").weight(new BigDecimal("1.6")).minValue(new BigDecimal("0.2")).maxValue(new BigDecimal("1.2")).type("CAR_TYPE").build(),
-                        Weights.builder().key("CAR_N1_CLASS").weight(new BigDecimal("1.2")).minValue(new BigDecimal("0.3")).maxValue(new BigDecimal("1.3")).type("CAR_TYPE").build(),
-                        Weights.builder().key("CAR_N2_CLASS").weight(new BigDecimal("1.5")).minValue(new BigDecimal("0.4")).maxValue(new BigDecimal("1.4")).type("CAR_TYPE").build(),
-                        Weights.builder().key("CAR_N3_CLASS").weight(new BigDecimal("2.0")).minValue(new BigDecimal("0.5")).maxValue(new BigDecimal("1.5")).type("CAR_TYPE").build(),
-                        Weights.builder().key("CAR_O1_CLASS").weight(new BigDecimal("1.4")).minValue(new BigDecimal("0.6")).maxValue(new BigDecimal("1.6")).type("CAR_TYPE").build(),
-                        Weights.builder().key("CAR_O2_CLASS").weight(new BigDecimal("1.6")).minValue(new BigDecimal("0.7")).maxValue(new BigDecimal("1.7")).type("CAR_TYPE").build(),
-                        Weights.builder().key("CAR_O3_CLASS").weight(new BigDecimal("2.2")).minValue(new BigDecimal("0.8")).maxValue(new BigDecimal("1.8")).type("CAR_TYPE").build(),
-                        Weights.builder().key("CAR_O4_CLASS").weight(new BigDecimal("2.5")).minValue(new BigDecimal("0.9")).maxValue(new BigDecimal("1.9")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_M1_CLASS").weight(new BigDecimal("1.1")).minValue(new BigDecimal("0.0")).maxValue(new BigDecimal("1.0")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_M2_CLASS").weight(new BigDecimal("1.3")).minValue(new BigDecimal("0.1")).maxValue(new BigDecimal("1.1")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_M3_CLASS").weight(new BigDecimal("1.6")).minValue(new BigDecimal("0.2")).maxValue(new BigDecimal("1.2")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_N1_CLASS").weight(new BigDecimal("1.2")).minValue(new BigDecimal("0.3")).maxValue(new BigDecimal("1.3")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_N2_CLASS").weight(new BigDecimal("1.5")).minValue(new BigDecimal("0.4")).maxValue(new BigDecimal("1.4")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_N3_CLASS").weight(new BigDecimal("2.0")).minValue(new BigDecimal("0.5")).maxValue(new BigDecimal("1.5")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_O1_CLASS").weight(new BigDecimal("1.4")).minValue(new BigDecimal("0.6")).maxValue(new BigDecimal("1.6")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_O2_CLASS").weight(new BigDecimal("1.6")).minValue(new BigDecimal("0.7")).maxValue(new BigDecimal("1.7")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_O3_CLASS").weight(new BigDecimal("2.2")).minValue(new BigDecimal("0.8")).maxValue(new BigDecimal("1.8")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_O4_CLASS").weight(new BigDecimal("2.5")).minValue(new BigDecimal("0.9")).maxValue(new BigDecimal("1.9")).type("CAR_TYPE").build(),
 
 
-                        // SABİTELER
-                        Weights.builder().key("BASE").weight(new BigDecimal("1.0")).minValue(new BigDecimal("0.0")).maxValue(new BigDecimal("1.0")).type("CONSTANT").build(),
-                        Weights.builder().key("EURO").weight(new BigDecimal("1.1")).minValue(new BigDecimal("0.1")).maxValue(new BigDecimal("1.1")).type("CONSTANT").build(),
+                // SABİTELER
+                Weights.builder().key("BASE").weight(new BigDecimal("1.0")).minValue(new BigDecimal("0.0")).maxValue(new BigDecimal("1.0")).type("CONSTANT").build(),
+                Weights.builder().key("EURO").weight(new BigDecimal("1.1")).minValue(new BigDecimal("0.1")).maxValue(new BigDecimal("1.1")).type("CONSTANT").build(),
 
-                        // POLİCY TYPE
-                        Weights.builder().key("KASKO").weight(new BigDecimal("1.7")).minValue(new BigDecimal("0.2")).maxValue(new BigDecimal("1.2")).type("POLICY_TYPE").build(),
-                        Weights.builder().key("TRAFİK").weight(new BigDecimal("1.0")).minValue(new BigDecimal("0.3")).maxValue(new BigDecimal("1.3")).type("POLICY_TYPE").build()
+                // POLİCY TYPE
+                Weights.builder().key("KASKO").weight(new BigDecimal("1.7")).minValue(new BigDecimal("0.2")).maxValue(new BigDecimal("1.2")).type("POLICY_TYPE").build(),
+                Weights.builder().key("TRAFİK").weight(new BigDecimal("1.0")).minValue(new BigDecimal("0.3")).maxValue(new BigDecimal("1.3")).type("POLICY_TYPE").build()
+        ));
+    }
+
+    private void seedCoverage() {
+        List<Coverage> coverages = new ArrayList<>();
+
+        Coverage coverage2 = Coverage.builder()
+                .coverageType(CoverageType.TRAFİK)
+                .coverageDescription("Coverage Description " + "Trafik")
+                .build();
+        coverages.add(coverage2);
+        Coverage coverage = Coverage.builder()
+                .coverageType(CoverageType.KASKO)
+                .coverageDescription("Coverage Description " + "Kasko")
+                .build();
+        coverages.add(coverage);
+
+        coverageRepository.saveAll(coverages);
+
+    }
+
+    private void seedBuildings() {
+        Random random = new Random();
+        for (int i = 1; i <= 137; i++) {
+
+            Long customerId = (long) (i % 20 + 1);
+            Long addressId = (long) (i % 46 + 1);
+
+            Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+            Optional<Address> optionalAddress = addressRepository.findById(addressId);
+            if (optionalCustomer.isPresent() && optionalAddress.isPresent()) {
+                Customer customer = optionalCustomer.get();
+                Address address = optionalAddress.get();
+                int randomNumber = random.nextInt(10) + 1;
+
+                int randomYear = random.nextInt(2024 - 1980 + 1) + 1980;
+                Building building = Building.builder()
+                        .apartmentNumber(i % 3 + 1)
+                        .constructionStyle(i % 2 + 1)
+                        .totalFloors(randomNumber)
+                        .constructionYear(randomYear)
+                        .address(address)
+                        .build();
+
+                buildingRepository.save(building);
+            }
+        }
+    }
+
+    private void seedAddress() {
+        List<Address> addresses = List.of(
+                new Address(null, 2, "Acıbadem", "Kadıköy", "İstanbul", null),
+                new Address(null, 3, "Fenerbahçe", "Kadıköy", "İstanbul", null),
+                new Address(null, 4, "Kozyatağı", "Kadıköy", "İstanbul", null),
+                new Address(null, 5, "Etiler", "Beşiktaş", "İstanbul", null),
+                new Address(null, 6, "Levent", "Beşiktaş", "İstanbul", null),
+                new Address(null, 7, "Ortaköy", "Beşiktaş", "İstanbul", null),
+                new Address(null, 1, "Çengelköy", "Üsküdar", "İstanbul", null),
+                new Address(null, 2, "Kuzguncuk", "Üsküdar", "İstanbul", null),
+                new Address(null, 3, "Beylerbeyi", "Üsküdar", "İstanbul", null),
+                new Address(null, 4, "Ataköy", "Bakırköy", "İstanbul", null),
+                new Address(null, 5, "Yeşilköy", "Bakırköy", "İstanbul", null),
+                new Address(null, 6, "Florya", "Bakırköy", "İstanbul", null),
+                new Address(null, 7, "Maçka", "Şişli", "İstanbul", null),
+                new Address(null, 1, "Nişantaşı", "Şişli", "İstanbul", null),
+                new Address(null, 2, "Bomonti", "Şişli", "İstanbul", null),
+                new Address(null, 3, "Bahçelievler", "Çankaya", "Ankara", null),
+                new Address(null, 4, "Çayyolu", "Çankaya", "Ankara", null),
+                new Address(null, 5, "Kızılay", "Çankaya", "Ankara", null),
+                new Address(null, 6, "Etlik", "Keçiören", "Ankara", null),
+                new Address(null, 7, "Kuşcağız", "Keçiören", "Ankara", null),
+                new Address(null, 1, "Bağlum", "Keçiören", "Ankara", null),
+                new Address(null, 2, "Demetevler", "Yenimahalle", "Ankara", null),
+                new Address(null, 3, "Batıkent", "Yenimahalle", "Ankara", null),
+                new Address(null, 4, "İvedik", "Yenimahalle", "Ankara", null),
+                new Address(null, 5, "BüyükKayaş", "Mamak", "Ankara", null),
+                new Address(null, 6, "ŞahinTepesi", "Mamak", "Ankara", null),
+                new Address(null, 7, "Gökçek", "Mamak", "Ankara", null),
+                new Address(null, 1, "Alsancak", "Konak", "İzmir", null),
+                new Address(null, 2, "Kemeraltı", "Konak", "İzmir", null),
+                new Address(null, 3, "Basmane", "Konak", "İzmir", null),
+                new Address(null, 4, "Bostanlı", "Karşıyaka", "İzmir", null),
+                new Address(null, 5, "Çarşı", "Karşıyaka", "İzmir", null),
+                new Address(null, 6, "Yalı", "Karşıyaka", "İzmir", null),
+                new Address(null, 7, "Ege Üniversitesi", "Bornova", "İzmir", null),
+                new Address(null, 1, "Işıkkent", "Bornova", "İzmir", null),
+                new Address(null, 2, "Köyceğiz", "Bornova", "İzmir", null),
+                new Address(null, 3, "Kaleiçi", "Muratpaşa", "Antalya", null),
+                new Address(null, 4, "Konyaaltı", "Muratpaşa", "Antalya", null),
+                new Address(null, 5, "Lara", "Muratpaşa", "Antalya", null),
+                new Address(null, 6, "Santral", "Kepez", "Antalya", null),
+                new Address(null, 7, "Süleyman Demirel", "Kepez", "Antalya", null),
+                new Address(null, 1, "Aksu", "Kepez", "Antalya", null),
+                new Address(null, 2, "Mahmutlar", "Alanya", "Antalya", null),
+                new Address(null, 3, "Oba", "Alanya", "Antalya", null),
+                new Address(null, 4, "Kestel", "Alanya", "Antalya", null)
+        );
+        addressRepository.saveAll(addresses);
+    }
+
+    private void seedHouse() {
+        Random random = new Random();
+        for (int i = 1; i <= 138; i++) {
+            Long customerId = (long) (i % 20 + 1);
+            Long buildingId = (long) (i % 138 + 1);
+
+            Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+            Optional<Building> optionalBuilding = buildingRepository.findById(buildingId);
+
+            if (optionalCustomer.isPresent() && optionalBuilding.isPresent()) {
+                Customer customer = optionalCustomer.get();
+                Building building = optionalBuilding.get();
+                for (int j = 1; j <= 3; j++) {
+                    int randomNumber = random.nextInt(300) + 1;
+                    House house = House.builder()
+                            .number(j)
+                            .customer(customer)
+                            .building(building)
+                            .squareMeters(randomNumber)
+                            .build();
+
+                    houseRepository.save(house);
+                }
+            }
+        }
+    }
+
+    private void seedEarthquakeWeight() {
+        earthQuakeWeightsRepository.saveAll(List.of(
+                EarthQaukeWeights.builder().key("EARTHQUAKERISK_1").weight(new BigDecimal("3.2")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("EARTHQUAKERISK").build(),
+                EarthQaukeWeights.builder().key("EARTHQUAKERISK_2").weight(new BigDecimal("2.8")).minValue(new BigDecimal("2")).maxValue(new BigDecimal("2")).type("EARTHQUAKERISK").build(),
+                EarthQaukeWeights.builder().key("EARTHQUAKERISK_3").weight(new BigDecimal("4.1")).minValue(new BigDecimal("3")).maxValue(new BigDecimal("3")).type("EARTHQUAKERISK").build(),
+                EarthQaukeWeights.builder().key("EARTHQUAKERISK_4").weight(new BigDecimal("3.7")).minValue(new BigDecimal("4")).maxValue(new BigDecimal("4")).type("EARTHQUAKERISK").build(),
+                EarthQaukeWeights.builder().key("EARTHQUAKERISK_5").weight(new BigDecimal("3.9")).minValue(new BigDecimal("5")).maxValue(new BigDecimal("5")).type("EARTHQUAKERISK").build(),
+                EarthQaukeWeights.builder().key("EARTHQUAKERISK_6").weight(new BigDecimal("4.3")).minValue(new BigDecimal("6")).maxValue(new BigDecimal("6")).type("EARTHQUAKERISK").build(),
+                EarthQaukeWeights.builder().key("EARTHQUAKERISK_7").weight(new BigDecimal("2.5")).minValue(new BigDecimal("7")).maxValue(new BigDecimal("7")).type("EARTHQUAKERISK").build(),
+
+                EarthQaukeWeights.builder().key("CONSTRUCTIONSTYLE_REINFORCED_CONCRETE").weight(new BigDecimal("5.0")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("CONSTRUCTION_STYLE").build(),
+                EarthQaukeWeights.builder().key("CONSTRUCTIONSTYLE_OTHER").weight(new BigDecimal("3.0")).minValue(new BigDecimal("2")).maxValue(new BigDecimal("2")).type("CONSTRUCTION_STYLE").build(),
+
+                EarthQaukeWeights.builder().key("CONSTRUCTION_YEAR_0_5").weight(new BigDecimal("3.5")).minValue(new BigDecimal("0")).maxValue(new BigDecimal("5")).type("CONSTRUCTION_YEAR").build(),
+                EarthQaukeWeights.builder().key("CONSTRUCTION_YEAR_6_10").weight(new BigDecimal("4.0")).minValue(new BigDecimal("6")).maxValue(new BigDecimal("10")).type("CONSTRUCTION_YEAR").build(),
+                EarthQaukeWeights.builder().key("CONSTRUCTION_YEAR_11_20").weight(new BigDecimal("3.8")).minValue(new BigDecimal("11")).maxValue(new BigDecimal("20")).type("CONSTRUCTION_YEAR").build(),
+                EarthQaukeWeights.builder().key("CONSTRUCTION_YEAR_21_UP").weight(new BigDecimal("4.5")).minValue(new BigDecimal("21")).maxValue(new BigDecimal("500")).type("CONSTRUCTION_YEAR").build(),
+
+                EarthQaukeWeights.builder().key("TOTAL_FLOORS_0_3").weight(new BigDecimal("2.5")).minValue(new BigDecimal("0")).maxValue(new BigDecimal("3")).type("TOTAL_FLOORS").build(),
+                EarthQaukeWeights.builder().key("TOTAL_FLOORS_4_7").weight(new BigDecimal("3.0")).minValue(new BigDecimal("4")).maxValue(new BigDecimal("7")).type("TOTAL_FLOORS").build(),
+                EarthQaukeWeights.builder().key("TOTAL_FLOORS_8_10").weight(new BigDecimal("3.3")).minValue(new BigDecimal("8")).maxValue(new BigDecimal("10")).type("TOTAL_FLOORS").build(),
+                EarthQaukeWeights.builder().key("TOTAL_FLOORS_11_15").weight(new BigDecimal("4.0")).minValue(new BigDecimal("11")).maxValue(new BigDecimal("15")).type("TOTAL_FLOORS").build(),
+                EarthQaukeWeights.builder().key("TOTAL_FLOORS_16_UP").weight(new BigDecimal("4.2")).minValue(new BigDecimal("16")).maxValue(new BigDecimal("100")).type("TOTAL_FLOORS").build(),
+
+                EarthQaukeWeights.builder().key("SQUARE_METERS_0_60").weight(new BigDecimal("2.1")).minValue(new BigDecimal("0")).maxValue(new BigDecimal("60")).type("SQUARE_METERS").build(),
+                EarthQaukeWeights.builder().key("SQUARE_METERS_61_80").weight(new BigDecimal("3.0")).minValue(new BigDecimal("61")).maxValue(new BigDecimal("80")).type("SQUARE_METERS").build(),
+                EarthQaukeWeights.builder().key("SQUARE_METERS_81_100").weight(new BigDecimal("3.5")).minValue(new BigDecimal("81")).maxValue(new BigDecimal("100")).type("SQUARE_METERS").build(),
+                EarthQaukeWeights.builder().key("SQUARE_METERS_101_120").weight(new BigDecimal("4.0")).minValue(new BigDecimal("101")).maxValue(new BigDecimal("120")).type("SQUARE_METERS").build(),
+                EarthQaukeWeights.builder().key("SQUARE_METERS_121_150").weight(new BigDecimal("4.3")).minValue(new BigDecimal("121")).maxValue(new BigDecimal("150")).type("SQUARE_METERS").build(),
+                EarthQaukeWeights.builder().key("SQUARE_METERS_151_UP").weight(new BigDecimal("4.8")).minValue(new BigDecimal("151")).maxValue(new BigDecimal("5000")).type("SQUARE_METERS").build()
+
+
+
         ));
     }
 }
+
 

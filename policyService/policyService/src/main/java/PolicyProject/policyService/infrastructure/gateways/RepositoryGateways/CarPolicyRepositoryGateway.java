@@ -2,6 +2,7 @@ package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
 
 import PolicyProject.policyService.application.gateways.CarPolicyGateway;
 import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
+import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
@@ -30,18 +31,18 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
     private Specification<CarPolicy> specification;
 
     @Override
-    @CachePut(value = "carPolicyCache", key = "#carPolicy.id")
+    //@CachePut(value = "carPolicyCache", key = "#carPolicy.id")
     public CarPolicy create(CarPolicy carPolicy, Customer customer, LicensePlate licensePlate) {
         carPolicy.setCustomer(customer);
         carPolicy.setLicensePlate(licensePlate);
-        carPolicy.setState(CarPolicyState.CREATED);
+        carPolicy.setState(PolicyState.CREATED);
         var entity = carPolicyRepository.save(carPolicy);
         updateTotalCount();
         return entity;
     }
 
     @Override
-    @Cacheable(value = "carPolicyCache", key = "#carPolicy.id")
+    //@Cacheable(value = "carPolicyCache", key = "#carPolicy.id")
     public CarPolicy get(CarPolicy carPolicy) {
         var entityObject = carPolicyRepository.findById(carPolicy.getId());
         return entityObject.orElse(null);
@@ -49,7 +50,7 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
 
     @Override
     @Transactional
-    @CachePut(value = "carPolicyCache", key = "#carPolicy.id")
+    //@CachePut(value = "carPolicyCache", key = "#carPolicy.id")
     public CarPolicy update(CarPolicy carPolicy) {
         var existingCarPolicy = get(carPolicy);
         if (existingCarPolicy != null) {
@@ -61,7 +62,7 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
     }
 
     @Override
-    @CacheEvict(value = "carPolicyCache", key = "#carPolicy.id")
+    //@CacheEvict(value = "carPolicyCache", key = "#carPolicy.id")
     public CarPolicy delete(CarPolicy carPolicy) {
         var entityObject = get(carPolicy);
         if (entityObject != null) {
@@ -86,12 +87,12 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
 
     @Override
     public List<CarPolicy> getCarPoliciesByCustomer(String tckn) {
-        var PolicyList = carPolicyRepository.findByCustomerTckn(tckn).stream().toList();
+        var PolicyList = carPolicyRepository.findByCustomer_Tckn(tckn).stream().toList();
         if (PolicyList.isEmpty() )
         {
             return null;
         }
-        return PolicyList;
+       return PolicyList;
     }
 
     @Override
@@ -116,24 +117,32 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
 
     @Override
     public List<CarPolicy> findByStateAndExpiryDateBefore(CarPolicyState state, LocalDate currentDate) {
-        return carPolicyRepository.findByStateAndExpiryDateBefore(state, currentDate);
+        return  carPolicyRepository.findByStateAndExpiryDateBefore(state, currentDate);
     }
 
     public int getTotal() {
         return (int) carPolicyRepository.count(specification);
     }
 
-    @CacheEvict(value = "totalCarPolicies", allEntries = true)
+    @Override
+    public List<CarPolicy> findByCustomer_Tckn(String tckn) {
+        CarPolicy carPolicy = new CarPolicy();
+        carPolicy.getId();
+
+        return List.of();
+    }
+
+   // @CacheEvict(value = "totalCarPolicies", allEntries = true)
     public void updateTotalCount() {}
 
 
     @Override
-    public CarPolicy SetStateCarPolicy(CarPolicy carPolicy, CarPolicyState carPolicyState) {
+    public CarPolicy SetStateCarPolicy(CarPolicy carPolicy, PolicyState policyState) {
         var existingCarPolicy = get(carPolicy);
         if (existingCarPolicy != null) {
-            carPolicy.setCustomer(existingCarPolicy.getCustomer());
+           carPolicy.setCustomer(existingCarPolicy.getCustomer());
             carPolicy.setLicensePlate(existingCarPolicy.getLicensePlate());
-            carPolicy.setState(carPolicyState);
+            carPolicy.setState(policyState);
             return carPolicyRepository.save(carPolicy);
         }
         return null;

@@ -92,10 +92,6 @@ public class CarPolicyController_V1 {
                         (CarPolicyMapper.INSTANCE.getCarPoliciesToCarPolicyModel(getCarPolicyListRequest)));
     }
 
-
-
-
-
     @DeleteMapping
     public ResponseEntity<DeleteCarPolicyResponse> deletePolicy(@Valid @ModelAttribute DeleteCarPolicyRequest deleteCarPolicyRequest)
     {

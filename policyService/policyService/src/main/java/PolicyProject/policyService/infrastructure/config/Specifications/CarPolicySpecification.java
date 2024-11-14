@@ -1,7 +1,9 @@
 package PolicyProject.policyService.infrastructure.config.Specifications;
 
 import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
+import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -14,15 +16,15 @@ public class CarPolicySpecification {
 
 
     public static Specification<CarPolicy> build(
-            String policyDescription, Integer policyType,
-            CarPolicyState state, LocalDate startDate, LocalDate endDate,
+            String policyDescription, Coverage coverage,
+            PolicyState state, LocalDate startDate, LocalDate endDate,
             Double Amount, String plate, String tckn) {
 
         return Specification
                 .where(hasPolicyDescription(policyDescription))
                 .and(hasPolicyStartDate(startDate))
                 .and(hasPolicyEndDate(endDate))
-                .and(hasPolicyType(policyType))
+                .and(hasPolicyType(coverage))
                 .and(isActiveBetween(startDate, endDate))
                 .and(hasPolicyAmount(Amount))
                 .and(hasPolicyStatus(state))
@@ -36,17 +38,18 @@ public class CarPolicySpecification {
                 policyDescription == null ? null : criteriaBuilder.equal(root.get("policyDescription"), policyDescription);
     }
 
-    public static Specification<CarPolicy> hasPolicyType(Integer policyType) {
+    public static Specification<CarPolicy> hasPolicyType(Coverage policyType) {
         return (root, query, criteriaBuilder) -> {
             if (policyType == null) {
                 return criteriaBuilder.conjunction();
             } else {
-                return criteriaBuilder.equal(root.get("policyType"), policyType);
+                policyType.setId(policyType.getId()%100);
+                return criteriaBuilder.equal(root.get("coverage"), policyType);
             }
         };
     }
 
-    public static Specification<CarPolicy> hasPolicyStatus(CarPolicyState state) {
+    public static Specification<CarPolicy> hasPolicyStatus(PolicyState state) {
         return (root, query, criteriaBuilder) ->
                 state == null ? null : criteriaBuilder.equal(root.get("state"), state);
     }

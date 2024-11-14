@@ -1,8 +1,11 @@
 package PolicyProject.policyService.application.usecases;
 
 import PolicyProject.policyService.application.gateways.CarPolicyGateway;
+import PolicyProject.policyService.domain.CoverageTypeConverter;
 import PolicyProject.policyService.domain.Enums.Enums.CarPolicyEvent;
 import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
+import PolicyProject.policyService.domain.Enums.Enums.CoverageType;
+import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
@@ -10,6 +13,7 @@ import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.C
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyType;
 import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import PolicyProject.policyService.interfaces.mappers.LicensePlateMapper;
@@ -29,8 +33,6 @@ public class ExecuteCarPolicy {
     private final ExecuteCustomer executeCustomer;
     private final ExecuteLicensePlate executeLicensePlate;
     private final CarPolicySpecificationBuild carPolicySpecificationBuild;
-    private StateMachine<CarPolicyState, CarPolicyEvent> stateMachine;
-
 
     public CarPolicyModel executeUpdate(CarPolicyModel carPolicyModel)
     {
@@ -54,6 +56,7 @@ public class ExecuteCarPolicy {
 
     public CarPolicyModel executeGet(CarPolicyModel carPolicyModel)
     {
+
         Optional<CarPolicy> optionalEntity = Optional.ofNullable
                 (carPolicyGateway.get(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel)));
         CarPolicy carPolicyEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.customerId(),"Entity not found"));
@@ -96,6 +99,7 @@ public class ExecuteCarPolicy {
         Specification<CarPolicy> specification = carPolicySpecificationBuild.CarPolicyBuild(CarPolicyMapper
                 .INSTANCE.carPolicyModelToCarPolicyEntity
                         (carPolicyModel),carPolicyModel.tckn(),carPolicyModel.licensePlateNumber());
+
         int page = carPolicyModel.page();
         int size = carPolicyModel.size();
         Optional<List<CarPolicy>> EntityList = Optional.ofNullable
@@ -103,6 +107,7 @@ public class ExecuteCarPolicy {
 
         List<CarPolicy> CarPolicyList = EntityList.orElseThrow(() -> new EntityNotFoundException(carPolicyModel.policyId(),"Entity not found"));
         return CarPolicyMapper.INSTANCE.carPolicyEntityListToCarPolicyModelList(CarPolicyList);
+
     }
 
     public List<CarPolicyModel> executeGet_BetweenDate(CarPolicyModel carPolicyModel)
@@ -130,11 +135,11 @@ public class ExecuteCarPolicy {
         if (event == CarPolicyEvent.CANCEL)
         {
             optionalEntity = Optional.ofNullable
-                    (carPolicyGateway.SetStateCarPolicy(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel), CarPolicyState.CANCELLED));
+                    (carPolicyGateway.SetStateCarPolicy(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel), PolicyState.CANCELLED));
         }
         else if (event == CarPolicyEvent.ACTIVATE) {
             optionalEntity = Optional.ofNullable
-                    (carPolicyGateway.SetStateCarPolicy(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel), CarPolicyState.ACTIVE));
+                    (carPolicyGateway.SetStateCarPolicy(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel), PolicyState.ACTIVE));
         }
         else
         { new IllegalStateException();}

@@ -2,22 +2,16 @@ package PolicyProject.policyService.application.usecases;
 
 import PolicyProject.policyService.application.gateways.WeightGateway;
 import PolicyProject.policyService.application.service.StrategyFactory.WeightStrategyFactory;
-import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.domain.model.LicensePlateModel;
 import PolicyProject.policyService.domain.model.WeightsModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
-import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;
-import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.ConstantStrategy.ConstantStrategy;
-import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
+import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.CarPolicyWeightStrategy.ConstantStrategy;
 import PolicyProject.policyService.interfaces.mappers.WeightsMapper;
-import com.sun.jdi.LongValue;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +45,6 @@ public class ExecuteWeight {
             IWeightStrategy strategy = strategyFactory.getStrategy(parameter.getType());
             BigDecimal valueToCheck = strategy.getValue(licensePlateModel);
 
-            // ConstantStrategy'yi koşulsuz olarak hesaba dahil et
             if (strategy instanceof ConstantStrategy) {
                 total = total.add(strategy.calculate(licensePlateModel, parameter));
             } else if (parameter.getMinValue() != null && parameter.getMaxValue() != null) {

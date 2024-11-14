@@ -53,7 +53,8 @@ public class CustomerRepositoryGateway implements CustomerGateway {
             return null;
         }
         newCustomer.setId(existingCustomer.getId());
-        newCustomer.setCarPolicies(existingCustomer.getCarPolicies());
+        newCustomer.setPolicies(existingCustomer.getPolicies());
+        //newCustomer.setCarPolicies(existingCustomer.getCarPolicies());
         return customerRepository.save(newCustomer);
     }
 
