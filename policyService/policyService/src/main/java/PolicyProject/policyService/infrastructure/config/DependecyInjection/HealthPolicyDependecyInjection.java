@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 public class HealthPolicyDependecyInjection {
 
     @Bean
-    ExecuteHealthPolicy executePolicy(HealthPolicyGateway healthPolicyGateway,
+    ExecuteHealthPolicy executeHealthPolicy(HealthPolicyGateway healthPolicyGateway,
                                       ExecuteCustomer executeCustomer,
                                       HealthPolicySpecificationBuild healthPolicySpecificationBuild,
                                       ExecutePersonalHealth executePersonalHealth)

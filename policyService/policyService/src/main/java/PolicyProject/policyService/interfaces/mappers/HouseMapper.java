@@ -19,15 +19,9 @@ public interface HouseMapper {
     @Mapping(source = "neighborhood", target = "building.address.neighborhood")
     HouseModel getHouseWithCustomerRequestToHouseModel(GetHouseWCustomerRequest getHouseWCustomerRequest);
 
-
-
-
-
     GetHouseWCustomerResponse HouseModelToGetHouseWCustomerResponse(HouseModel houseModel);
 
     House HouseModelToHouseEntity(HouseModel houseModel);
-
-
 
     HouseModel houseEntityToHouseModel(House house);
 
