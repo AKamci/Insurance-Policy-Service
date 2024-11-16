@@ -14,9 +14,9 @@ import PolicyProject.policyService.application.usecases.ExecuteWeight;
 import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.EarthQuakeWeightRepositoryGateway;
 import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.HouseRepositoryGateway;
 import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.LicensePlateRepositoryGateway;
-import PolicyProject.policyService.infrastructure.persistence.repository.EarthQuakeWeightsRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.HouseRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.LicensePlateRepository;
+
+import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.EarthquakePolicy.HouseRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.EarthQuakeWeightsRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

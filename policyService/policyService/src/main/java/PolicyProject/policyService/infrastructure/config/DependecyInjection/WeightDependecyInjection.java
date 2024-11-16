@@ -8,8 +8,8 @@ import PolicyProject.policyService.application.usecases.ExecuteLicensePlate;
 import PolicyProject.policyService.application.usecases.ExecuteWeight;
 import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.LicensePlateRepositoryGateway;
 import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.WeightRepositoryGateway;
-import PolicyProject.policyService.infrastructure.persistence.repository.LicensePlateRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository;
+
+import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.WeightsRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

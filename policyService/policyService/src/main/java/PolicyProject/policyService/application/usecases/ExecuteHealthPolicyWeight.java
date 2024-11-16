@@ -1,0 +1,13 @@
+package PolicyProject.policyService.application.usecases;
+
+import PolicyProject.policyService.application.gateways.EarthQuakeWeightGateway;
+import PolicyProject.policyService.application.gateways.HealthPolicyWeightGateway;
+import PolicyProject.policyService.application.service.StrategyFactory.EarthQuakeWeightStrategyFactory;
+import PolicyProject.policyService.application.service.StrategyFactory.HealthPolicyWeightStrategyFactory;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class ExecuteHealthPolicyWeight {
+    private final HealthPolicyWeightGateway healthPolicyWeightGateway;
+    private final HealthPolicyWeightStrategyFactory healthPolicyWeightStrategyFactory;
+}

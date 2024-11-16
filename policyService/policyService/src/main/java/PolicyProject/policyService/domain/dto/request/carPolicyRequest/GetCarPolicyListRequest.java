@@ -14,7 +14,7 @@ public record GetCarPolicyListRequest(
         Long policyId,
         LocalDate policyOfferDate,
         String policyDescription,
-        Integer coverage,
+        Integer coverageCode,
         PolicyState state,
         Double policyAmount,
         Long customerId,

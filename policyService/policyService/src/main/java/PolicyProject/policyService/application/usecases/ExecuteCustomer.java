@@ -2,20 +2,15 @@ package PolicyProject.policyService.application.usecases;
 
 import PolicyProject.policyService.application.gateways.CustomerGateway;
 import PolicyProject.policyService.domain.model.CustomerModel;
-import PolicyProject.policyService.infrastructure.exception.DuplicateTcknException;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CustomerSpecificationBuild;
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
-import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 @RequiredArgsConstructor
 public class ExecuteCustomer {

@@ -1,8 +1,9 @@
 package PolicyProject.policyService.application.gateways;
 
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.*;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.House;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.EarthquakePolicy;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;

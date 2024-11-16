@@ -4,24 +4,18 @@ import PolicyProject.policyService.application.gateways.CarPolicyGateway;
 import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
-import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
-import PolicyProject.policyService.infrastructure.persistence.repository.CarPolicyRepository;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.LicensePlate;
+import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.CarPolicyRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @RequiredArgsConstructor
 public class CarPolicyRepositoryGateway implements CarPolicyGateway
@@ -142,10 +136,8 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
     public CarPolicy SetStateCarPolicy(CarPolicy carPolicy, PolicyState policyState) {
         var existingCarPolicy = get(carPolicy);
         if (existingCarPolicy != null) {
-           carPolicy.setCustomer(existingCarPolicy.getCustomer());
-            carPolicy.setLicensePlate(existingCarPolicy.getLicensePlate());
-            carPolicy.setState(policyState);
-            return carPolicyRepository.save(carPolicy);
+            existingCarPolicy.setState(policyState);
+            return carPolicyRepository.save(existingCarPolicy);
         }
         return null;
     }

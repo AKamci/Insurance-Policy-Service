@@ -11,8 +11,8 @@ import PolicyProject.policyService.application.usecases.ExecuteWeight;
 import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.CustomerRepositoryGateway;
 import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.LicensePlateRepositoryGateway;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CustomerSpecificationBuild;
+import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.CarPolicy.LicensePlateRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.CustomerRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.LicensePlateRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

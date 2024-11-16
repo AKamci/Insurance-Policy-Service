@@ -1,11 +1,14 @@
 package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
 
 import PolicyProject.policyService.application.gateways.EarthQuakeGateway;
-import PolicyProject.policyService.domain.CoverageTypeConverter;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.*;
-import PolicyProject.policyService.infrastructure.persistence.repository.EarthQuakeRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.PoliciesRepository;
+
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.House;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.EarthquakePolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.Policies;
+import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.EarthQuakeRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.PoliciesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

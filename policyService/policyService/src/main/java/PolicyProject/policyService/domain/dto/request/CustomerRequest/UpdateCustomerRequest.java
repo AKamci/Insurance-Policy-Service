@@ -1,12 +1,8 @@
 package PolicyProject.policyService.domain.dto.request.CustomerRequest;
 
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
 import jakarta.validation.constraints.*;
-import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 public record UpdateCustomerRequest(
         @Pattern(regexp = "\\d{11}", message = "TCKN must be 11 digits")

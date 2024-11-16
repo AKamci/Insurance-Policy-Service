@@ -5,7 +5,7 @@ import PolicyProject.policyService.application.service.StrategyFactory.WeightStr
 import PolicyProject.policyService.domain.model.LicensePlateModel;
 import PolicyProject.policyService.domain.model.WeightsModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
-import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
+import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.Weights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.CarPolicyWeightStrategy.ConstantStrategy;
 import PolicyProject.policyService.interfaces.mappers.WeightsMapper;

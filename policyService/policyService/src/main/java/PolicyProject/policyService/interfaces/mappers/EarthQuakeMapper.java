@@ -3,10 +3,9 @@ package PolicyProject.policyService.interfaces.mappers;
 
 import PolicyProject.policyService.domain.dto.request.EarthQuakeRequest.*;
 import PolicyProject.policyService.domain.dto.response.EarthQuakeResponse.*;
-import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.domain.model.EarthQuakeModel;
 import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
-import PolicyProject.policyService.infrastructure.persistence.entity.EarthquakePolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.EarthquakePolicy;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
@@ -46,8 +45,6 @@ public interface EarthQuakeMapper {
     @Mapping(source = "policyId", target = "id")
     @Mapping(source = "coverage", target = "coverage", qualifiedByName = "coverageFromInteger")
     List<EarthQuakeModel> earthQuakePolicyEntityListToEarthQuakeModelList(List<EarthquakePolicy> earthquakePolicyList);
-
-
 
 
     @Named("coverageFromInteger")

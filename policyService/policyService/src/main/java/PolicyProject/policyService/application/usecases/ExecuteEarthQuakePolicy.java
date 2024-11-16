@@ -1,24 +1,21 @@
 package PolicyProject.policyService.application.usecases;
 
-import PolicyProject.policyService.application.gateways.CarPolicyGateway;
 import PolicyProject.policyService.application.gateways.EarthQuakeGateway;
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyEvent;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyEvent;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
-import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.domain.model.EarthQuakeModel;
 import PolicyProject.policyService.domain.model.HouseModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
-import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CarPolicySpecificationBuild;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.EarthQuakeSpecificationBuild;
 import PolicyProject.policyService.infrastructure.persistence.entity.*;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.House;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.EarthquakePolicy;
 import PolicyProject.policyService.interfaces.mappers.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

@@ -3,11 +3,9 @@ package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
 import PolicyProject.policyService.application.gateways.EarthQuakeWeightGateway;
 import PolicyProject.policyService.domain.Enums.Enums.NonValuesStrategyType;
 import PolicyProject.policyService.infrastructure.exception.DuplicateWeightKeyException;
-import PolicyProject.policyService.infrastructure.persistence.entity.EarthQaukeWeights;
-import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
-import PolicyProject.policyService.infrastructure.persistence.repository.EarthQuakeRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.EarthQuakeWeightsRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository;
+import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
+
+import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.EarthQuakeWeightsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;

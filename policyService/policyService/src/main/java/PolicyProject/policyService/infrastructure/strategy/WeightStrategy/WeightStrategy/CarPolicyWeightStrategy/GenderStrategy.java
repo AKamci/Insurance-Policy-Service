@@ -1,7 +1,7 @@
 package PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.CarPolicyWeightStrategy;
 
 import PolicyProject.policyService.domain.model.LicensePlateModel;
-import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
+import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.Weights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.ICarPolicyWeightStrategy;
 
 import java.math.BigDecimal;

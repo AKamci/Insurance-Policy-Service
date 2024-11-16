@@ -3,13 +3,11 @@ package PolicyProject.policyService.interfaces.mappers;
 import PolicyProject.policyService.domain.dto.request.CustomerRequest.*;
 import PolicyProject.policyService.domain.dto.response.CustomerResponse.*;
 import PolicyProject.policyService.domain.model.CustomerModel;
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
-import java.util.Optional;
 
 @org.mapstruct.Mapper()
 public interface CustomerMapper{

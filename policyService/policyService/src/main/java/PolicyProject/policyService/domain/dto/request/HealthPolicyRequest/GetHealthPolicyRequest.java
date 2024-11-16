@@ -1,4 +1,9 @@
 package PolicyProject.policyService.domain.dto.request.HealthPolicyRequest;
 
-public record GetHealthPolicyRequest() {
+import jakarta.validation.constraints.NotNull;
+
+public record GetHealthPolicyRequest(
+        @NotNull(message = "ID cannot be null")
+        Long policyId
+) implements IHealthPolicyRequest{
 }

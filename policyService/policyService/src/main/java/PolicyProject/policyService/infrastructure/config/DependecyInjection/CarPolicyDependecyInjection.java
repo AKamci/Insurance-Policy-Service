@@ -9,7 +9,7 @@ import PolicyProject.policyService.application.usecases.ExecuteCustomer;
 import PolicyProject.policyService.application.usecases.ExecuteLicensePlate;
 import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.CarPolicyRepositoryGateway;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CarPolicySpecificationBuild;
-import PolicyProject.policyService.infrastructure.persistence.repository.CarPolicyRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.CarPolicyRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

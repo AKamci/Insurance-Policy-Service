@@ -1,15 +1,31 @@
 package PolicyProject.policyService.infrastructure.gateways;
 
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.domain.Enums.Enums.CoverageType;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.*;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.Car;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.LicensePlate;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.Address;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.Building;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.House;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.EarthquakePolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
+import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.Weights;
 import PolicyProject.policyService.infrastructure.persistence.repository.*;
+import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.CarPolicy.CarRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.CarPolicy.LicensePlateRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.EarthquakePolicy.AddressRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.EarthquakePolicy.BuildingRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.EarthquakePolicy.HouseRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.CarPolicyRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.EarthQuakeRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.EarthQuakeWeightsRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.WeightsRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -687,8 +703,8 @@ public class DatabaseSeed implements CommandLineRunner {
             Optional<LicensePlate> optionalLicensePlate = licensePlateRepository.findById(licensePlateId);
 
             if (optionalCustomer.isPresent() && optionalLicensePlate.isPresent() && optionalCoverage.isPresent()) {
-                Customer customer = optionalCustomer.get();
                 LicensePlate licensePlate = optionalLicensePlate.get();
+                Customer customer = licensePlate.getCustomer();
                 Coverage coverage = optionalCoverage.get();
                 LocalDate startDate = LocalDate.of(2024, 10, 1);
                 LocalDate policyLocalDate = startDate.plusDays(i);

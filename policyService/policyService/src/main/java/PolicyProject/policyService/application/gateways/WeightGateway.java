@@ -1,6 +1,6 @@
 package PolicyProject.policyService.application.gateways;
 
-import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
+import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.Weights;
 
 import java.util.List;
 

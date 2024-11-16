@@ -2,17 +2,9 @@ package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
 
 
 import PolicyProject.policyService.application.gateways.LicensePlateGateway;
-import PolicyProject.policyService.infrastructure.exception.DuplicateTcknException;
-import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
-import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
-import PolicyProject.policyService.infrastructure.persistence.repository.LicensePlateRepository;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.LicensePlate;
+import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.CarPolicy.LicensePlateRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.scheduling.annotation.Async;
-
-import java.util.concurrent.CompletableFuture;
 
 @RequiredArgsConstructor
 public class LicensePlateRepositoryGateway implements LicensePlateGateway {

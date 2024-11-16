@@ -5,9 +5,8 @@ import PolicyProject.policyService.application.service.StrategyFactory.EarthQuak
 import PolicyProject.policyService.domain.model.HouseModel;
 import PolicyProject.policyService.domain.model.WeightsModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
-import PolicyProject.policyService.infrastructure.persistence.entity.EarthQaukeWeights;
+import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;
-import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.CarPolicyWeightStrategy.ConstantStrategy;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.EarthQuakePolicyWeightStrategy.EarthQuakeConstantStrategy;
 import PolicyProject.policyService.interfaces.mappers.EarthQuakeWeightMapper;
 import lombok.RequiredArgsConstructor;

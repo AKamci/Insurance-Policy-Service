@@ -1,7 +1,6 @@
 package PolicyProject.policyService.domain.model;
 
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import java.time.LocalDate;
 import java.util.List;
 

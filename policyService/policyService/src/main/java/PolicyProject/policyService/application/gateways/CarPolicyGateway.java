@@ -3,14 +3,12 @@ package PolicyProject.policyService.application.gateways;
 import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
-import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.LicensePlate;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public interface CarPolicyGateway {
 

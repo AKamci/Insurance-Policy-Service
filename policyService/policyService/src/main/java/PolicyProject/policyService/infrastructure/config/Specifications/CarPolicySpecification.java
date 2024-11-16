@@ -1,8 +1,7 @@
 package PolicyProject.policyService.infrastructure.config.Specifications;
 
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

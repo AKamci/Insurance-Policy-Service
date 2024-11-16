@@ -5,6 +5,7 @@ import PolicyProject.policyService.application.service.ObjectValidation;
 import PolicyProject.policyService.application.usecases.ExecuteCarPolicy;
 import PolicyProject.policyService.domain.Enums.Enums.CarPolicyEvent;
 import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
+import PolicyProject.policyService.domain.Enums.Enums.PolicyEvent;
 import PolicyProject.policyService.domain.dto.response.CustomerResponse.GetCustomerResponse;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
@@ -88,13 +89,13 @@ public class CarPolicyService implements ICarPolicyService {
     {
         objectValidation.carPolicyModelValidations(carPolicyModel);
         return CarPolicyMapper.INSTANCE.cartPolicyModelToSetStateCarPolicyResponse
-                (executeCarPolicy.changeCarPolicyState(carPolicyModel, CarPolicyEvent.ACTIVATE));
+                (executeCarPolicy.changeCarPolicyState(carPolicyModel, PolicyEvent.ACTIVATE));
     }
     public SetCarPolicyStatusResponse rejectCarPolicy (CarPolicyModel carPolicyModel)
     {
         objectValidation.carPolicyModelValidations(carPolicyModel);
         return CarPolicyMapper.INSTANCE.cartPolicyModelToSetStateCarPolicyResponse
-                (executeCarPolicy.changeCarPolicyState(carPolicyModel, CarPolicyEvent.CANCEL));
+                (executeCarPolicy.changeCarPolicyState(carPolicyModel, PolicyEvent.CANCEL));
     }
 
 

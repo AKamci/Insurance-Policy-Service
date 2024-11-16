@@ -1,9 +1,7 @@
 package PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild;
 
-import PolicyProject.policyService.infrastructure.config.Specifications.CarPolicySpecification;
 import PolicyProject.policyService.infrastructure.config.Specifications.EarthQuakeSpecification;
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
-import PolicyProject.policyService.infrastructure.persistence.entity.EarthquakePolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.EarthquakePolicy;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;

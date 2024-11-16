@@ -1,8 +1,7 @@
 package PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.EarthQuakePolicyWeightStrategy;
 
 import PolicyProject.policyService.domain.model.HouseModel;
-import PolicyProject.policyService.infrastructure.persistence.entity.EarthQaukeWeights;
-import PolicyProject.policyService.infrastructure.persistence.entity.House;
+import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IEarthQuakeWeightStrategy;
 
 import java.math.BigDecimal;

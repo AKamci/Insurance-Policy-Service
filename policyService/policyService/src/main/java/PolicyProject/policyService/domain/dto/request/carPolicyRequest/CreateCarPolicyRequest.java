@@ -1,11 +1,9 @@
 package PolicyProject.policyService.domain.dto.request.carPolicyRequest;
 
-import PolicyProject.policyService.infrastructure.persistence.entity.Car;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 public record CreateCarPolicyRequest(

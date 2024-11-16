@@ -3,12 +3,10 @@ package PolicyProject.policyService.application.usecases;
 import PolicyProject.policyService.application.gateways.LicensePlateGateway;
 import PolicyProject.policyService.domain.model.LicensePlateModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
-import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
-import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.LicensePlate;
 import PolicyProject.policyService.interfaces.mappers.LicensePlateMapper;
 import lombok.RequiredArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @RequiredArgsConstructor

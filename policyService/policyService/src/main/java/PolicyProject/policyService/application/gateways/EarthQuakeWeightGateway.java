@@ -1,8 +1,6 @@
 package PolicyProject.policyService.application.gateways;
 
-import PolicyProject.policyService.infrastructure.persistence.entity.EarthQaukeWeights;
-import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
-import org.springframework.stereotype.Service;
+import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
 
 import java.util.List;
 

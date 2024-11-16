@@ -1,6 +1,6 @@
 package PolicyProject.policyService.domain.dto.response.HouseResponse;
 
-import PolicyProject.policyService.infrastructure.persistence.entity.Building;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.Building;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 
 public record GetHouseWCustomerResponse(

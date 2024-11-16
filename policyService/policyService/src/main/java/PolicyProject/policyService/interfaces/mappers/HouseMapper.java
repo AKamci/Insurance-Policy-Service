@@ -1,13 +1,9 @@
 package PolicyProject.policyService.interfaces.mappers;
 
 import PolicyProject.policyService.domain.dto.request.HouseRequest.GetHouseWCustomerRequest;
-import PolicyProject.policyService.domain.dto.request.LicensePlateRequest.GetPlateWithCustomerRequest;
 import PolicyProject.policyService.domain.dto.response.HouseResponse.GetHouseWCustomerResponse;
-import PolicyProject.policyService.domain.dto.response.LicensePlateResponse.GetPlateWithCustomerResponse;
 import PolicyProject.policyService.domain.model.HouseModel;
-import PolicyProject.policyService.domain.model.LicensePlateModel;
-import PolicyProject.policyService.infrastructure.persistence.entity.House;
-import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.House;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 

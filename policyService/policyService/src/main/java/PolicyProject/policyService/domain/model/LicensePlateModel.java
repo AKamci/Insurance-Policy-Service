@@ -1,8 +1,7 @@
 package PolicyProject.policyService.domain.model;
 
-import PolicyProject.policyService.infrastructure.persistence.entity.Car;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.Car;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
-import jakarta.persistence.*;
 
 import java.time.LocalDate;
 

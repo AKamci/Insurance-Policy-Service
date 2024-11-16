@@ -6,8 +6,7 @@ import PolicyProject.policyService.domain.dto.response.WeightResponse.DeleteWeig
 import PolicyProject.policyService.domain.dto.response.WeightResponse.GetWeightResponse;
 import PolicyProject.policyService.domain.dto.response.WeightResponse.UpdateWeightResponse;
 import PolicyProject.policyService.domain.model.WeightsModel;
-import PolicyProject.policyService.infrastructure.persistence.entity.EarthQaukeWeights;
-import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
+import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

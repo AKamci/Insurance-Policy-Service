@@ -1,25 +1,19 @@
 package PolicyProject.policyService.application.usecases;
 
 import PolicyProject.policyService.application.gateways.CarPolicyGateway;
-import PolicyProject.policyService.domain.CoverageTypeConverter;
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyEvent;
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
-import PolicyProject.policyService.domain.Enums.Enums.CoverageType;
-import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
+import PolicyProject.policyService.domain.Enums.Enums.*;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CarPolicySpecificationBuild;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
-import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
-import PolicyProject.policyService.infrastructure.persistence.entity.PolicyType;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.LicensePlate;
 import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import PolicyProject.policyService.interfaces.mappers.LicensePlateMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.statemachine.StateMachine;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -129,15 +123,16 @@ public class ExecuteCarPolicy {
 
 
     @Transactional
-    public CarPolicyModel changeCarPolicyState(CarPolicyModel carPolicyModel, CarPolicyEvent event) {
+    public CarPolicyModel changeCarPolicyState(CarPolicyModel carPolicyModel, PolicyEvent event) {
+
 
         Optional<CarPolicy> optionalEntity = Optional.empty();
-        if (event == CarPolicyEvent.CANCEL)
+        if (event == PolicyEvent.CANCEL)
         {
             optionalEntity = Optional.ofNullable
                     (carPolicyGateway.SetStateCarPolicy(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel), PolicyState.CANCELLED));
         }
-        else if (event == CarPolicyEvent.ACTIVATE) {
+        else if (event == PolicyEvent.ACTIVATE) {
             optionalEntity = Optional.ofNullable
                     (carPolicyGateway.SetStateCarPolicy(CarPolicyMapper.INSTANCE.carPolicyModelToCarPolicyEntity(carPolicyModel), PolicyState.ACTIVE));
         }

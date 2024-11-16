@@ -1,10 +1,9 @@
 package PolicyProject.policyService.interfaces.mappers;
 
-import PolicyProject.policyService.domain.Enums.Enums.CoverageType;
 import PolicyProject.policyService.domain.dto.request.carPolicyRequest.*;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

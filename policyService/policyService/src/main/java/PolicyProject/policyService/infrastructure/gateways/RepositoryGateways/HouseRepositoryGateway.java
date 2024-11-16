@@ -2,11 +2,10 @@ package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
 
 
 import PolicyProject.policyService.application.gateways.HouseGateway;
-import PolicyProject.policyService.infrastructure.persistence.entity.Address;
-import PolicyProject.policyService.infrastructure.persistence.entity.Building;
-import PolicyProject.policyService.infrastructure.persistence.entity.House;
-import PolicyProject.policyService.infrastructure.persistence.repository.HouseRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.LicensePlateRepository;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.Building;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.House;
+
+import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.EarthquakePolicy.HouseRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

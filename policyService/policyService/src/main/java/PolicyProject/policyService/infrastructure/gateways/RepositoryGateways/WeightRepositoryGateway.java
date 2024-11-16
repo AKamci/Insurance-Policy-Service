@@ -3,20 +3,13 @@ package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
 
 import PolicyProject.policyService.application.gateways.WeightGateway;
 import PolicyProject.policyService.domain.Enums.Enums.NonValuesStrategyType;
-import PolicyProject.policyService.domain.Enums.Enums.StrategyType;
-import PolicyProject.policyService.infrastructure.exception.DuplicateTcknException;
 import PolicyProject.policyService.infrastructure.exception.DuplicateWeightKeyException;
-import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
-import PolicyProject.policyService.infrastructure.persistence.entity.Weights;
-import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository;
+import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.Weights;
+import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.WeightsRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
