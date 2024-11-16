@@ -47,7 +47,7 @@ public interface CarPolicyMapper {
 
 
     @Mapping(source = "policyId", target = "id")
-    @Mapping(source = "coverage", target = "coverage", qualifiedByName = "coverageFromInteger")
+    @Mapping(source = "coverageCode", target = "coverage", qualifiedByName = "coverageFromInteger")
     CarPolicy carPolicyModelToCarPolicyEntity(CarPolicyModel carPolicyModel);
 
     @Named("coverageFromInteger")
@@ -70,7 +70,7 @@ public interface CarPolicyMapper {
     @Mapping(source = "customer.id", target = "customerId")
     @Mapping(source = "licensePlate.plate", target = "licensePlateNumber")
     @Mapping(source = "customer.tckn", target = "tckn")
-    @Mapping(source = "coverage", target = "coverage", qualifiedByName = "coverageToInteger")
+    @Mapping(source = "coverage", target = "coverage")
     CarPolicyModel carPolicyEntityToCarPolicyModel(CarPolicy carPolicy);
 
     @Named("coverageToInteger")

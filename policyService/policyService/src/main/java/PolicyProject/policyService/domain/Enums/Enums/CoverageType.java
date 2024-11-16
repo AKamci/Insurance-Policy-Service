@@ -5,7 +5,9 @@ import lombok.Getter;
 @Getter
 public enum CoverageType {
     TRAFİK(101),
-    KASKO(102);
+    KASKO(102),
+    YARI_KAPSAM(103),
+    TAM_KAPSAM(104);
 
 
     private final int code;

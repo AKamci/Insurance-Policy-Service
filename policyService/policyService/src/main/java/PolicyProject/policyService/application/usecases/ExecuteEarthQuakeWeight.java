@@ -25,7 +25,7 @@ public class ExecuteEarthQuakeWeight {
     public HouseModel Get_AHouseModel(HouseModel houseModel) {
         BigDecimal Amount = calculatePolicyPrice(houseModel);
         HouseModel newModel = new HouseModel(
-                null,
+                houseModel.id(),
                 houseModel.number(),
                 houseModel.squareMeters(),
                 houseModel.customer(),

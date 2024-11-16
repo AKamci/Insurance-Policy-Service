@@ -28,8 +28,10 @@ public class CustomerRepositoryGateway implements CustomerGateway {
     @CachePut(value = "customerCache", key = "#customer.tckn")
     public Customer create(Customer customer) {
         try {
+            if (customer == null) {
+                return null;
+            }
             var entity = customerRepository.save(customer);
-            updateTotalCount();
             return entity;
         } catch (DataIntegrityViolationException e) {
             throw new DuplicateTcknException("TCKN is Duplicate", customer.getTckn());
@@ -54,6 +56,8 @@ public class CustomerRepositoryGateway implements CustomerGateway {
         }
         newCustomer.setId(existingCustomer.getId());
         newCustomer.setPolicies(existingCustomer.getPolicies());
+        newCustomer.setHouses(existingCustomer.getHouses());
+        newCustomer.setLicensePlates(existingCustomer.getLicensePlates());
         //newCustomer.setCarPolicies(existingCustomer.getCarPolicies());
         return customerRepository.save(newCustomer);
     }

@@ -33,7 +33,7 @@ public record CreateCustomerRequest(
         @NotNull(message = "Birth date cannot be null")
         LocalDate birthDay,
 
-        @NotBlank(message = "Gender cannot be blank")
+        @NotNull(message = "Gender cannot be blank")
         Integer gender
 
 

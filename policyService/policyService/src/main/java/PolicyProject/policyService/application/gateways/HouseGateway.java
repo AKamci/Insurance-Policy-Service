@@ -4,6 +4,6 @@ import PolicyProject.policyService.infrastructure.persistence.entity.House;
 import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
 
 public interface HouseGateway {
-    House getWCustomer(House House);
-    House get(String plate);
+    House getWCustomer(House house);
+    House get(House house);
 }

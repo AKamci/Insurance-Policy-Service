@@ -20,6 +20,11 @@ public class EarthQuakeSpecificationBuild {
     public Specification<EarthquakePolicy> EarthQuakeBuild(EarthquakePolicy earthquakePolicy, String tckn) {
         setSpec(
                 EarthQuakeSpecification.build(
+                        earthquakePolicy.getHouse().getNumber(),
+                        earthquakePolicy.getHouse().getBuilding().getApartmentNumber(),
+                        earthquakePolicy.getHouse().getBuilding().getAddress().getCity(),
+                        earthquakePolicy.getHouse().getBuilding().getAddress().getDistrict(),
+                        earthquakePolicy.getHouse().getBuilding().getAddress().getNeighborhood(),
                         earthquakePolicy.getPolicyDescription(),
                         earthquakePolicy.getCoverage(),
                         earthquakePolicy.getState(),

@@ -3,6 +3,7 @@ package PolicyProject.policyService.domain.model;
 import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.Car;
+import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
 import PolicyProject.policyService.infrastructure.persistence.entity.House;
 import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
 
@@ -12,9 +13,11 @@ public record EarthQuakeModel(
 
 
         Long policyId,
+        Long houseId,
+        Integer coverageCode,
         LocalDate policyOfferDate, //
         String policyDescription, //
-        Integer coverage,
+        Coverage coverage,
         Double policyAmount,
         Long customerId,
         String tckn,
@@ -23,6 +26,14 @@ public record EarthQuakeModel(
         PolicyState state,
         int page,
         int size,
+
+        Integer number,
+        Integer apartmentNumber,
+        String city,
+        String district,
+        String neighborhood,
+
+
 
         //Navigation Properties
         CustomerModel CustomerModel,

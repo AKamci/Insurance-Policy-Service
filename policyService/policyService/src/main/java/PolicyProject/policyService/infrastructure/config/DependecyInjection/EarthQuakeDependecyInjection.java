@@ -12,6 +12,7 @@ import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.C
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.EarthQuakeSpecificationBuild;
 import PolicyProject.policyService.infrastructure.persistence.repository.CarPolicyRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.EarthQuakeRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.PoliciesRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,9 +31,9 @@ public class EarthQuakeDependecyInjection {
     }
 
     @Bean
-    EarthQuakeGateway earthQuakeGateway(EarthQuakeRepository earthQuakeRepository)
+    EarthQuakeGateway earthQuakeGateway(EarthQuakeRepository earthQuakeRepository, PoliciesRepository policiesRepository)
     {
-        return new EarthQuakeRepositoryGateway(earthQuakeRepository);
+        return new EarthQuakeRepositoryGateway(earthQuakeRepository, policiesRepository);
     }
 
     @Bean

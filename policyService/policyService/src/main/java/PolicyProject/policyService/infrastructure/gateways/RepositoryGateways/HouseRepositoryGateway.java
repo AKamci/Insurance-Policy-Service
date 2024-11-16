@@ -32,8 +32,12 @@ public class HouseRepositoryGateway implements HouseGateway {
     }
 
     @Override
-    public House get(String plate) {
-        return null;
+    public House get(House house) {
+        try {
+            return houseRepository.findById(house.getId()).orElse(null);
+        } catch (Exception e) {
+            throw new RuntimeException("Error", e);
+        }
     }
 
    // @Override

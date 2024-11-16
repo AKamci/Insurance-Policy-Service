@@ -2,6 +2,7 @@ package PolicyProject.policyService.domain.model;
 
 import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.Car;
+import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
 import PolicyProject.policyService.infrastructure.persistence.entity.LicensePlate;
 
 import java.sql.Date;
@@ -12,7 +13,8 @@ public record CarPolicyModel(
         Long policyId,
         LocalDate policyOfferDate, //
         String policyDescription, //
-        Integer coverage,
+        Integer coverageCode,
+        Coverage coverage,
         Double policyAmount,
         Long customerId,
         String licensePlateNumber,

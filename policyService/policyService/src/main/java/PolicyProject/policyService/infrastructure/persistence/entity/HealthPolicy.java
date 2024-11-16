@@ -5,13 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
 @Table(name = "HealthPolicy")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @DiscriminatorValue("HEALTH")
 public class HealthPolicy extends Policies {
 

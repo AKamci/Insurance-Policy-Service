@@ -63,7 +63,7 @@ public class CarPolicyController_V1 {
     }
 
     @PutMapping("/accepted")
-    public  ResponseEntity<SetCarPolicyStatusResponse> acceptCarPolicy(@Valid @ModelAttribute SetCarPolicyStatusRequest setCarPolicyStatusRequest)
+    public  ResponseEntity<SetCarPolicyStatusResponse> acceptCarPolicy(@Valid @RequestBody SetCarPolicyStatusRequest setCarPolicyStatusRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -72,7 +72,7 @@ public class CarPolicyController_V1 {
     }
 
     @PutMapping("/rejected")
-    public  ResponseEntity<SetCarPolicyStatusResponse> rejectCarPolicy(@Valid @ModelAttribute SetCarPolicyStatusRequest setCarPolicyStatusRequest)
+    public  ResponseEntity<SetCarPolicyStatusResponse> rejectCarPolicy(@Valid @RequestBody SetCarPolicyStatusRequest setCarPolicyStatusRequest)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)

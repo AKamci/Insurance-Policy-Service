@@ -40,6 +40,8 @@ public class EarthQuakePolicyController_V1 {
                     .status(HttpStatus.OK)
                     .body(earthQuakeService.get
                             (EarthQuakeMapper.INSTANCE.getEarthQuakeRequestToEarthQuakeModel(getEarthQuakeRequest)));
+
+
         }
 
         @PutMapping
@@ -52,7 +54,7 @@ public class EarthQuakePolicyController_V1 {
         }
 
         @PutMapping("/accepted")
-        public  ResponseEntity<SetStateEarthQuakeResponse> acceptPolicy(@Valid @ModelAttribute SetStateEarthQuakeRequest setStateEarthQuakeRequest)
+        public  ResponseEntity<SetStateEarthQuakeResponse> acceptPolicy(@Valid @RequestBody SetStateEarthQuakeRequest setStateEarthQuakeRequest)
         {
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -61,7 +63,7 @@ public class EarthQuakePolicyController_V1 {
         }
 
         @PutMapping("/rejected")
-        public  ResponseEntity<SetStateEarthQuakeResponse> rejectPolicy(@Valid @ModelAttribute SetStateEarthQuakeRequest setStateEarthQuakeRequest)
+        public  ResponseEntity<SetStateEarthQuakeResponse> rejectPolicy(@Valid @RequestBody SetStateEarthQuakeRequest setStateEarthQuakeRequest)
         {
             return ResponseEntity
                     .status(HttpStatus.OK)

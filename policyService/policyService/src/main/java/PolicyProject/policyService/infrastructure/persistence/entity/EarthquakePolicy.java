@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @SuperBuilder
 @Entity
@@ -13,7 +16,6 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "EartquakePolicy")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @DiscriminatorValue("EARTHQUAKE")
 public class EarthquakePolicy extends Policies {
 

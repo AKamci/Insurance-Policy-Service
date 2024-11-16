@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "policy_type", discriminatorType = DiscriminatorType.STRING)
+
 public abstract class Policies {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

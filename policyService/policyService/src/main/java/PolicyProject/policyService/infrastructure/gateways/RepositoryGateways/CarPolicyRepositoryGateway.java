@@ -36,6 +36,8 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
         carPolicy.setCustomer(customer);
         carPolicy.setLicensePlate(licensePlate);
         carPolicy.setState(PolicyState.CREATED);
+        Long calculatedId = (carPolicy.getCoverage().getId() % 100L) == 0 ? 3L : (carPolicy.getCoverage().getId() % 100L);
+        carPolicy.getCoverage().setId(calculatedId);
         var entity = carPolicyRepository.save(carPolicy);
         updateTotalCount();
         return entity;

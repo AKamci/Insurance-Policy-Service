@@ -26,6 +26,7 @@ public class DatabaseSeed implements CommandLineRunner {
     private final BuildingRepository buildingRepository;
     private final AddressRepository addressRepository;
     private final EarthQuakeWeightsRepository earthQuakeWeightsRepository;
+    private final EarthQuakeRepository earthQuakeRepository;
 
     // Constructor
     public DatabaseSeed(CarPolicyRepository carPolicyrepository,
@@ -37,7 +38,8 @@ public class DatabaseSeed implements CommandLineRunner {
                         HouseRepository houseRepository,
                         BuildingRepository buildingRepository,
                         AddressRepository addressRepository,
-                        EarthQuakeWeightsRepository earthQuakeWeightsRepository) {
+                        EarthQuakeWeightsRepository earthQuakeWeightsRepository,
+                        EarthQuakeRepository earthQuakeRepository) {
         this.carPolicyrepository = carPolicyrepository;
         this.customerRepository = customerRepository;
         this.carRepository = carRepository;
@@ -48,6 +50,7 @@ public class DatabaseSeed implements CommandLineRunner {
         this.buildingRepository = buildingRepository;
         this.addressRepository = addressRepository;
         this.earthQuakeWeightsRepository = earthQuakeWeightsRepository;
+        this.earthQuakeRepository = earthQuakeRepository;
 
     }
 
@@ -99,6 +102,10 @@ public class DatabaseSeed implements CommandLineRunner {
         if (earthQuakeWeightsRepository.count() == 0 || condition) {
             seedEarthquakeWeight();
             System.out.println("EARTHQUAKE_WEIGHTS SEED IS COMPLETED");
+        }
+        if (earthQuakeRepository.count() == 0 || condition) {
+            seedDataEarthquakePolicies();
+            System.out.println("EARTHQUAKE SEED IS COMPLETED");
         }
 
 
@@ -790,6 +797,16 @@ public class DatabaseSeed implements CommandLineRunner {
                 .coverageDescription("Coverage Description " + "Kasko")
                 .build();
         coverages.add(coverage);
+        Coverage coverage3 = Coverage.builder()
+                .coverageType(CoverageType.YARI_KAPSAM)
+                .coverageDescription("Coverage Description " + "Trafik")
+                .build();
+        coverages.add(coverage3);
+        Coverage coverage4 = Coverage.builder()
+                .coverageType(CoverageType.TAM_KAPSAM)
+                .coverageDescription("Coverage Description " + "Trafik")
+                .build();
+        coverages.add(coverage4);
 
         coverageRepository.saveAll(coverages);
 
@@ -935,6 +952,50 @@ public class DatabaseSeed implements CommandLineRunner {
 
 
         ));
+    }
+
+    private void seedDataEarthquakePolicies() {
+
+        PolicyState state;
+        Random random = new Random();
+
+        List<EarthquakePolicy> earthquakePolicies = new ArrayList<>();
+        for (int i = 1; i <= 1000; i++) {
+
+            Long customerId = (long) (i % 20 + 1);
+            Long houseId = (long) (i % 402 + 1);
+            Long coverageId = (long) (i % 2 == 0 ? 3 : 4);
+
+            Optional<Coverage> optionalCoverage = coverageRepository.findById(coverageId);
+            Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+            Optional<House> optionalHouse = houseRepository.findById(houseId);
+
+            if (optionalCustomer.isPresent() && optionalHouse.isPresent() && optionalCoverage.isPresent()) {
+                House house = optionalHouse.get();
+                Customer customer = house.getCustomer();
+                Coverage coverage = optionalCoverage.get();
+
+                LocalDate startDate = LocalDate.of(2024, 10, 1);
+                LocalDate policyLocalDate = startDate.plusDays(i);
+
+                state = PolicyState.values()[random.nextInt(PolicyState.values().length)];
+
+                EarthquakePolicy policy = EarthquakePolicy.builder()
+                        .policyDescription("Açıklama " + i)
+                        .policyStartDate(policyLocalDate)
+                        .policyEndDate(policyLocalDate.plusYears(1))
+                        .policyAmount(1000.0 + (i * 100))
+                        .policyOfferDate(policyLocalDate)
+                        .house(house)
+                        .customer(customer)
+                        .coverage(coverage)
+                        .state(state)
+                        .build();
+
+                earthquakePolicies.add(policy);
+            }
+        }
+        earthQuakeRepository.saveAll(earthquakePolicies);
     }
 }
 

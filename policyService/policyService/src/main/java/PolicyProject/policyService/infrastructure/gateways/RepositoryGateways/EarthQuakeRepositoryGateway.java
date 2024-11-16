@@ -1,12 +1,11 @@
 package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
 
 import PolicyProject.policyService.application.gateways.EarthQuakeGateway;
+import PolicyProject.policyService.domain.CoverageTypeConverter;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
-import PolicyProject.policyService.infrastructure.persistence.entity.CarPolicy;
-import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
-import PolicyProject.policyService.infrastructure.persistence.entity.EarthquakePolicy;
-import PolicyProject.policyService.infrastructure.persistence.entity.House;
+import PolicyProject.policyService.infrastructure.persistence.entity.*;
 import PolicyProject.policyService.infrastructure.persistence.repository.EarthQuakeRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.PoliciesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,12 +14,14 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
 public class EarthQuakeRepositoryGateway implements EarthQuakeGateway {
 
     private final EarthQuakeRepository earthQuakeRepository;
+    private final PoliciesRepository policiesRepository;
     private Specification<EarthquakePolicy> specification;
 
 
@@ -29,6 +30,14 @@ public class EarthQuakeRepositoryGateway implements EarthQuakeGateway {
         earthquakePolicy.setCustomer(customer);
         earthquakePolicy.setHouse(house);
         earthquakePolicy.setState(PolicyState.CREATED);
+        System.out.println(earthquakePolicy.getCoverage());
+        if (earthquakePolicy.getCoverage() == null)
+        {
+            System.out.println("earthquakePolicy.getCoverage() is NULL");
+
+        }
+        Long calculatedId = (earthquakePolicy.getCoverage().getId() % 100L) == 0 ? 3L : (earthquakePolicy.getCoverage().getId() % 100L);
+        earthquakePolicy.getCoverage().setId(calculatedId);
         var entity = earthQuakeRepository.save(earthquakePolicy);
         return entity;
     }
@@ -54,7 +63,10 @@ public class EarthQuakeRepositoryGateway implements EarthQuakeGateway {
     public EarthquakePolicy delete(EarthquakePolicy earthquakePolicy) {
         var entityObject = get(earthquakePolicy);
         if (entityObject != null) {
-            earthQuakeRepository.delete(entityObject);
+           earthQuakeRepository.delete(entityObject);
+           Optional<Policies> policies = policiesRepository.findById(earthquakePolicy.getId());
+            Policies policies1 = policies.get();
+            policiesRepository.delete(policies1);
             return earthquakePolicy;
         }
         return null;
@@ -82,10 +94,8 @@ public class EarthQuakeRepositoryGateway implements EarthQuakeGateway {
     public EarthquakePolicy SetStateCarPolicy(EarthquakePolicy earthquakePolicy, PolicyState policyState) {
         var existingCarPolicy = get(earthquakePolicy);
         if (existingCarPolicy != null) {
-            earthquakePolicy.setCustomer(existingCarPolicy.getCustomer());
-            earthquakePolicy.setHouse(existingCarPolicy.getHouse());
-            earthquakePolicy.setState(policyState);
-            return earthQuakeRepository.save(earthquakePolicy);
+            existingCarPolicy.setState(policyState);
+            return earthQuakeRepository.save(existingCarPolicy);
         }
         return null;
     }

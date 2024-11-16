@@ -8,12 +8,15 @@ import java.time.LocalDate;
 
 public record CreateEarthQuakeRequest(
 
-        @FutureOrPresent(message = "Policy Offer date must be in the present or future")
+        //@FutureOrPresent(message = "Policy Offer date must be in the present or future")
         @NotNull(message = "Policy Offer date cannot be null")
         LocalDate policyOfferDate,
 
-        @NotNull(message = "coverage  cannot be blank")
-        Integer coverage,
+        @NotNull(message = "houseId  cannot be blank")
+        Long houseId,
+
+        @NotNull(message = "coverageCode  cannot be blank")
+        Integer coverageCode,
 
         @FutureOrPresent(message = "Policy date must be in the present or future")
         @NotNull(message = "Policy date cannot be null")

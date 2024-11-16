@@ -16,6 +16,8 @@ public class EarthQuakeSpecification {
 
 
     public static Specification<EarthquakePolicy> build(
+            Integer number, Integer apartmentNumber, String city,
+            String district, String neighborhood,
             String policyDescription, Coverage coverage,
             PolicyState state, LocalDate startDate, LocalDate endDate,
             Double Amount, String tckn) {
@@ -28,9 +30,47 @@ public class EarthQuakeSpecification {
                 .and(isActiveBetween(startDate, endDate))
                 .and(hasPolicyAmount(Amount))
                 .and(hasPolicyStatus(state))
-                .and(hasCustomerTckn(tckn));
+                .and(hasCustomerTckn(tckn))
+                .and(hasCity(city))
+                .and(hasDistrict(district))
+                .and(hasNeighborhood(neighborhood))
+                .and(hasNumber(number))
+                .and(hasApartmentNumber(apartmentNumber));
+
     }
 
+
+
+    public static Specification<EarthquakePolicy> hasCity(String city) {
+        return (root, query, criteriaBuilder) -> city == null
+                ? criteriaBuilder.conjunction()
+                : criteriaBuilder.equal(root.join("house").join("building").join("address").get("city"), city);
+    }
+
+    public static Specification<EarthquakePolicy> hasDistrict(String district) {
+        return (root, query, criteriaBuilder) -> district == null
+                ? criteriaBuilder.conjunction()
+                : criteriaBuilder.equal(root.join("house").join("building").join("address").get("district"), district);
+    }
+
+    public static Specification<EarthquakePolicy> hasNeighborhood(String neighborhood) {
+        return (root, query, criteriaBuilder) -> neighborhood == null
+                ? criteriaBuilder.conjunction()
+                : criteriaBuilder.equal(root.join("house").join("building").join("address").get("neighborhood"), neighborhood);
+    }
+
+    public static Specification<EarthquakePolicy> hasNumber(Integer number) {
+
+        return (root, query, criteriaBuilder) -> number == 0
+                ? criteriaBuilder.conjunction()
+                : criteriaBuilder.equal(root.join("house").get("number"), number);
+    }
+
+    public static Specification<EarthquakePolicy> hasApartmentNumber(Integer apartmentNumber) {
+        return (root, query, criteriaBuilder) -> apartmentNumber == 0
+                ? criteriaBuilder.conjunction()
+                : criteriaBuilder.equal(root.join("house").join("building").get("apartmentNumber"), apartmentNumber);
+    }
 
     public static Specification<EarthquakePolicy> hasPolicyDescription(String policyDescription) {
         return (root, query, criteriaBuilder) ->

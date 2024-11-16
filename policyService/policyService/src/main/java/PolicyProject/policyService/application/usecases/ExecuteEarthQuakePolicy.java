@@ -8,6 +8,7 @@ import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.domain.model.CustomerModel;
 import PolicyProject.policyService.domain.model.EarthQuakeModel;
+import PolicyProject.policyService.domain.model.HouseModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.CarPolicySpecificationBuild;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.EarthQuakeSpecificationBuild;
@@ -46,7 +47,10 @@ public class ExecuteEarthQuakePolicy {
         Customer customer = CustomerMapper.INSTANCE.customerModelToCustomerEntity
                 (executeCustomer.executeGet(customerModel));
 
-        House house = HouseMapper.INSTANCE.HouseModelToHouseEntity(executeHouse.ExecuteGetHouse(earthQuakeModel.house().toString()));
+        HouseModel houseModel = new HouseModel(earthQuakeModel.houseId(),
+                null,null,null,null,null, null );
+
+        House house = HouseMapper.INSTANCE.HouseModelToHouseEntity(executeHouse.ExecuteGetHouse(houseModel));
 
         EarthquakePolicy EnityObject = earthQuakeGateway.create
                 (EarthQuakeMapper.INSTANCE.earthQuakeModelToEarthQuakePolicyEntity

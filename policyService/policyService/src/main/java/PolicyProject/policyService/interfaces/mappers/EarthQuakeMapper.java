@@ -19,6 +19,7 @@ public interface EarthQuakeMapper {
     EarthQuakeMapper INSTANCE = Mappers.getMapper(EarthQuakeMapper.class);
 
 
+
     EarthQuakeModel createEarthQuakeRequestToEarthQuakeModel(CreateEarthQuakeRequest createEarthQuakeRequest);
     EarthQuakeModel updateEarthQuakeRequestToEarthQuakeModel(UpdateEarthQuakeRequest updateEarthQuakeRequest);
     EarthQuakeModel setStateEarthQuakeRequestToEarthQuakeModel(SetStateEarthQuakeRequest setStateEarthQuakeRequest);
@@ -34,10 +35,16 @@ public interface EarthQuakeMapper {
     DeleteEarthQuakeResponse earthQuakeModelToDeleteEarthQuakeResponse(EarthQuakeModel earthQuakeModel);
 
     @Mapping(source = "policyId", target = "id")
-    @Mapping(source = "coverage", target = "coverage", qualifiedByName = "coverageFromInteger")
+    @Mapping(source = "number", target = "house.number")
+    @Mapping(source = "apartmentNumber", target = "house.building.apartmentNumber")
+    @Mapping(source = "city", target = "house.building.address.city")
+    @Mapping(source = "district", target = "house.building.address.district")
+    @Mapping(source = "neighborhood", target = "house.building.address.neighborhood")
+    @Mapping(source = "coverageCode", target = "coverage", qualifiedByName = "coverageFromInteger")
     EarthquakePolicy earthQuakeModelToEarthQuakePolicyEntity(EarthQuakeModel earthQuakeModel);
 
-
+    @Mapping(source = "policyId", target = "id")
+    @Mapping(source = "coverage", target = "coverage", qualifiedByName = "coverageFromInteger")
     List<EarthQuakeModel> earthQuakePolicyEntityListToEarthQuakeModelList(List<EarthquakePolicy> earthquakePolicyList);
 
 
@@ -61,7 +68,7 @@ public interface EarthQuakeMapper {
     @Mapping(source = "id", target = "policyId")
     @Mapping(source = "customer.id", target = "customerId")
     @Mapping(source = "customer.tckn", target = "tckn")
-    @Mapping(source = "coverage", target = "coverage", qualifiedByName = "coverageToInteger")
+    @Mapping(source = "coverage", target = "coverage")
     EarthQuakeModel earthQuakePolicyEntityToEarthQuakeModel(EarthquakePolicy earthquakePolicy);
 
     @Named("coverageToInteger")
@@ -71,7 +78,4 @@ public interface EarthQuakeMapper {
         }
         return coverage.getCoverageType().getCode();
     }
-
-
-
 }

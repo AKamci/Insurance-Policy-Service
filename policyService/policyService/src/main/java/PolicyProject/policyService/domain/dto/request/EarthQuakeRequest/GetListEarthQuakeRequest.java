@@ -11,13 +11,20 @@ public record GetListEarthQuakeRequest(
         Long policyId,
         LocalDate policyOfferDate,
         String policyDescription,
-        Integer coverage,
+        Integer coverageCode,
         PolicyState state,
         Double policyAmount,
         Long customerId,
         String tckn,
         LocalDate policyStartDate,
-        LocalDate policyEndDate
+        LocalDate policyEndDate,
+
+
+        Integer number,
+        Integer apartmentNumber,
+        String city,
+        String district,
+        String neighborhood
 
 
 ) implements IEarthQuakeRequest{

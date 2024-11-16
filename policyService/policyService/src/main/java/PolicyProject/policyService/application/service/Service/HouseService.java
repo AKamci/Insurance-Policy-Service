@@ -22,7 +22,7 @@ public class HouseService {
 
     public GetHouseWCustomerResponse getWCustomer(HouseModel houseModel)
     {
-        HouseModel houseModelResult = executeHouse.ExecuteGetLicensePlateWithCustomer(houseModel);
+        HouseModel houseModelResult = executeHouse.ExecuteGetWithCustomer(houseModel);
         return HouseMapper.INSTANCE.HouseModelToGetHouseWCustomerResponse(houseModelResult);
     }
 }
