@@ -42,7 +42,7 @@ public class LicensePlate implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
-    Customer customer;
+    private Customer customer;
 
 
 

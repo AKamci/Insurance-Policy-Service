@@ -1,6 +1,8 @@
 package PolicyProject.policyService.domain.model;
 
 import PolicyProject.policyService.domain.Enums.Enums.BloodType;
+import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
+import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,6 +12,12 @@ public record PersonalHealthModel(
  Long id,
 
  String tckn,
+
+ Coverage coverage,
+
+ Integer coverageCode,
+
+ Customer customer,
 
  Integer height,
 
@@ -28,7 +36,9 @@ public record PersonalHealthModel(
 
  Boolean hasDisability,
 
- Boolean hasPreviousSurgeries
+ Boolean hasPreviousSurgeries,
+
+ Long Amount
 
 
 ) {

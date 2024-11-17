@@ -25,15 +25,15 @@ public class ExecutePersonalHealth {
 
         var newModel = PersonalHealthMapper.INSTANCE.getPersonalHealthEntityToPersonalHealthModel(personalHealthEntity);
 
-        return executeHealthPolicyWeight.Get_AHealthPolicyModel(newModel);
+        return executeHealthPolicyWeight.Get_APersonalHealthModel(newModel);
     }
 
-    public PersonalHealthModel ExecuteGetHouse(PersonalHealthModel personalHealthModel) {
+    public PersonalHealthModel ExecuteGetPersonalHealth(PersonalHealthModel personalHealthModel) {
         PersonalHealth entity = PersonalHealthMapper.INSTANCE.getPersonalHealthModelToPersonalHealthEntity(personalHealthModel);
-        PersonalHealth houseEntity = Optional.ofNullable(personalHealthGateway.get(entity))
+        PersonalHealth personalHealthEntity = Optional.ofNullable(personalHealthGateway.get(personalHealthModel.tckn()))
                 .orElseThrow(() -> new EntityNotFoundException(personalHealthModel.id(), "Entity not found"));
 
-        var newHouseModel = PersonalHealthMapper.INSTANCE.getPersonalHealthEntityToPersonalHealthModel(houseEntity);
+        var newHouseModel = PersonalHealthMapper.INSTANCE.getPersonalHealthEntityToPersonalHealthModel(personalHealthEntity);
 
         return newHouseModel;
     }

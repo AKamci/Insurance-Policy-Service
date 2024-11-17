@@ -29,7 +29,7 @@ public class ExecuteWeight {
                 licensePlateModel.plate(),
                 licensePlateModel.car(),
                 licensePlateModel.customer(),
-                licensePlateModel.policyType(),
+                licensePlateModel.coverageCode(),
                 licensePlateModel.policyStartDate(),
                 licensePlateModel.policyEndDate(),
                 Amount.longValue()

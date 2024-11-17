@@ -1,5 +1,6 @@
 package PolicyProject.policyService.infrastructure.gateways;
 
+import PolicyProject.policyService.domain.Enums.Enums.BloodType;
 import PolicyProject.policyService.domain.Enums.Enums.CoverageType;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.*;
@@ -8,6 +9,7 @@ import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEn
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.Address;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.Building;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.House;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.HealthPolicy.PersonalHealth;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.EarthquakePolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
@@ -18,15 +20,19 @@ import PolicyProject.policyService.infrastructure.persistence.repository.Auxilia
 import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.EarthquakePolicy.AddressRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.EarthquakePolicy.BuildingRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.EarthquakePolicy.HouseRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.HealthPolicy.PersonalHealthRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.CarPolicyRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.EarthQuakeRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.HealthPolicyRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.EarthQuakeWeightsRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.HealthPolicyWeightRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.WeightsRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Component
@@ -43,6 +49,9 @@ public class DatabaseSeed implements CommandLineRunner {
     private final AddressRepository addressRepository;
     private final EarthQuakeWeightsRepository earthQuakeWeightsRepository;
     private final EarthQuakeRepository earthQuakeRepository;
+    private final HealthPolicyWeightRepository healthPolicyWeightRepository;
+    private final HealthPolicyRepository healthPolicyRepository;
+    private final PersonalHealthRepository personalHealthRepository;
 
     // Constructor
     public DatabaseSeed(CarPolicyRepository carPolicyrepository,
@@ -55,7 +64,10 @@ public class DatabaseSeed implements CommandLineRunner {
                         BuildingRepository buildingRepository,
                         AddressRepository addressRepository,
                         EarthQuakeWeightsRepository earthQuakeWeightsRepository,
-                        EarthQuakeRepository earthQuakeRepository) {
+                        EarthQuakeRepository earthQuakeRepository,
+                        HealthPolicyWeightRepository healthPolicyWeightRepository,
+                        HealthPolicyRepository healthPolicyRepository,
+                        PersonalHealthRepository personalHealthRepository) {
         this.carPolicyrepository = carPolicyrepository;
         this.customerRepository = customerRepository;
         this.carRepository = carRepository;
@@ -67,6 +79,9 @@ public class DatabaseSeed implements CommandLineRunner {
         this.addressRepository = addressRepository;
         this.earthQuakeWeightsRepository = earthQuakeWeightsRepository;
         this.earthQuakeRepository = earthQuakeRepository;
+        this.healthPolicyWeightRepository = healthPolicyWeightRepository;
+        this.healthPolicyRepository = healthPolicyRepository;
+        this.personalHealthRepository = personalHealthRepository;
 
     }
 
@@ -122,6 +137,11 @@ public class DatabaseSeed implements CommandLineRunner {
         if (earthQuakeRepository.count() == 0 || condition) {
             seedDataEarthquakePolicies();
             System.out.println("EARTHQUAKE SEED IS COMPLETED");
+        }
+        if (personalHealthRepository.count() == 0 || condition)
+        {
+            seedPersonalHealth();
+            System.out.println("PERSONAL HEALTH SEED IS COMPLETED");
         }
 
 
@@ -435,252 +455,37 @@ public class DatabaseSeed implements CommandLineRunner {
         Set<String> uniqueTCKNs = new HashSet<>();
 
         Random random = new Random();
-        for (int i = 0; i < 20; i++) {
-            String tckn;
-            do {
-                tckn = String.format("%011d", random.nextInt(1_000_000_000) + 100_000_0000);
-            } while (uniqueTCKNs.contains(tckn));
+
+        while (uniqueTCKNs.size() < 20) {
+            String tckn = generateValidTCKN(random);
             uniqueTCKNs.add(tckn);
         }
-        customers.add(Customer.builder()
-                .name("Ahmet Yılmaz")
-                .tckn(uniqueTCKNs.toArray()[0].toString())
-                .address("İstanbul, Türkiye")
-                .phone("5321234567")
-                .email("ahmet.yilmaz@example.com")
-                .password("password123")
-                .birthDay(LocalDate.of(1993, 1, 1)) // Doğum tarihi
-                .gender(1)
-                .grade(1)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Ayşe Demir")
-                .tckn(uniqueTCKNs.toArray()[1].toString())
-                .address("Ankara, Türkiye")
-                .phone("5322345678")
-                .email("ayse.demir@example.com")
-                .password("password234")
-                .birthDay(LocalDate.of(1995, 2, 1)) // Doğum tarihi
-                .gender(0)
-                .grade(2)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Mehmet Öz")
-                .tckn(uniqueTCKNs.toArray()[2].toString())
-                .address("İzmir, Türkiye")
-                .phone("5323456789")
-                .email("mehmet.oz@example.com")
-                .password("password345")
-                .birthDay(LocalDate.of(1988, 3, 1)) // Doğum tarihi
-                .gender(1)
-                .grade(3)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Fatma Korkmaz")
-                .tckn(uniqueTCKNs.toArray()[3].toString())
-                .address("Bursa, Türkiye")
-                .phone("5324567890")
-                .email("fatma.korkmaz@example.com")
-                .password("password456")
-                .birthDay(LocalDate.of(1991, 4, 1)) // Doğum tarihi
-                .gender(0)
-                .grade(4)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Ali Can")
-                .tckn(uniqueTCKNs.toArray()[4].toString())
-                .address("Antalya, Türkiye")
-                .phone("5325678901")
-                .email("ali.can@example.com")
-                .password("password567")
-                .birthDay(LocalDate.of(1983, 5, 1))
-                .gender(1)
-                .grade(5)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Emine Çelik")
-                .tckn(uniqueTCKNs.toArray()[5].toString())
-                .address("Konya, Türkiye")
-                .phone("5326789012")
-                .email("emine.celik@example.com")
-                .password("password678")
-                .birthDay(LocalDate.of(1994, 6, 1)) // Doğum tarihi
-                .gender(0)
-                .grade(6)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Burak Yıldız")
-                .tckn(uniqueTCKNs.toArray()[6].toString())
-                .address("Adana, Türkiye")
-                .phone("5327890123")
-                .email("burak.yildiz@example.com")
-                .password("password789")
-                .birthDay(LocalDate.of(1990, 7, 1)) // Doğum tarihi
-                .gender(1)
-                .grade(7)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Zeynep Arslan")
-                .tckn(uniqueTCKNs.toArray()[7].toString())
-                .address("Gaziantep, Türkiye")
-                .phone("5328901234")
-                .email("zeynep.arslan@example.com")
-                .password("password890")
-                .birthDay(LocalDate.of(1998, 8, 1)) // Doğum tarihi
-                .gender(0)
-                .grade(1)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Cemal Akman")
-                .tckn(uniqueTCKNs.toArray()[8].toString())
-                .address("Kayseri, Türkiye")
-                .phone("5329012345")
-                .email("cemal.akman@example.com")
-                .password("password901")
-                .birthDay(LocalDate.of(1986, 9, 1)) // Doğum tarihi
-                .gender(1)
-                .grade(2)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Merve Koç")
-                .tckn(uniqueTCKNs.toArray()[9].toString())
-                .address("Sakarya, Türkiye")
-                .phone("5320123456")
-                .email("merve.koc@example.com")
-                .password("password012")
-                .birthDay(LocalDate.of(2001, 10, 1)) // Doğum tarihi
-                .gender(0)
-                .grade(3)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Oğuzhan Şahin")
-                .tckn(uniqueTCKNs.toArray()[10].toString())
-                .address("Trabzon, Türkiye")
-                .phone("5321234568")
-                .email("oguzhan.sahin@example.com")
-                .password("password1234")
-                .birthDay(LocalDate.of(1996, 11, 1)) // Doğum tarihi
-                .gender(1)
-                .grade(4)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Seda Eren")
-                .tckn(uniqueTCKNs.toArray()[11].toString())
-                .address("Eskişehir, Türkiye")
-                .phone("5322345679")
-                .email("seda.eren@example.com")
-                .password("password2345")
-                .birthDay(LocalDate.of(1992, 12, 1)) // Doğum tarihi
-                .gender(0)
-                .grade(5)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Ali Rıza Polat")
-                .tckn(uniqueTCKNs.toArray()[12].toString())
-                .address("Kocaeli, Türkiye")
-                .phone("5323456780")
-                .email("ali.riza.polat@example.com")
-                .password("password3456")
-                .birthDay(LocalDate.of(1989, 1, 1)) // Doğum tarihi
-                .gender(1)
-                .grade(6)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Nihal Aydın")
-                .tckn(uniqueTCKNs.toArray()[13].toString())
-                .address("Manisa, Türkiye")
-                .phone("5324567891")
-                .email("nihayl.aydin@example.com")
-                .password("password4567")
-                .birthDay(LocalDate.of(1997, 2, 1)) // Doğum tarihi
-                .gender(0)
-                .grade(5)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Ege Şimşek")
-                .tckn(uniqueTCKNs.toArray()[14].toString())
-                .address("Samsun, Türkiye")
-                .phone("5325678902")
-                .email("ege.simsek@example.com")
-                .password("password5678")
-                .birthDay(LocalDate.of(2000, 3, 1)) // Doğum tarihi
-                .gender(1)
-                .grade(4)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Büşra Kaplan")
-                .tckn(uniqueTCKNs.toArray()[15].toString())
-                .address("Diyarbakır, Türkiye")
-                .phone("5326789013")
-                .email("busra.kaplan@example.com")
-                .password("password6789")
-                .birthDay(LocalDate.of(1999, 4, 1)) // Doğum tarihi
-                .gender(0)
-                .grade(3)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Mert Çetin")
-                .tckn(uniqueTCKNs.toArray()[16].toString())
-                .address("Malatya, Türkiye")
-                .phone("5327890124")
-                .email("mert.cetin@example.com")
-                .password("password7890")
-                .birthDay(LocalDate.of(1985, 5, 1)) // Doğum tarihi
-                .gender(1)
-                .grade(2)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Eylül Aksu")
-                .tckn(uniqueTCKNs.toArray()[17].toString())
-                .address("Rize, Türkiye")
-                .phone("5328901235")
-                .email("eylul.aksu@example.com")
-                .password("password8901")
-                .birthDay(LocalDate.of(1993, 6, 1))
-                .gender(0)
-                .grade(1)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Deniz Özdemir")
-                .tckn(uniqueTCKNs.toArray()[18].toString())
-                .address("Aydın, Türkiye")
-                .phone("5329012346")
-                .email("deniz.ozdemir@example.com")
-                .password("password9012")
-                .birthDay(LocalDate.of(1981, 7, 1))
-                .gender(1)
-                .grade(1)
-                .build());
-
-        customers.add(Customer.builder()
-                .name("Şeyma Korkut")
-                .tckn(uniqueTCKNs.toArray()[19].toString())
-                .address("Aksaray, Türkiye")
-                .phone("5320123457")
-                .email("seyma.korkut@example.com")
-                .password("password0123")
-                .birthDay(LocalDate.of(1994, 8, 1))
-                .gender(0)
-                .grade(4)
-                .build());
+        List<String> names = Arrays.asList(
+                "Ahmet Yılmaz", "Mehmet Kaya", "Ayşe Demir", "Fatma Çelik",
+                "Ali Şahin", "Emre Koç", "Zeynep Aksoy", "Hasan Özkan",
+                "Hüseyin Aydın", "Hatice Korkmaz", "Mustafa Taş", "Elif Yıldız",
+                "Kemal Arslan", "Burak Güneş", "Serkan Karaca", "Ayhan Kaplan",
+                "Cemre Yılmaz", "Sevgi Öztürk", "Merve Karadeniz", "Berk Ünal"
+        );
+        List<String> cities = Arrays.asList(
+                "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya",
+                "Adana", "Konya", "Gaziantep", "Kayseri", "Eskişehir"
+        );
+        Iterator<String> tcknIterator = uniqueTCKNs.iterator();
+        for (int i = 0; i < 20; i++) {
+            String city = cities.get(random.nextInt(cities.size()));
+            customers.add(Customer.builder()
+                    .name(names.get(i))
+                    .tckn(tcknIterator.next())
+                    .address(city + ", Türkiye")
+                    .phone("532" + String.format("%07d", random.nextInt(1_000_0000)))
+                    .email(names.get(i).replaceAll("\\s", "") + "@example.com")
+                    .password("password" + (i + 1))
+                    .birthDay(LocalDate.of(1990 + random.nextInt(10), random.nextInt(12) + 1, random.nextInt(28) + 1))
+                    .gender(random.nextInt(2))
+                    .grade(random.nextInt(7))
+                    .build());
+        }
 
 
         customerRepository.saveAll(customers);
@@ -934,6 +739,74 @@ public class DatabaseSeed implements CommandLineRunner {
         }
     }
 
+    private void seedPersonalHealth() {
+        Random random = new Random();
+        Map<Long, PersonalHealth> customerHealthMap = new HashMap<>();
+
+        for (int i = 1; i <= 100; i++) {
+            Long customerId = (long) (i % 20 + 1);
+
+            Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+
+            if (optionalCustomer.isPresent()) {
+                Customer customer = optionalCustomer.get();
+
+                // Aynı müşteri için PersonalHealth verilerini kontrol et
+                PersonalHealth existingHealth = customerHealthMap.get(customerId);
+
+                if (existingHealth == null) {
+                    // Eğer müşteri için daha önce sağlık verisi oluşturulmamışsa rastgele oluştur
+                    int height = random.nextInt(51) + 150; // 150-200 cm arası boy
+                    double weight = random.nextDouble() * 50 + 50; // 50-100 kg arası kilo
+                    double bmi = Math.round((weight / Math.pow(height / 100.0, 2)) * 10.0) / 10.0; // BMI hesaplama
+                    BloodType bloodType = BloodType.values()[random.nextInt(BloodType.values().length)];
+                    boolean alcoholConsumption = random.nextBoolean();
+                    boolean smokeConsumption = random.nextBoolean();
+                    boolean isPregnant = random.nextBoolean();
+                    boolean hasDisability = random.nextBoolean();
+                    boolean hasPreviousSurgeries = random.nextBoolean();
+
+                    existingHealth = PersonalHealth.builder()
+                            .height(height)
+                            .weight(weight)
+                            .bmi(bmi)
+                            .bloodType(bloodType)
+                            .alcoholConsumption(alcoholConsumption)
+                            .smokeConsumption(smokeConsumption)
+                            .isPregnant(isPregnant)
+                            .hasDisability(hasDisability)
+                            .hasPreviousSurgeries(hasPreviousSurgeries)
+                            .customer(customer)
+                            .build();
+
+                    customerHealthMap.put(customerId, existingHealth);
+                }
+
+                // Rastgele createdAt tarihi oluştur
+                LocalDateTime startDate = LocalDateTime.now().minusYears(2);
+                long daysBetween = java.time.Duration.between(startDate, LocalDateTime.now()).toDays();
+                LocalDateTime createdAt = startDate.plusDays(random.nextInt((int) daysBetween + 1));
+
+                // Yeni bir PersonalHealth kaydı oluştur, mevcut sağlık verilerini kullanarak
+                PersonalHealth personalHealth = PersonalHealth.builder()
+                        .height(existingHealth.getHeight())
+                        .weight(existingHealth.getWeight())
+                        .bmi(existingHealth.getBmi())
+                        .bloodType(existingHealth.getBloodType())
+                        .alcoholConsumption(existingHealth.getAlcoholConsumption())
+                        .smokeConsumption(existingHealth.getSmokeConsumption())
+                        .isPregnant(existingHealth.getIsPregnant())
+                        .hasDisability(existingHealth.getHasDisability())
+                        .hasPreviousSurgeries(existingHealth.getHasPreviousSurgeries())
+                        .createdAt(createdAt)
+                        .customer(customer)
+                        .build();
+
+                personalHealthRepository.save(personalHealth);
+            }
+        }
+    }
+
     private void seedEarthquakeWeight() {
         earthQuakeWeightsRepository.saveAll(List.of(
                 EarthQaukeWeights.builder().key("EARTHQUAKERISK_1").weight(new BigDecimal("3.2")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("EARTHQUAKERISK").build(),
@@ -1012,6 +885,30 @@ public class DatabaseSeed implements CommandLineRunner {
             }
         }
         earthQuakeRepository.saveAll(earthquakePolicies);
+    }
+
+    private static String generateValidTCKN(Random random) {
+        int[] digits = new int[11];
+
+        digits[0] = random.nextInt(9) + 1;
+
+        for (int i = 1; i < 9; i++) {
+            digits[i] = random.nextInt(10);
+        }
+        int oddSum = digits[0] + digits[2] + digits[4] + digits[6] + digits[8];
+        int evenSum = digits[1] + digits[3] + digits[5] + digits[7];
+        digits[9] = ((7 * oddSum) - evenSum) % 10;
+
+        int totalSum = 0;
+        for (int i = 0; i < 10; i++) {
+            totalSum += digits[i];
+        }
+        digits[10] = totalSum % 10;
+        StringBuilder tcknBuilder = new StringBuilder();
+        for (int digit : digits) {
+            tcknBuilder.append(digit);
+        }
+        return tcknBuilder.toString();
     }
 }
 

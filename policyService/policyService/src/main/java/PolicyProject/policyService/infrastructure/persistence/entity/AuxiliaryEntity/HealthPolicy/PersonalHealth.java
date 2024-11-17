@@ -1,11 +1,11 @@
 package PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.HealthPolicy;
 
 import PolicyProject.policyService.domain.Enums.Enums.BloodType;
+import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -40,5 +40,23 @@ public class PersonalHealth {
     private Boolean hasDisability;
 
     private Boolean hasPreviousSurgeries;
+
+    private LocalDateTime createdAt;
+
+
+
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
 }

@@ -5,11 +5,9 @@ import java.time.LocalDate;
 public record GetPlateWithCustomerRequest(
 
         String plate,
-        int policyType,
+        Integer coverageCode,
         LocalDate policyStartDate,
         LocalDate policyEndDate
-
-
 
 ) {
 }

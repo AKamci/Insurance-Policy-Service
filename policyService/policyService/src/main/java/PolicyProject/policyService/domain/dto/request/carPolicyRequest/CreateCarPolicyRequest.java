@@ -12,11 +12,8 @@ public record CreateCarPolicyRequest(
         @NotNull(message = "Policy Offer date cannot be null")
         LocalDate policyOfferDate,
 
-        @NotBlank(message = "Policy description cannot be blank")
-        String policyDescription,
-
-        @NotBlank(message = "Policy type cannot be blank")
-        Integer coverage,
+        @NotNull(message = "Policy type cannot be blank")
+        Integer coverageCode,
 
         @FutureOrPresent(message = "Policy date must be in the present or future")
         @NotNull(message = "Policy date cannot be null")

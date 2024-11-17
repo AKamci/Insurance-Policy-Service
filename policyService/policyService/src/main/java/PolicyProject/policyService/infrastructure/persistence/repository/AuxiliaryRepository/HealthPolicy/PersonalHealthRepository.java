@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PersonalHealthRepository extends JpaRepository<PersonalHealth, Long> {
+
+    PersonalHealth findTopByCustomerTcknOrderByCreatedAtDesc(String tckn);
 }

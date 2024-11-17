@@ -2,17 +2,20 @@ package PolicyProject.policyService.infrastructure.config.DependecyInjection;
 
 import PolicyProject.policyService.application.gateways.EarthQuakeWeightGateway;
 import PolicyProject.policyService.application.gateways.HealthPolicyWeightGateway;
-import PolicyProject.policyService.application.gateways.HouseGateway;
 import PolicyProject.policyService.application.gateways.PersonalHealthGateway;
 import PolicyProject.policyService.application.service.ObjectValidation;
 import PolicyProject.policyService.application.service.Service.HouseService;
 import PolicyProject.policyService.application.service.Service.PersonalHealthService;
 import PolicyProject.policyService.application.service.StrategyFactory.EarthQuakeWeightStrategyFactory;
+import PolicyProject.policyService.application.service.StrategyFactory.HealthPolicyWeightStrategyFactory;
 import PolicyProject.policyService.application.usecases.ExecuteEarthQuakeWeight;
+import PolicyProject.policyService.application.usecases.ExecuteHealthPolicyWeight;
 import PolicyProject.policyService.application.usecases.ExecuteHouse;
 import PolicyProject.policyService.application.usecases.ExecutePersonalHealth;
 import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.EarthQuakeWeightRepositoryGateway;
+import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.HealthPolicyWeightRepositoryGateway;
 import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.HouseRepositoryGateway;
+import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.PersonalHealthRepositoryGateway;
 import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.EarthquakePolicy.HouseRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.HealthPolicy.PersonalHealthRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.EarthQuakeWeightsRepository;
@@ -25,22 +28,22 @@ public class PersonalHealthDependecyInjection {
 
     @Bean
     PersonalHealthGateway personalHealthGateway(PersonalHealthRepository personalHealthRepository) {
-        return new PersonalHealthGateway(personalHealthRepository);
+        return new PersonalHealthRepositoryGateway(personalHealthRepository);
     }
 
     @Bean
-    HealthPolicyWeightGateway earthQuakeWeightGateway(HealthPolicyWeightRepository healthPolicyWeightRepository) {
-        return new HealthPolicyWeightRepository(healthPolicyWeightRepository);
+    HealthPolicyWeightGateway healthPolicyWeightGateway(HealthPolicyWeightRepository healthPolicyWeightRepository) {
+        return new HealthPolicyWeightRepositoryGateway(healthPolicyWeightRepository);
     }
 
     @Bean
-    ExecuteHouse executeHouse(HouseGateway houseGateway, ExecuteEarthQuakeWeight executeEarthQuakeWeight) {
-        return new ExecuteHouse(houseGateway, executeEarthQuakeWeight);
+    ExecutePersonalHealth executePersonalHealth(PersonalHealthGateway personalHealthGateway, ExecuteHealthPolicyWeight executeHealthPolicyWeight) {
+        return new ExecutePersonalHealth(personalHealthGateway, executeHealthPolicyWeight);
     }
 
     @Bean
-    ExecuteEarthQuakeWeight executeEarthQuakeWeight(EarthQuakeWeightGateway weightGateway, EarthQuakeWeightStrategyFactory strategyFactory) {
-        return new ExecuteEarthQuakeWeight(weightGateway, strategyFactory);
+    ExecuteHealthPolicyWeight executeHealthPolicyWeight(HealthPolicyWeightGateway healthPolicyWeightGateway, HealthPolicyWeightStrategyFactory strategyFactory) {
+        return new ExecuteHealthPolicyWeight(healthPolicyWeightGateway, strategyFactory);
     }
 
     @Bean

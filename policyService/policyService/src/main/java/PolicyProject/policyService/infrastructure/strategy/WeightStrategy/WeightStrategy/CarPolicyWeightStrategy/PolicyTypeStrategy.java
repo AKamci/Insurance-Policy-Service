@@ -6,7 +6,7 @@ import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeigh
 
 import java.math.BigDecimal;
 
-public class PolicyTypeStrategy   implements ICarPolicyWeightStrategy {
+public class PolicyTypeStrategy implements ICarPolicyWeightStrategy {
     @Override
     public BigDecimal calculate(LicensePlateModel model, Weights parameter) {
         return parameter.getWeight();
@@ -14,6 +14,6 @@ public class PolicyTypeStrategy   implements ICarPolicyWeightStrategy {
 
     @Override
     public BigDecimal getValue(LicensePlateModel model) {
-        return BigDecimal.valueOf(model.policyType());
+        return BigDecimal.valueOf(model.coverageCode());
     }
 }

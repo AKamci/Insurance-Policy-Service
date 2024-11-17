@@ -2,6 +2,7 @@ package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
 
 import PolicyProject.policyService.application.gateways.CustomerGateway;
 import PolicyProject.policyService.infrastructure.exception.DuplicateTcknException;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.HealthPolicy.PersonalHealth;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -54,12 +55,38 @@ public class CustomerRepositoryGateway implements CustomerGateway {
         if (existingCustomer == null) {
             return null;
         }
-        newCustomer.setId(existingCustomer.getId());
-        newCustomer.setPolicies(existingCustomer.getPolicies());
-        newCustomer.setHouses(existingCustomer.getHouses());
-        newCustomer.setLicensePlates(existingCustomer.getLicensePlates());
-        //newCustomer.setCarPolicies(existingCustomer.getCarPolicies());
-        return customerRepository.save(newCustomer);
+
+        existingCustomer.setName(newCustomer.getName());
+        existingCustomer.setAddress(newCustomer.getAddress());
+        existingCustomer.setPhone(newCustomer.getPhone());
+        existingCustomer.setEmail(newCustomer.getEmail());
+        existingCustomer.setPassword(newCustomer.getPassword());
+        existingCustomer.setBirthDay(newCustomer.getBirthDay());
+        existingCustomer.setGender(newCustomer.getGender());
+        existingCustomer.setGrade(newCustomer.getGrade());
+
+        if (newCustomer.getPersonalHealths() != null) {
+            existingCustomer.getPersonalHealths().forEach(health -> health.setCustomer(null));
+            existingCustomer.getPersonalHealths().clear();
+
+            newCustomer.getPersonalHealths().forEach(health -> {
+                PersonalHealth newHealth = new PersonalHealth();
+                newHealth.setHeight(health.getHeight());
+                newHealth.setWeight(health.getWeight());
+                newHealth.setBmi(health.getBmi());
+                newHealth.setBloodType(health.getBloodType());
+                newHealth.setAlcoholConsumption(health.getAlcoholConsumption());
+                newHealth.setSmokeConsumption(health.getSmokeConsumption());
+                newHealth.setIsPregnant(health.getIsPregnant());
+                newHealth.setHasDisability(health.getHasDisability());
+                newHealth.setHasPreviousSurgeries(health.getHasPreviousSurgeries());
+
+                newHealth.setCustomer(existingCustomer);
+                existingCustomer.getPersonalHealths().add(newHealth);
+            });
+        }
+
+        return customerRepository.save(existingCustomer);
     }
 
     @Override

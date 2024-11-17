@@ -21,8 +21,17 @@ public class ExecuteLicensePlate {
                 .orElseThrow(() -> new EntityNotFoundException(licensePlateModel.id(), "Entity not found"));
 
         var licenseModel = LicensePlateMapper.INSTANCE.licensePlateEntityToLicensePlateModel(licensePlateEntity);
-
-        return executeWeight.Get_ALicensePlateModel(licenseModel);
+        LicensePlateModel newPlate = new LicensePlateModel(
+                null,
+                licenseModel.plate(),
+                licenseModel.car(),
+                licenseModel.customer(),
+                licensePlateModel.coverageCode(),
+                licenseModel.policyStartDate(),
+                licenseModel.policyEndDate(),
+                0L
+        );
+        return executeWeight.Get_ALicensePlateModel(newPlate);
     }
 
     public LicensePlateModel ExecuteGetLicensePlate(String plate) {

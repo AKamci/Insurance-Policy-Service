@@ -6,6 +6,7 @@ import PolicyProject.policyService.application.service.StrategyFactory.EarthQuak
 import PolicyProject.policyService.application.service.StrategyFactory.HealthPolicyWeightStrategyFactory;
 import PolicyProject.policyService.domain.model.HealthPolicyModel;
 import PolicyProject.policyService.domain.model.HouseModel;
+import PolicyProject.policyService.domain.model.PersonalHealthModel;
 import PolicyProject.policyService.domain.model.WeightsModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
@@ -25,34 +26,42 @@ public class ExecuteHealthPolicyWeight {
     private final HealthPolicyWeightGateway healthPolicyWeightGateway;
     private final HealthPolicyWeightStrategyFactory healthPolicyWeightStrategyFactory;
 
-    public HealthPolicyModel Get_AHealthPolicyModel(HealthPolicyModel healthPolicyModel) {
-        BigDecimal Amount = calculatePolicyPrice(healthPolicyModel);
-        HealthPolicyModel newModel = new HealthPolicyModel(
-                healthPolicyModel.id(),
-                healthPolicyModel.number(),
-                healthPolicyModel.squareMeters(),
-                healthPolicyModel.customer(),
-                healthPolicyModel.building(),
-                healthPolicyModel.tckn(),
+    public PersonalHealthModel Get_APersonalHealthModel(PersonalHealthModel personalHealthModel) {
+        BigDecimal Amount = calculatePolicyPrice(personalHealthModel);
+        PersonalHealthModel newModel = new PersonalHealthModel(
+                personalHealthModel.id(), // Reuse existing id
+                personalHealthModel.tckn(),
+                personalHealthModel.coverage(),
+                personalHealthModel.coverageCode(),
+                personalHealthModel.customer(),
+                personalHealthModel.height(), // Reuse existing height
+                personalHealthModel.weight(), // Reuse existing weight
+                personalHealthModel.bmi(), // Reuse existing bmi
+                personalHealthModel.bloodType(), // Reuse existing blood type
+                personalHealthModel.alcoholConsumption(), // Reuse existing alcoholConsumption
+                personalHealthModel.smokeConsumption(), // Reuse existing smokeConsumption
+                personalHealthModel.isPregnant(), // Reuse existing isPregnant
+                personalHealthModel.hasDisability(), // Reuse existing hasDisability
+                personalHealthModel.hasPreviousSurgeries(),
                 Amount.longValue()
         );
         return newModel;
     }
 
-    private BigDecimal calculatePolicyPrice(HealthPolicyModel healthPolicyModel) {
+    private BigDecimal calculatePolicyPrice(PersonalHealthModel personalHealthModel) {
         BigDecimal total = BigDecimal.ZERO;
         List<HealthPolicyWeight> parameters = healthPolicyWeightGateway.list();
 
         for (HealthPolicyWeight parameter : parameters) {
             IWeightStrategy strategy = healthPolicyWeightStrategyFactory.getStrategy(parameter.getType());
-            BigDecimal valueToCheck = strategy.getValue(healthPolicyModel);
+            BigDecimal valueToCheck = strategy.getValue(personalHealthModel);
 
             if (strategy instanceof EarthQuakeConstantStrategy) {
-                total = total.add(strategy.calculate(healthPolicyModel, parameter));
+                total = total.add(strategy.calculate(personalHealthModel, parameter));
             } else if (parameter.getMinValue() != null && parameter.getMaxValue() != null) {
                 if (valueToCheck != null && parameter.getMinValue().compareTo(valueToCheck) <= 0
                         && parameter.getMaxValue().compareTo(valueToCheck) >= 0) {
-                    total = total.add(strategy.calculate(healthPolicyModel, parameter));
+                    total = total.add(strategy.calculate(personalHealthModel, parameter));
                     System.out.println("Parametre :" + parameter);
                     System.out.println("Total :" + total);
                     System.out.println("Strategy :" + strategy);
@@ -61,7 +70,7 @@ public class ExecuteHealthPolicyWeight {
             } else {
                 System.out.println("Doğru Aralığa girmedi");
                 System.out.println(strategy);
-                total = total.add(strategy.calculate(healthPolicyModel, parameter));
+                total = total.add(strategy.calculate(personalHealthModel, parameter));
             }
         }
 
