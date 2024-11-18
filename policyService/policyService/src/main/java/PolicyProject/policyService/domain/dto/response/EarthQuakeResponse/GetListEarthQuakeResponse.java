@@ -1,13 +1,13 @@
 package PolicyProject.policyService.domain.dto.response.EarthQuakeResponse;
 
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
+import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 
 import java.time.LocalDate;
 
 public record GetListEarthQuakeResponse(
         Long policyId,
         LocalDate policyOfferDate,
-        CarPolicyState state,
+        PolicyState state,
         String policyDescription,
         int coverage,
         Double policyAmount,

@@ -1,9 +1,12 @@
 package PolicyProject.policyService.interfaces.controller.Version_1;
 
-import PolicyProject.policyService.application.service.Service.PersonalHealthService;
+import PolicyProject.policyService.application.service.Service.AuxiliaryService.HealthPolicy.PersonalHealthService;
+import PolicyProject.policyService.domain.dto.request.HealthPolicyRequest.CreateHealthPolicyRequest;
 import PolicyProject.policyService.domain.dto.request.LicensePlateRequest.GetPlateWithCustomerRequest;
+import PolicyProject.policyService.domain.dto.request.PersonalHealthRequest.CreatePersonalHealthRequest;
 import PolicyProject.policyService.domain.dto.request.PersonalHealthRequest.GetPersonalHealthWithCustomerRequest;
 import PolicyProject.policyService.domain.dto.response.LicensePlateResponse.GetPlateWithCustomerResponse;
+import PolicyProject.policyService.domain.dto.response.PersonalHealthResponse.CreatePersonalHealthResponse;
 import PolicyProject.policyService.domain.dto.response.PersonalHealthResponse.GetPersonalHealthWithCustomerResponse;
 import PolicyProject.policyService.interfaces.mappers.LicensePlateMapper;
 import PolicyProject.policyService.interfaces.mappers.PersonalHealthMapper;
@@ -11,10 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/personalHealth")
@@ -30,6 +30,16 @@ public class PersonalHealthController_V1 {
                 PersonalHealthMapper.INSTANCE.getGetPersonalHealthWithCustomerRequestToPersonalHealthModel(getPersonalHealthWithCustomerRequest));
 
         return ResponseEntity.status(HttpStatus.OK).body(getPlateWithCustomer);
+    }
+
+    @PostMapping
+    public ResponseEntity<CreatePersonalHealthResponse> createPersonalHealth(
+            @Valid @RequestBody CreatePersonalHealthRequest createPersonalHealthRequest) {
+
+        CreatePersonalHealthResponse createPersonalHealthResponse = personalHealthService.create(
+                PersonalHealthMapper.INSTANCE.createPersonalHealthRequestToPersonalHealthModel(createPersonalHealthRequest));
+
+        return ResponseEntity.status(HttpStatus.OK).body(createPersonalHealthResponse);
     }
 
 

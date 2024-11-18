@@ -1,6 +1,6 @@
 package PolicyProject.policyService.application.service.StrategyFactory;
 
-import PolicyProject.policyService.domain.Enums.Enums.StrategyType;
+import PolicyProject.policyService.domain.Enums.Enums.CarPolicyEnum.StrategyType;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.CarPolicyWeightStrategy.CarAgeStrategy;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.CarPolicyWeightStrategy.CarPriceStrategy;

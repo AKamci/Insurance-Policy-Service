@@ -1,7 +1,7 @@
 package PolicyProject.policyService.interfaces.controller.Version_1;
 
-import PolicyProject.policyService.application.service.Service.HouseService;
-import PolicyProject.policyService.application.service.Service.LicensePlateService;
+
+import PolicyProject.policyService.application.service.Service.AuxiliaryService.EarthquakePolicy.HouseService;
 import PolicyProject.policyService.domain.dto.request.HouseRequest.GetHouseWCustomerRequest;
 import PolicyProject.policyService.domain.dto.request.LicensePlateRequest.GetPlateWithCustomerRequest;
 import PolicyProject.policyService.domain.dto.response.HouseResponse.GetHouseWCustomerResponse;

@@ -1,6 +1,7 @@
 package PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.HealthPolicy;
 
 import PolicyProject.policyService.domain.Enums.Enums.BloodType;
+import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 public class PersonalHealth {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "height")

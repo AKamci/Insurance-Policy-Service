@@ -1,6 +1,5 @@
 package PolicyProject.policyService.domain.dto.request.EarthQuakeRequest;
 
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 
 import java.time.LocalDate;

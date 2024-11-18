@@ -1,6 +1,6 @@
 package PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository;
 
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
+import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -24,7 +24,7 @@ public interface CarPolicyRepository extends JpaRepository<CarPolicy, Long>, Jpa
 
     List<CarPolicy> findByPolicyStartDateBetween(LocalDate startDate, LocalDate endDate);
 
-    List<CarPolicy> findByStateAndExpiryDateBefore(CarPolicyState state, LocalDate currentDate);
+    List<CarPolicy> findByStateAndExpiryDateBefore(PolicyState state, LocalDate currentDate);
 
 
 

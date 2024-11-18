@@ -1,6 +1,5 @@
 package PolicyProject.policyService.interfaces.controller.Version_1;
 
-import PolicyProject.policyService.application.service.Service.CarPolicyService;
 import PolicyProject.policyService.application.service.Service.EarthQuakeService;
 import PolicyProject.policyService.domain.dto.request.EarthQuakeRequest.*;
 import PolicyProject.policyService.domain.dto.request.carPolicyRequest.*;

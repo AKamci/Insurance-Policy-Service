@@ -1,7 +1,7 @@
 package PolicyProject.policyService.interfaces.controller.Version_1;
 
 
-import PolicyProject.policyService.application.service.Service.LicensePlateService;
+import PolicyProject.policyService.application.service.Service.AuxiliaryService.CarPolicy.LicensePlateService;
 import PolicyProject.policyService.domain.dto.request.CustomerRequest.GetCustomerRequest;
 import PolicyProject.policyService.domain.dto.request.LicensePlateRequest.GetPlateWithCustomerRequest;
 import PolicyProject.policyService.domain.dto.response.CustomerResponse.GetCustomerResponse;

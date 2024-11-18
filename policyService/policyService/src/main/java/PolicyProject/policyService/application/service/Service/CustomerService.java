@@ -25,41 +25,40 @@ public class CustomerService implements ICustomerService {
     private final ObjectValidation objectValidation;
 
     @Override
-    public CreateCustomerResponse create(CustomerModel CustomerModel) {
+    public CreateCustomerResponse create(CustomerModel customerModel) {
 
-        objectValidation.CustomerModelValidations(CustomerModel);
+        objectValidation.validateModel(customerModel, "customerModel");
         return CustomerMapper.INSTANCE.customerModelToCreateCustomerResponse
-                (executeCustomer.executeCreate(CustomerModel));
+                (executeCustomer.executeCreate(customerModel));
     }
 
     @Override
-    public UpdateCustomerResponse update(CustomerModel CustomerModel) {
-        objectValidation.CustomerModelValidations(CustomerModel);
+    public UpdateCustomerResponse update(CustomerModel customerModel) {
+        objectValidation.validateModel(customerModel, "customerModel");
         return CustomerMapper.INSTANCE.customerModelToUpdateCustomerResponse
-                (executeCustomer.executeUpdate(CustomerModel));
+                (executeCustomer.executeUpdate(customerModel));
     }
 
     @Override
-    public DeleteCustomerResponse delete(CustomerModel CustomerModel) {
-        objectValidation.CustomerModelValidations(CustomerModel);
+    public DeleteCustomerResponse delete(CustomerModel customerModel) {
+        objectValidation.validateModel(customerModel, "customerModel");
         return CustomerMapper.INSTANCE.customerModelToDeleteCustomerResponse
-                (executeCustomer.executeDelete(CustomerModel));
+                (executeCustomer.executeDelete(customerModel));
     }
 
     @Override
     public List<GetCustomerResponse> getList(CustomerModel customerModel) {
+        objectValidation.validateModel(customerModel, "customerModel");
         return CustomerMapper.INSTANCE.customersModelToGetCustomerResponse
                 (executeCustomer.executeGetList(customerModel));
     }
 
     @Override
-    public GetCustomerResponse get(CustomerModel CustomerModel) {
-        objectValidation.CustomerModelValidations(CustomerModel);
+    public GetCustomerResponse get(CustomerModel customerModel) {
+        objectValidation.validateModel(customerModel, "customerModel");
         return CustomerMapper.INSTANCE.customerModelToGetCustomerResponse
-                (executeCustomer.executeGet(CustomerModel));
+                (executeCustomer.executeGet(customerModel));
     }
-
-
     public int getTotalRecord() {
         return executeCustomer.executeGetTotalRecord();
     }

@@ -1,7 +1,7 @@
 package PolicyProject.policyService.interfaces.controller.Version_1;
 
 import PolicyProject.policyService.application.service.IService.ICarPolicyService;
-import PolicyProject.policyService.application.service.Service.CarPolicyService;
+import PolicyProject.policyService.application.service.Service.PolicyService.CarPolicyService;
 import PolicyProject.policyService.domain.dto.request.carPolicyRequest.*;
 import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
 import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;

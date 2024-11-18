@@ -1,7 +1,6 @@
 package PolicyProject.policyService.application.service.StrategyFactory;
 
 import PolicyProject.policyService.domain.Enums.Enums.EarthquakePolicyStrategyType;
-import PolicyProject.policyService.domain.Enums.Enums.StrategyType;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.CarPolicyWeightStrategy.CustomerAgeStrategy;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.EarthQuakePolicyWeightStrategy.*;

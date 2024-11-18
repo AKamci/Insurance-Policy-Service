@@ -12,7 +12,9 @@ import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEn
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.HealthPolicy.PersonalHealth;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.EarthquakePolicy;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.HealthPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
+import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.HealthPolicyWeight;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.Weights;
 import PolicyProject.policyService.infrastructure.persistence.repository.*;
 import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.CarPolicy.CarRepository;
@@ -138,15 +140,18 @@ public class DatabaseSeed implements CommandLineRunner {
             seedDataEarthquakePolicies();
             System.out.println("EARTHQUAKE SEED IS COMPLETED");
         }
-        if (personalHealthRepository.count() == 0 || condition)
-        {
+        if (personalHealthRepository.count() == 0 || condition) {
             seedPersonalHealth();
             System.out.println("PERSONAL HEALTH SEED IS COMPLETED");
         }
-
-
-
-
+        if (healthPolicyWeightRepository.count() == 0 || condition) {
+            seedHealthPolicyWeight();
+            System.out.println("HEALTH WEIGHT SEED IS COMPLETED");
+        }
+        if (healthPolicyRepository.count() == 0 || condition) {
+            seedDataHealthPolicies();
+            System.out.println("HEALTH POLICY WEIGHT SEED IS COMPLETED");
+        }
         System.out.println("DATABASE SEED IS COMPLETED");
     }
 
@@ -610,24 +615,45 @@ public class DatabaseSeed implements CommandLineRunner {
 
         Coverage coverage2 = Coverage.builder()
                 .coverageType(CoverageType.TRAFİK)
-                .coverageDescription("Coverage Description " + "Trafik")
+                .coverageDescription("Trafik sigortası, trafikte yaşanabilecek kazalarda üçüncü şahıslara verebileceğiniz zararları karşılayan bir zorunluluk sigortasıdır.")
                 .build();
         coverages.add(coverage2);
+
         Coverage coverage = Coverage.builder()
                 .coverageType(CoverageType.KASKO)
-                .coverageDescription("Coverage Description " + "Kasko")
+                .coverageDescription("Kasko sigortası, aracınızı kazalar, hırsızlık ya da doğal afetler gibi beklenmedik durumlara karşı güvence altına alır.")
                 .build();
         coverages.add(coverage);
+
         Coverage coverage3 = Coverage.builder()
                 .coverageType(CoverageType.YARI_KAPSAM)
-                .coverageDescription("Coverage Description " + "Trafik")
+                .coverageDescription("Yarı kapsamlı deprem sigortası, olası bir depremde evinizde meydana gelen zararların bir kısmını karşılayan ekonomik bir güvence sunar.")
                 .build();
         coverages.add(coverage3);
+
         Coverage coverage4 = Coverage.builder()
                 .coverageType(CoverageType.TAM_KAPSAM)
-                .coverageDescription("Coverage Description " + "Trafik")
+                .coverageDescription("Tam kapsamlı deprem sigortası, depremin neden olabileceği her türlü maddi zararı tamamen karşılayan geniş bir güvence sağlar.")
                 .build();
         coverages.add(coverage4);
+
+        Coverage coverage5 = Coverage.builder()
+                .coverageType(CoverageType.AYAKTA_TEDAVİ)
+                .coverageDescription("Ayakta tedavi sigortası, muayene, reçeteli ilaçlar ve ayakta yapılan diğer tıbbi işlemlerde sizi destekler.")
+                .build();
+        coverages.add(coverage5);
+
+        Coverage coverage6 = Coverage.builder()
+                .coverageType(CoverageType.YATARAK_TEDAVİ)
+                .coverageDescription("Yatarak tedavi sigortası, hastanede yatarak gerçekleştirilen tedavi ve ameliyat masraflarını güvence altına alır.")
+                .build();
+        coverages.add(coverage6);
+
+        Coverage coverage7 = Coverage.builder()
+                .coverageType(CoverageType.SEYEHAT)
+                .coverageDescription("Seyahat sigortası, seyahatleriniz sırasında karşılaşabileceğiniz sağlık sorunları, bagaj kaybı ya da diğer beklenmedik durumlarda sizi korur.")
+                .build();
+        coverages.add(coverage7);
 
         coverageRepository.saveAll(coverages);
 
@@ -783,7 +809,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 }
 
                 // Rastgele createdAt tarihi oluştur
-                LocalDateTime startDate = LocalDateTime.now().minusYears(2);
+                LocalDateTime startDate = LocalDateTime.now().minusMonths(5);
                 long daysBetween = java.time.Duration.between(startDate, LocalDateTime.now()).toDays();
                 LocalDateTime createdAt = startDate.plusDays(random.nextInt((int) daysBetween + 1));
 
@@ -885,6 +911,101 @@ public class DatabaseSeed implements CommandLineRunner {
             }
         }
         earthQuakeRepository.saveAll(earthquakePolicies);
+    }
+
+    private void seedHealthPolicyWeight() {
+        healthPolicyWeightRepository.saveAll(List.of(
+                HealthPolicyWeight.builder().key("WEIGHT_0_50").weight(new BigDecimal("2.0")).minValue(new BigDecimal("0")).maxValue(new BigDecimal("50")).type("WEIGHT").build(),
+                HealthPolicyWeight.builder().key("WEIGHT_51_70").weight(new BigDecimal("3.0")).minValue(new BigDecimal("51")).maxValue(new BigDecimal("70")).type("WEIGHT").build(),
+                HealthPolicyWeight.builder().key("WEIGHT_71_90").weight(new BigDecimal("4.0")).minValue(new BigDecimal("71")).maxValue(new BigDecimal("90")).type("WEIGHT").build(),
+                HealthPolicyWeight.builder().key("WEIGHT_91_UP").weight(new BigDecimal("5.0")).minValue(new BigDecimal("91")).maxValue(new BigDecimal("300")).type("WEIGHT").build(),
+
+                HealthPolicyWeight.builder().key("HEIGHT_0_150").weight(new BigDecimal("2.5")).minValue(new BigDecimal("0")).maxValue(new BigDecimal("150")).type("HEIGHT").build(),
+                HealthPolicyWeight.builder().key("HEIGHT_151_170").weight(new BigDecimal("3.0")).minValue(new BigDecimal("151")).maxValue(new BigDecimal("170")).type("HEIGHT").build(),
+                HealthPolicyWeight.builder().key("HEIGHT_171_190").weight(new BigDecimal("3.5")).minValue(new BigDecimal("171")).maxValue(new BigDecimal("190")).type("HEIGHT").build(),
+                HealthPolicyWeight.builder().key("HEIGHT_191_UP").weight(new BigDecimal("4.0")).minValue(new BigDecimal("191")).maxValue(new BigDecimal("250")).type("HEIGHT").build(),
+
+                HealthPolicyWeight.builder().key("BMI_UNDERWEIGHT").weight(new BigDecimal("1.5")).minValue(new BigDecimal("0")).maxValue(new BigDecimal("18.4")).type("BMI").build(),
+                HealthPolicyWeight.builder().key("BMI_NORMAL").weight(new BigDecimal("3.0")).minValue(new BigDecimal("18.5")).maxValue(new BigDecimal("24.9")).type("BMI").build(),
+                HealthPolicyWeight.builder().key("BMI_OVERWEIGHT").weight(new BigDecimal("3.5")).minValue(new BigDecimal("25.0")).maxValue(new BigDecimal("29.9")).type("BMI").build(),
+                HealthPolicyWeight.builder().key("BMI_OBESE").weight(new BigDecimal("4.0")).minValue(new BigDecimal("30.0")).maxValue(new BigDecimal("50.0")).type("BMI").build(),
+
+                HealthPolicyWeight.builder().key("BLOODTYPE_O_POSITIVE").weight(new BigDecimal("3.0")).minValue(new BigDecimal("7")).maxValue(new BigDecimal("7")).type("BLOODTYPE").build(),
+                HealthPolicyWeight.builder().key("BLOODTYPE_A_POSITIVE").weight(new BigDecimal("3.5")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("BLOODTYPE").build(),
+                HealthPolicyWeight.builder().key("BLOODTYPE_B_POSITIVE").weight(new BigDecimal("4.0")).minValue(new BigDecimal("3")).maxValue(new BigDecimal("3")).type("BLOODTYPE").build(),
+                HealthPolicyWeight.builder().key("BLOODTYPE_AB_POSITIVE").weight(new BigDecimal("4.5")).minValue(new BigDecimal("5")).maxValue(new BigDecimal("5")).type("BLOODTYPE").build(),
+
+                HealthPolicyWeight.builder().key("BLOODTYPE_O_NEGATIVE").weight(new BigDecimal("3.0")).minValue(new BigDecimal("8")).maxValue(new BigDecimal("8")).type("BLOODTYPE").build(),
+                HealthPolicyWeight.builder().key("BLOODTYPE_A_NEGATIVE").weight(new BigDecimal("3.5")).minValue(new BigDecimal("2")).maxValue(new BigDecimal("2")).type("BLOODTYPE").build(),
+                HealthPolicyWeight.builder().key("BLOODTYPE_B_NEGATIVE").weight(new BigDecimal("4.0")).minValue(new BigDecimal("4")).maxValue(new BigDecimal("4")).type("BLOODTYPE").build(),
+                HealthPolicyWeight.builder().key("BLOODTYPE_AB_NEGATIVE").weight(new BigDecimal("4.5")).minValue(new BigDecimal("6")).maxValue(new BigDecimal("6")).type("BLOODTYPE").build(),
+
+
+                HealthPolicyWeight.builder().key("GENDER_MALE").weight(new BigDecimal("3.0")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("GENDER").build(),
+                HealthPolicyWeight.builder().key("GENDER_FEMALE").weight(new BigDecimal("3.5")).minValue(new BigDecimal("2")).maxValue(new BigDecimal("2")).type("GENDER").build(),
+
+                HealthPolicyWeight.builder().key("AGE_0_20").weight(new BigDecimal("2.0")).minValue(new BigDecimal("0")).maxValue(new BigDecimal("20")).type("AGE").build(),
+                HealthPolicyWeight.builder().key("AGE_21_40").weight(new BigDecimal("3.0")).minValue(new BigDecimal("21")).maxValue(new BigDecimal("40")).type("AGE").build(),
+                HealthPolicyWeight.builder().key("AGE_41_60").weight(new BigDecimal("3.5")).minValue(new BigDecimal("41")).maxValue(new BigDecimal("60")).type("AGE").build(),
+                HealthPolicyWeight.builder().key("AGE_61_UP").weight(new BigDecimal("4.0")).minValue(new BigDecimal("61")).maxValue(new BigDecimal("120")).type("AGE").build(),
+
+
+                HealthPolicyWeight.builder().key("AYAKTA_TEDAVİ").weight(new BigDecimal("4.0")).minValue(new BigDecimal("105")).maxValue(new BigDecimal("105")).type("POLICY_TYPE").build(),
+                HealthPolicyWeight.builder().key("YATARAK_TEDAVİ").weight(new BigDecimal("4.0")).minValue(new BigDecimal("106")).maxValue(new BigDecimal("106")).type("POLICY_TYPE").build(),
+                HealthPolicyWeight.builder().key("SEYEHAT").weight(new BigDecimal("4.0")).minValue(new BigDecimal("107")).maxValue(new BigDecimal("107")).type("POLICY_TYPE").build()
+
+
+
+
+
+
+
+                ));
+    }
+
+    private void seedDataHealthPolicies()
+    {
+
+        PolicyState state;
+        Random random = new Random();
+
+        List<HealthPolicy> healthPolicyList = new ArrayList<>();
+        for (int i = 1; i <= 1000; i++) {
+
+            Long customerId = (long) (i % 20 + 1);
+            Long personalHealthId = (long) (i % 100 + 1);
+            Long coverageId = (long) (i % 3 == 1 ? 5 : (i % 3 == 2 ? 6 : 7));
+
+            Optional<Coverage> optionalCoverage = coverageRepository.findById(coverageId);
+            Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+            Optional<PersonalHealth> optionalPersonalHealth = personalHealthRepository.findById(personalHealthId);
+
+            if (optionalCustomer.isPresent() && optionalPersonalHealth.isPresent() && optionalCoverage.isPresent()) {
+                PersonalHealth personalHealth = optionalPersonalHealth.get();
+                Customer customer = personalHealth.getCustomer();
+                Coverage coverage = optionalCoverage.get();
+
+                LocalDate startDate = LocalDate.of(2024, 10, 1);
+                LocalDate policyLocalDate = startDate.plusDays(i);
+
+                state = PolicyState.values()[random.nextInt(PolicyState.values().length)];
+
+                HealthPolicy policy = HealthPolicy.builder()
+                        .policyDescription("Açıklama " + i)
+                        .policyStartDate(policyLocalDate)
+                        .policyEndDate(policyLocalDate.plusYears(1))
+                        .policyAmount(1000.0 + (i * 100))
+                        .policyOfferDate(policyLocalDate)
+                        .personalHealth(personalHealth)
+                        .customer(customer)
+                        .coverage(coverage)
+                        .state(state)
+                        .build();
+
+                healthPolicyList.add(policy);
+            }
+        }
+        healthPolicyRepository.saveAll(healthPolicyList);
     }
 
     private static String generateValidTCKN(Random random) {

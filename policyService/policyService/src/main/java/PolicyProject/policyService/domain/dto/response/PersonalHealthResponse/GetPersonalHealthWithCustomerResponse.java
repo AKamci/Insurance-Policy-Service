@@ -17,6 +17,7 @@ public record GetPersonalHealthWithCustomerResponse(
         Boolean hasDisability,
         Boolean hasPreviousSurgeries,
         LocalDateTime createdAt,
-        Customer customer
+        Customer customer,
+        Long Amount
 ) {
 }

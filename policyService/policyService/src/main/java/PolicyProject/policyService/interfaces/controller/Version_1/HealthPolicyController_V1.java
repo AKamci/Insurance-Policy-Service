@@ -1,7 +1,7 @@
 package PolicyProject.policyService.interfaces.controller.Version_1;
 
 import PolicyProject.policyService.application.service.Service.EarthQuakeService;
-import PolicyProject.policyService.application.service.Service.HealthPolicyService;
+import PolicyProject.policyService.application.service.Service.PolicyService.HealthPolicyService;
 import PolicyProject.policyService.domain.dto.request.EarthQuakeRequest.*;
 import PolicyProject.policyService.domain.dto.request.HealthPolicyRequest.*;
 import PolicyProject.policyService.domain.dto.response.EarthQuakeResponse.*;

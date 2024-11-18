@@ -23,7 +23,7 @@ public class HealthPolicySpecification {
                 .and(hasBmi(bmi))
                 .and(hasAlcoholConsumption(alcoholConsumption))
                 .and(hasSmokeConsumption(smokeConsumption))
-                .and(hasBloodType(bloodType.name()))
+                .and(hasBloodType(bloodType))
                 .and(isPregnant(isPregnant))
                 .and(hasDisability(hasDisability))
                 .and(hasPreviousSurgeries(hasPreviousSurgeries))
@@ -62,7 +62,7 @@ public class HealthPolicySpecification {
                 : criteriaBuilder.equal(root.get("smokeConsumption"), smokeConsumption);
     }
 
-    public static Specification<HealthPolicy> hasBloodType(String bloodType) {
+    public static Specification<HealthPolicy> hasBloodType(BloodType bloodType) {
         return (root, query, criteriaBuilder) -> bloodType == null
                 ? criteriaBuilder.conjunction()
                 : criteriaBuilder.equal(root.get("bloodType"), bloodType);

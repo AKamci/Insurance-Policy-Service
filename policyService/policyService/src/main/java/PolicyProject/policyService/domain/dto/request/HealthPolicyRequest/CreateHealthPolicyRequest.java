@@ -11,8 +11,8 @@ public record CreateHealthPolicyRequest(
         @NotNull(message = "Policy Offer date cannot be null")
         LocalDate policyOfferDate,
 
-        @NotNull(message = "houseId  cannot be blank")
-        Long houseId,
+        @NotNull(message = "personalHealthId  cannot be blank")
+        Long personalHealthId,
 
         @NotNull(message = "coverageCode  cannot be blank")
         Integer coverageCode,

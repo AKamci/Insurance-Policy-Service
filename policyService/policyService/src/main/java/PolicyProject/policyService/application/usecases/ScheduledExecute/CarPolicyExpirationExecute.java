@@ -1,7 +1,6 @@
 package PolicyProject.policyService.application.usecases.ScheduledExecute;
 
 import PolicyProject.policyService.application.gateways.CarPolicyGateway;
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyState;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,7 +19,7 @@ public class CarPolicyExpirationExecute {
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void expirePolicies() {
-        List<CarPolicy> expiredPolicies = carPolicyGateway.findByStateAndExpiryDateBefore(CarPolicyState.CREATED, LocalDate.now());
+        List<CarPolicy> expiredPolicies = carPolicyGateway.findByStateAndExpiryDateBefore(PolicyState.CREATED, LocalDate.now());
 
         expiredPolicies.forEach(policy -> {
             policy.setState(PolicyState.EXPIRED);
