@@ -1,11 +1,12 @@
 package PolicyProject.policyService.infrastructure.config.DependecyInjection.AuxiliaryDependecyInjection.CarPolicy;
 
-import PolicyProject.policyService.application.gateways.LicensePlateGateway;
+import PolicyProject.policyService.application.gateways.AuxiliaryGateway.CarPolicy.LicensePlateGateway;
 import PolicyProject.policyService.application.service.ObjectValidation;
 import PolicyProject.policyService.application.service.Service.AuxiliaryService.CarPolicy.LicensePlateService;
-import PolicyProject.policyService.application.usecases.ExecuteLicensePlate;
-import PolicyProject.policyService.application.usecases.ExecuteWeight;
-import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.LicensePlateRepositoryGateway;
+
+import PolicyProject.policyService.application.usecases.ExecuteAuxiliary.CarPolicy.ExecuteLicensePlate;
+import PolicyProject.policyService.application.usecases.ExecuteWeights.ExecuteCarPolicyWeight;
+import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.AuxiliaryRepositoryGateway.CarPolicy.LicensePlateRepositoryGateway;
 import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.CarPolicy.LicensePlateRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +21,7 @@ public class LicensePlateDependecyInjection {
     }
 
     @Bean
-    ExecuteLicensePlate executeLicensePlate(LicensePlateGateway licensePlateGateway, ExecuteWeight executeWeight) {
+    ExecuteLicensePlate executeLicensePlate(LicensePlateGateway licensePlateGateway, ExecuteCarPolicyWeight executeWeight) {
         return new ExecuteLicensePlate(licensePlateGateway, executeWeight);
     }
 

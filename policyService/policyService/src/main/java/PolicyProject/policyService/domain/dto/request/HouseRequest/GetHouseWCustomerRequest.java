@@ -7,6 +7,7 @@ public record GetHouseWCustomerRequest(
         String city,
         String district,
         String neighborhood,
+        Integer coverageCode,
         String tckn
 ) {
 }

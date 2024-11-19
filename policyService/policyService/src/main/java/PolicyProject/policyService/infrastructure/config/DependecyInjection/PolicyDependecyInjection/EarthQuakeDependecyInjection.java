@@ -1,10 +1,13 @@
-package PolicyProject.policyService.infrastructure.config.DependecyInjection;
+package PolicyProject.policyService.infrastructure.config.DependecyInjection.PolicyDependecyInjection;
 
-import PolicyProject.policyService.application.gateways.EarthQuakeGateway;
+import PolicyProject.policyService.application.gateways.PolicyGateway.EarthQuakeGateway;
 import PolicyProject.policyService.application.service.ObjectValidation;
-import PolicyProject.policyService.application.service.Service.EarthQuakeService;
+import PolicyProject.policyService.application.service.Service.PolicyService.EarthQuakeService;
 import PolicyProject.policyService.application.usecases.*;
-import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.EarthQuakeRepositoryGateway;
+
+import PolicyProject.policyService.application.usecases.ExecuteAuxiliary.EarthquakePolicy.ExecuteHouse;
+import PolicyProject.policyService.application.usecases.ExecutePolicy.ExecuteEarthQuakePolicy;
+import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.PolicyRepositoryGateway.EarthQuakeRepositoryGateway;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.EarthQuakeSpecificationBuild;
 
 import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.EarthQuakeRepository;

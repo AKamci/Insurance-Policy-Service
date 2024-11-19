@@ -1,7 +1,7 @@
 package PolicyProject.policyService.domain.dto.request.EarthQuakeRequest;
 
+import PolicyProject.policyService.domain.dto.request.IRequest.IEarthQuakeRequest;
 import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;

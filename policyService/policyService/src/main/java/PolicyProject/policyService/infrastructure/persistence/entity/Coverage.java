@@ -1,7 +1,7 @@
 package PolicyProject.policyService.infrastructure.persistence.entity;
 
 import PolicyProject.policyService.domain.CoverageTypeConverter;
-import PolicyProject.policyService.domain.Enums.Enums.CoverageType;
+import PolicyProject.policyService.domain.Enums.Enums.SharedEnum.CoverageType;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.Policies;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package PolicyProject.policyService.domain.model;
+package PolicyProject.policyService.domain.model.AuxiliaryModel.EarthquakePolicy;
 
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.Building;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
@@ -6,6 +6,7 @@ import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 public record HouseModel(
 
         Long id,
+        Integer coverageCode,
         Integer number,
         Integer squareMeters,
         Customer customer,

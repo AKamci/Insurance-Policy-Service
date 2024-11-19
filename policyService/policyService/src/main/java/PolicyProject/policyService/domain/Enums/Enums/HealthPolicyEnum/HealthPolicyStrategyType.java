@@ -7,6 +7,8 @@ public enum HealthPolicyStrategyType {
         BLOODTYPE,
         GENDER,
         POLICY_TYPE,
+        CONSTANT,
+        BOOLEAN_TYPE,
         AGE;
     }
 

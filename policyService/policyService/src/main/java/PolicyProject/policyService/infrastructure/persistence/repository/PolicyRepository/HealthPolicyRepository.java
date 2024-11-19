@@ -1,6 +1,7 @@
 package PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository;
 
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
+import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.EarthquakePolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.HealthPolicy;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,9 @@ import java.util.List;
 public interface HealthPolicyRepository extends JpaRepository<HealthPolicy, Long>, JpaSpecificationExecutor<HealthPolicy> {
     List<HealthPolicy> findByStateAndExpiryDateBefore(PolicyState state, LocalDate currentDate);
 
+    List<HealthPolicy> findByCustomerAndPolicyEndDateGreaterThanEqualAndPolicyStartDateLessThanEqual(
+            Customer customer,
+            LocalDate policyEndDate,
+            LocalDate policyStartDate
+    );
 }

@@ -1,11 +1,12 @@
 package PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity;
 
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.House;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @SuperBuilder
 @Entity
@@ -13,12 +14,14 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "EartquakePolicy")
 @NoArgsConstructor
 @AllArgsConstructor
-@DiscriminatorValue("EARTHQUAKE")
 public class EarthquakePolicy extends Policies {
 
 
+   @JsonIgnore
+   @ToString.Exclude
+   @EqualsAndHashCode.Exclude
    @ManyToOne
+   @OnDelete(action = OnDeleteAction.CASCADE)
    @JoinColumn(name = "house_id")
    private House house;
-
 }

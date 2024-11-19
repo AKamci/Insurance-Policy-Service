@@ -12,14 +12,13 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-
 public class CarPolicy extends Policies {
 
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToOne
-    @JoinColumn(name = "license_plate_id", nullable = false)
+    @JoinColumn(name = "license_plate_id")
     private LicensePlate licensePlate;
 
 }

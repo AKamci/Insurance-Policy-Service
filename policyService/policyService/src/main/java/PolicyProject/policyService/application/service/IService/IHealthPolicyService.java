@@ -9,7 +9,7 @@ import PolicyProject.policyService.domain.dto.response.HealthPolicyResponse.Dele
 import PolicyProject.policyService.domain.dto.response.HealthPolicyResponse.GetHealthPolicyResponse;
 import PolicyProject.policyService.domain.dto.response.HealthPolicyResponse.UpdateHealthPolicyResponse;
 import PolicyProject.policyService.domain.model.EarthQuakeModel;
-import PolicyProject.policyService.domain.model.HealthPolicyModel;
+import PolicyProject.policyService.domain.model.PolicyModel.HealthPolicyModel;
 
 public interface IHealthPolicyService extends IBaseService<
         CreateHealthPolicyResponse,

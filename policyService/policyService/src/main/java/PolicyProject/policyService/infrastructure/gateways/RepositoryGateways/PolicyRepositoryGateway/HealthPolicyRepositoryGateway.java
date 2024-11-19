@@ -1,7 +1,8 @@
-package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
+package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.PolicyRepositoryGateway;
 
-import PolicyProject.policyService.application.gateways.HealthPolicyGateway;
+import PolicyProject.policyService.application.gateways.PolicyGateway.HealthPolicyGateway;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
+import PolicyProject.policyService.infrastructure.exception.AlreadyExistsException.HealthPolicyAlreadyExistsException;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.HealthPolicy.PersonalHealth;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.HealthPolicy;
@@ -28,6 +29,15 @@ public class HealthPolicyRepositoryGateway implements HealthPolicyGateway {
 
     @Override
     public HealthPolicy create(HealthPolicy healthPolicy, Customer customer, PersonalHealth personalHealth) {
+        List<HealthPolicy> existingPolicies = healthPolicyRepository.findByCustomerAndPolicyEndDateGreaterThanEqualAndPolicyStartDateLessThanEqual(
+                customer,
+                healthPolicy.getPolicyStartDate(),
+                healthPolicy.getPolicyEndDate()
+        );
+
+        if (existingPolicies != null && !existingPolicies.isEmpty()) {
+            throw new HealthPolicyAlreadyExistsException("Bu tarih aralığında zaten bir poliçe mevcut.", healthPolicy.getId());
+        }
         healthPolicy.setCustomer(customer);
         healthPolicy.setPersonalHealth(personalHealth);
         healthPolicy.setState(PolicyState.CREATED);
@@ -35,7 +45,6 @@ public class HealthPolicyRepositoryGateway implements HealthPolicyGateway {
         if (healthPolicy.getCoverage() == null)
         {
             System.out.println("earthquakePolicy.getCoverage() is NULL");
-
         }
         Long calculatedId = (healthPolicy.getCoverage().getId() % 100L) == 0 ? 3L : (healthPolicy.getCoverage().getId() % 100L);
         healthPolicy.getCoverage().setId(calculatedId);

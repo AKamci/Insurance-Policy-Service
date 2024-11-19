@@ -1,4 +1,4 @@
-package PolicyProject.policyService.application.gateways;
+package PolicyProject.policyService.application.gateways.PolicyGateway;
 
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;

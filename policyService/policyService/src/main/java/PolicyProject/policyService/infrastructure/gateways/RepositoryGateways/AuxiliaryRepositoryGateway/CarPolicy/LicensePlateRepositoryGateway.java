@@ -1,7 +1,7 @@
-package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
+package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.AuxiliaryRepositoryGateway.CarPolicy;
 
 
-import PolicyProject.policyService.application.gateways.LicensePlateGateway;
+import PolicyProject.policyService.application.gateways.AuxiliaryGateway.CarPolicy.LicensePlateGateway;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.LicensePlate;
 import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.CarPolicy.LicensePlateRepository;
 import lombok.RequiredArgsConstructor;

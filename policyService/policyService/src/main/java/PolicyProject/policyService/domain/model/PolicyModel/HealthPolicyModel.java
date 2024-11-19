@@ -1,8 +1,11 @@
-package PolicyProject.policyService.domain.model;
+package PolicyProject.policyService.domain.model.PolicyModel;
 
-import PolicyProject.policyService.domain.Enums.Enums.BloodType;
+import PolicyProject.policyService.domain.Enums.Enums.HealthPolicyEnum.BloodType;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
+import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.HealthPolicy.PersonalHealth;
 import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 import java.time.LocalDate;
 
@@ -16,6 +19,7 @@ public record HealthPolicyModel(
         Integer coverageCode,
         Coverage coverage,
         Double bmi,
+
         BloodType bloodType,
         Boolean alcoholConsumption,
         Boolean smokeConsumption,
@@ -30,4 +34,5 @@ public record HealthPolicyModel(
         PolicyState state,
         int page,
         int size
+
         ) {}

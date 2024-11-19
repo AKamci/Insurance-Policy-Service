@@ -3,7 +3,6 @@ package PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild;
 import PolicyProject.policyService.infrastructure.config.Specifications.CustomerSpecification;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;

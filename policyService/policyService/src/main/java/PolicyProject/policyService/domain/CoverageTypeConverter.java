@@ -1,6 +1,6 @@
 package PolicyProject.policyService.domain;
 
-import PolicyProject.policyService.domain.Enums.Enums.CoverageType;
+import PolicyProject.policyService.domain.Enums.Enums.SharedEnum.CoverageType;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

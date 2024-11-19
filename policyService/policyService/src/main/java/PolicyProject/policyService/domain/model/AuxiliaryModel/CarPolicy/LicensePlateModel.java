@@ -1,4 +1,4 @@
-package PolicyProject.policyService.domain.model;
+package PolicyProject.policyService.domain.model.AuxiliaryModel.CarPolicy;
 
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.Car;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;

@@ -1,6 +1,7 @@
 package PolicyProject.policyService.domain.dto.request.HealthPolicyRequest;
 
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
+import PolicyProject.policyService.domain.dto.request.IRequest.IHealthPolicyRequest;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -34,5 +35,5 @@ public record UpdateHealthPolicyRequest(
         @NotNull(message = "Policy amount cannot be null")
         Double policyAmount
 
-) implements IHealthPolicyRequest{
+) implements IHealthPolicyRequest {
 }

@@ -1,6 +1,7 @@
 package PolicyProject.policyService.domain.dto.response.EarthQuakeResponse;
 
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
+import PolicyProject.policyService.domain.dto.response.IResponse.IEarthQuakeResponse;
 import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
 
 import java.time.LocalDate;
@@ -17,5 +18,5 @@ public record GetEarthQuakeResponse(
         LocalDate policyStartDate,
         LocalDate policyEndDate,
         String tckn
-) implements IEarthQuakeResponse{
+) implements IEarthQuakeResponse {
 }

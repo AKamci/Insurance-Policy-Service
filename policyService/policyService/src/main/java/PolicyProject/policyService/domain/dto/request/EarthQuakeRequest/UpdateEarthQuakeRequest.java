@@ -1,6 +1,7 @@
 package PolicyProject.policyService.domain.dto.request.EarthQuakeRequest;
 
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
+import PolicyProject.policyService.domain.dto.request.IRequest.IEarthQuakeRequest;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -34,5 +35,5 @@ public record UpdateEarthQuakeRequest(
         @NotNull(message = "Policy amount cannot be null")
         Double policyAmount
 
-) implements IEarthQuakeRequest{
+) implements IEarthQuakeRequest {
 }

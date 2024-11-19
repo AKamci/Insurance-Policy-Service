@@ -1,8 +1,8 @@
 package PolicyProject.policyService.infrastructure.gateways;
 
-import PolicyProject.policyService.domain.Enums.Enums.BloodType;
-import PolicyProject.policyService.domain.Enums.Enums.CoverageType;
+import PolicyProject.policyService.domain.Enums.Enums.HealthPolicyEnum.BloodType;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
+import PolicyProject.policyService.domain.Enums.Enums.SharedEnum.CoverageType;
 import PolicyProject.policyService.infrastructure.persistence.entity.*;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.Car;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.LicensePlate;
@@ -552,14 +552,15 @@ public class DatabaseSeed implements CommandLineRunner {
                 Weights.builder().key("FEMALE").weight(new BigDecimal("1.0")).minValue(new BigDecimal(2)).maxValue(new BigDecimal(3)).type("GENDER").build(),
 
                 // MÜŞTERİ BASAMAĞI
-                Weights.builder().key("GRADE_1").weight(new BigDecimal("1.0")).minValue(new BigDecimal("0.0")).maxValue(new BigDecimal("1.0")).type("CUSTOMER_GRADE").build(),
-                Weights.builder().key("GRADE_2").weight(new BigDecimal("1.2")).minValue(new BigDecimal("0.1")).maxValue(new BigDecimal("1.1")).type("CUSTOMER_GRADE").build(),
-                Weights.builder().key("GRADE_3").weight(new BigDecimal("1.4")).minValue(new BigDecimal("0.2")).maxValue(new BigDecimal("1.2")).type("CUSTOMER_GRADE").build(),
-                Weights.builder().key("GRADE_4").weight(new BigDecimal("1.6")).minValue(new BigDecimal("0.3")).maxValue(new BigDecimal("1.3")).type("CUSTOMER_GRADE").build(),
-                Weights.builder().key("GRADE_5").weight(new BigDecimal("1.8")).minValue(new BigDecimal("0.4")).maxValue(new BigDecimal("1.4")).type("CUSTOMER_GRADE").build(),
-                Weights.builder().key("GRADE_6").weight(new BigDecimal("2.0")).minValue(new BigDecimal("0.5")).maxValue(new BigDecimal("1.5")).type("CUSTOMER_GRADE").build(),
-                Weights.builder().key("GRADE_7").weight(new BigDecimal("2.2")).minValue(new BigDecimal("0.6")).maxValue(new BigDecimal("1.6")).type("CUSTOMER_GRADE").build(),
-                Weights.builder().key("GRADE_8").weight(new BigDecimal("2.5")).minValue(new BigDecimal("0.7")).maxValue(new BigDecimal("1.7")).type("CUSTOMER_GRADE").build(),
+                Weights.builder().key("GRADE_1").weight(new BigDecimal("1.0")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("CUSTOMER_GRADE").build(),
+                Weights.builder().key("GRADE_2").weight(new BigDecimal("1.2")).minValue(new BigDecimal("2")).maxValue(new BigDecimal("2")).type("CUSTOMER_GRADE").build(),
+                Weights.builder().key("GRADE_3").weight(new BigDecimal("1.4")).minValue(new BigDecimal("3")).maxValue(new BigDecimal("3")).type("CUSTOMER_GRADE").build(),
+                Weights.builder().key("GRADE_4").weight(new BigDecimal("1.6")).minValue(new BigDecimal("4")).maxValue(new BigDecimal("4")).type("CUSTOMER_GRADE").build(),
+                Weights.builder().key("GRADE_5").weight(new BigDecimal("1.8")).minValue(new BigDecimal("5")).maxValue(new BigDecimal("5")).type("CUSTOMER_GRADE").build(),
+                Weights.builder().key("GRADE_6").weight(new BigDecimal("2.0")).minValue(new BigDecimal("6")).maxValue(new BigDecimal("6")).type("CUSTOMER_GRADE").build(),
+                Weights.builder().key("GRADE_7").weight(new BigDecimal("2.2")).minValue(new BigDecimal("7")).maxValue(new BigDecimal("7")).type("CUSTOMER_GRADE").build(),
+                Weights.builder().key("GRADE_8").weight(new BigDecimal("2.5")).minValue(new BigDecimal("8")).maxValue(new BigDecimal("8")).type("CUSTOMER_GRADE").build(),
+
 
                 // ARAÇ MOTOR SINIFI
                 Weights.builder().key("ENGINE_0_1300").weight(new BigDecimal("1.0")).minValue(new BigDecimal("0")).maxValue(new BigDecimal("1300")).type("ENGINE").build(),
@@ -588,16 +589,17 @@ public class DatabaseSeed implements CommandLineRunner {
                 Weights.builder().key("CAR_AGE_20_UP").weight(new BigDecimal("2.5")).minValue(new BigDecimal("21")).maxValue(new BigDecimal("100")).type("CAR_AGE").build(),
 
                 // ARAÇ TONAJ ARALIĞI VE TİPİ
-                Weights.builder().key("CAR_M1_CLASS").weight(new BigDecimal("1.1")).minValue(new BigDecimal("0.0")).maxValue(new BigDecimal("1.0")).type("CAR_TYPE").build(),
-                Weights.builder().key("CAR_M2_CLASS").weight(new BigDecimal("1.3")).minValue(new BigDecimal("0.1")).maxValue(new BigDecimal("1.1")).type("CAR_TYPE").build(),
-                Weights.builder().key("CAR_M3_CLASS").weight(new BigDecimal("1.6")).minValue(new BigDecimal("0.2")).maxValue(new BigDecimal("1.2")).type("CAR_TYPE").build(),
-                Weights.builder().key("CAR_N1_CLASS").weight(new BigDecimal("1.2")).minValue(new BigDecimal("0.3")).maxValue(new BigDecimal("1.3")).type("CAR_TYPE").build(),
-                Weights.builder().key("CAR_N2_CLASS").weight(new BigDecimal("1.5")).minValue(new BigDecimal("0.4")).maxValue(new BigDecimal("1.4")).type("CAR_TYPE").build(),
-                Weights.builder().key("CAR_N3_CLASS").weight(new BigDecimal("2.0")).minValue(new BigDecimal("0.5")).maxValue(new BigDecimal("1.5")).type("CAR_TYPE").build(),
-                Weights.builder().key("CAR_O1_CLASS").weight(new BigDecimal("1.4")).minValue(new BigDecimal("0.6")).maxValue(new BigDecimal("1.6")).type("CAR_TYPE").build(),
-                Weights.builder().key("CAR_O2_CLASS").weight(new BigDecimal("1.6")).minValue(new BigDecimal("0.7")).maxValue(new BigDecimal("1.7")).type("CAR_TYPE").build(),
-                Weights.builder().key("CAR_O3_CLASS").weight(new BigDecimal("2.2")).minValue(new BigDecimal("0.8")).maxValue(new BigDecimal("1.8")).type("CAR_TYPE").build(),
-                Weights.builder().key("CAR_O4_CLASS").weight(new BigDecimal("2.5")).minValue(new BigDecimal("0.9")).maxValue(new BigDecimal("1.9")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_M1_CLASS").weight(new BigDecimal("1.1")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_M2_CLASS").weight(new BigDecimal("1.3")).minValue(new BigDecimal("2")).maxValue(new BigDecimal("2")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_M3_CLASS").weight(new BigDecimal("1.6")).minValue(new BigDecimal("3")).maxValue(new BigDecimal("3")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_N1_CLASS").weight(new BigDecimal("1.2")).minValue(new BigDecimal("4")).maxValue(new BigDecimal("4")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_N2_CLASS").weight(new BigDecimal("1.5")).minValue(new BigDecimal("5")).maxValue(new BigDecimal("5")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_N3_CLASS").weight(new BigDecimal("2.0")).minValue(new BigDecimal("6")).maxValue(new BigDecimal("6")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_O1_CLASS").weight(new BigDecimal("1.4")).minValue(new BigDecimal("7")).maxValue(new BigDecimal("7")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_O2_CLASS").weight(new BigDecimal("1.6")).minValue(new BigDecimal("8")).maxValue(new BigDecimal("8")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_O3_CLASS").weight(new BigDecimal("2.2")).minValue(new BigDecimal("9")).maxValue(new BigDecimal("9")).type("CAR_TYPE").build(),
+                Weights.builder().key("CAR_O4_CLASS").weight(new BigDecimal("2.5")).minValue(new BigDecimal("10")).maxValue(new BigDecimal("10")).type("CAR_TYPE").build(),
+
 
 
                 // SABİTELER
@@ -605,8 +607,8 @@ public class DatabaseSeed implements CommandLineRunner {
                 Weights.builder().key("EURO").weight(new BigDecimal("1.1")).minValue(new BigDecimal("0.1")).maxValue(new BigDecimal("1.1")).type("CONSTANT").build(),
 
                 // POLİCY TYPE
-                Weights.builder().key("KASKO").weight(new BigDecimal("1.7")).minValue(new BigDecimal("0.2")).maxValue(new BigDecimal("1.2")).type("POLICY_TYPE").build(),
-                Weights.builder().key("TRAFİK").weight(new BigDecimal("1.0")).minValue(new BigDecimal("0.3")).maxValue(new BigDecimal("1.3")).type("POLICY_TYPE").build()
+                Weights.builder().key("KASKO").weight(new BigDecimal("1.7")).minValue(new BigDecimal("102")).maxValue(new BigDecimal("102")).type("POLICY_TYPE").build(),
+                Weights.builder().key("TRAFİK").weight(new BigDecimal("1.0")).minValue(new BigDecimal("101")).maxValue(new BigDecimal("101")).type("POLICY_TYPE").build()
         ));
     }
 
@@ -777,14 +779,12 @@ public class DatabaseSeed implements CommandLineRunner {
             if (optionalCustomer.isPresent()) {
                 Customer customer = optionalCustomer.get();
 
-                // Aynı müşteri için PersonalHealth verilerini kontrol et
                 PersonalHealth existingHealth = customerHealthMap.get(customerId);
 
                 if (existingHealth == null) {
-                    // Eğer müşteri için daha önce sağlık verisi oluşturulmamışsa rastgele oluştur
-                    int height = random.nextInt(51) + 150; // 150-200 cm arası boy
-                    double weight = random.nextDouble() * 50 + 50; // 50-100 kg arası kilo
-                    double bmi = Math.round((weight / Math.pow(height / 100.0, 2)) * 10.0) / 10.0; // BMI hesaplama
+                    int height = random.nextInt(51) + 150;
+                    double weight = random.nextDouble() * 50 + 50;
+                    double bmi = Math.round((weight / Math.pow(height / 100.0, 2)) * 10.0) / 10.0;
                     BloodType bloodType = BloodType.values()[random.nextInt(BloodType.values().length)];
                     boolean alcoholConsumption = random.nextBoolean();
                     boolean smokeConsumption = random.nextBoolean();
@@ -808,12 +808,10 @@ public class DatabaseSeed implements CommandLineRunner {
                     customerHealthMap.put(customerId, existingHealth);
                 }
 
-                // Rastgele createdAt tarihi oluştur
                 LocalDateTime startDate = LocalDateTime.now().minusMonths(5);
                 long daysBetween = java.time.Duration.between(startDate, LocalDateTime.now()).toDays();
                 LocalDateTime createdAt = startDate.plusDays(random.nextInt((int) daysBetween + 1));
 
-                // Yeni bir PersonalHealth kaydı oluştur, mevcut sağlık verilerini kullanarak
                 PersonalHealth personalHealth = PersonalHealth.builder()
                         .height(existingHealth.getHeight())
                         .weight(existingHealth.getWeight())
@@ -862,11 +860,17 @@ public class DatabaseSeed implements CommandLineRunner {
                 EarthQaukeWeights.builder().key("SQUARE_METERS_81_100").weight(new BigDecimal("3.5")).minValue(new BigDecimal("81")).maxValue(new BigDecimal("100")).type("SQUARE_METERS").build(),
                 EarthQaukeWeights.builder().key("SQUARE_METERS_101_120").weight(new BigDecimal("4.0")).minValue(new BigDecimal("101")).maxValue(new BigDecimal("120")).type("SQUARE_METERS").build(),
                 EarthQaukeWeights.builder().key("SQUARE_METERS_121_150").weight(new BigDecimal("4.3")).minValue(new BigDecimal("121")).maxValue(new BigDecimal("150")).type("SQUARE_METERS").build(),
-                EarthQaukeWeights.builder().key("SQUARE_METERS_151_UP").weight(new BigDecimal("4.8")).minValue(new BigDecimal("151")).maxValue(new BigDecimal("5000")).type("SQUARE_METERS").build()
+                EarthQaukeWeights.builder().key("SQUARE_METERS_151_UP").weight(new BigDecimal("4.8")).minValue(new BigDecimal("151")).maxValue(new BigDecimal("5000")).type("SQUARE_METERS").build(),
+
+                EarthQaukeWeights.builder().key("BASE").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("CONSTANT").build(),
+                EarthQaukeWeights.builder().key("BASE2").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("CONSTANT").build(),
+                EarthQaukeWeights.builder().key("BASE3").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("CONSTANT").build(),
+
+                EarthQaukeWeights.builder().key("YARI_KAPSAM").weight(new BigDecimal("4.8")).minValue(new BigDecimal("103")).maxValue(new BigDecimal("103")).type("POLICY_TYPE").build(),
+                EarthQaukeWeights.builder().key("TAM_KAPSAM").weight(new BigDecimal("4.8")).minValue(new BigDecimal("104")).maxValue(new BigDecimal("104")).type("POLICY_TYPE").build()
 
 
-
-        ));
+                ));
     }
 
     private void seedDataEarthquakePolicies() {
@@ -952,13 +956,17 @@ public class DatabaseSeed implements CommandLineRunner {
 
                 HealthPolicyWeight.builder().key("AYAKTA_TEDAVİ").weight(new BigDecimal("4.0")).minValue(new BigDecimal("105")).maxValue(new BigDecimal("105")).type("POLICY_TYPE").build(),
                 HealthPolicyWeight.builder().key("YATARAK_TEDAVİ").weight(new BigDecimal("4.0")).minValue(new BigDecimal("106")).maxValue(new BigDecimal("106")).type("POLICY_TYPE").build(),
-                HealthPolicyWeight.builder().key("SEYEHAT").weight(new BigDecimal("4.0")).minValue(new BigDecimal("107")).maxValue(new BigDecimal("107")).type("POLICY_TYPE").build()
+                HealthPolicyWeight.builder().key("SEYEHAT").weight(new BigDecimal("4.0")).minValue(new BigDecimal("107")).maxValue(new BigDecimal("107")).type("POLICY_TYPE").build(),
 
+                HealthPolicyWeight.builder().key("BASE").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("CONSTANT").build(),
+                HealthPolicyWeight.builder().key("BASE2").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("CONSTANT").build(),
+                HealthPolicyWeight.builder().key("BASE3").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("CONSTANT").build(),
 
-
-
-
-
+                HealthPolicyWeight.builder().key("ALCOHOL").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("BOOLEAN_TYPE").build(),
+                HealthPolicyWeight.builder().key("SMOKE").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("BOOLEAN_TYPE").build(),
+                HealthPolicyWeight.builder().key("PREGNANT").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("BOOLEAN_TYPE").build(),
+                HealthPolicyWeight.builder().key("DISABILITY").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("BOOLEAN_TYPE").build(),
+                HealthPolicyWeight.builder().key("SURGERIES").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("BOOLEAN_TYPE").build()
 
                 ));
     }

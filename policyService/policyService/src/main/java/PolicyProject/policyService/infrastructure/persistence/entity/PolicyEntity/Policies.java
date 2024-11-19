@@ -18,12 +18,11 @@ import java.time.LocalDate;
 @Table(name = "Policies")
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "policy_type", discriminatorType = DiscriminatorType.STRING)
-
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Policies {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "policies_seq")
+    @SequenceGenerator(name = "policies_seq", sequenceName = "policies_sequence", allocationSize = 1)
     private Long id;
     private String policyDescription;
     private LocalDate policyStartDate;
@@ -42,4 +41,5 @@ public abstract class Policies {
     @ManyToOne
     @JoinColumn(name = "coverage_id")
     private Coverage coverage;
+
 }

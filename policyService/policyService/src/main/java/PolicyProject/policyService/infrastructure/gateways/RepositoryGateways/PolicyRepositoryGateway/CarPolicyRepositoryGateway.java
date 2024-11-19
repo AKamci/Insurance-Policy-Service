@@ -1,10 +1,12 @@
 package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.PolicyRepositoryGateway;
 
-import PolicyProject.policyService.application.gateways.CarPolicyGateway;
+import PolicyProject.policyService.application.gateways.PolicyGateway.CarPolicyGateway;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
+import PolicyProject.policyService.infrastructure.exception.AlreadyExistsException.EarthquakePolicyAlreadyExistsException;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.LicensePlate;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.EarthquakePolicy;
 import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.CarPolicyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,15 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
     @Override
     //@CachePut(value = "carPolicyCache", key = "#carPolicy.id")
     public CarPolicy create(CarPolicy carPolicy, Customer customer, LicensePlate licensePlate) {
+        List<CarPolicy> existingPolicies = carPolicyRepository.findByCustomerAndPolicyEndDateGreaterThanEqualAndPolicyStartDateLessThanEqual(
+                customer,
+                carPolicy.getPolicyStartDate(),
+                carPolicy.getPolicyEndDate()
+        );
+
+        if (existingPolicies != null && !existingPolicies.isEmpty()) {
+            throw new EarthquakePolicyAlreadyExistsException("Bu tarih aralığında zaten bir poliçe mevcut.", carPolicy.getId());
+        }
         carPolicy.setCustomer(customer);
         carPolicy.setLicensePlate(licensePlate);
         carPolicy.setState(PolicyState.CREATED);
@@ -62,7 +73,6 @@ public class CarPolicyRepositoryGateway implements CarPolicyGateway
         var entityObject = get(carPolicy);
         if (entityObject != null) {
             carPolicyRepository.delete(entityObject);
-            updateTotalCount();
             return carPolicy;
         }
         return null;

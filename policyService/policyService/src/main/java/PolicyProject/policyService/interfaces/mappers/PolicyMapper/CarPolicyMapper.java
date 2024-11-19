@@ -1,7 +1,7 @@
-package PolicyProject.policyService.interfaces.mappers;
+package PolicyProject.policyService.interfaces.mappers.PolicyMapper;
 
-import PolicyProject.policyService.domain.dto.request.carPolicyRequest.*;
-import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
+import PolicyProject.policyService.domain.dto.request.CarPolicyRequest.*;
+import PolicyProject.policyService.domain.dto.response.CarPolicyResponse.*;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;

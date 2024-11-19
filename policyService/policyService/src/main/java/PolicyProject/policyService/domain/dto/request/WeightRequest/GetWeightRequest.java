@@ -1,10 +1,10 @@
 package PolicyProject.policyService.domain.dto.request.WeightRequest;
 
-import java.math.BigDecimal;
+import PolicyProject.policyService.domain.dto.request.IRequest.IWeightRequest;
 
 public record GetWeightRequest(
 
         String key
 
-) implements IWeightRequest{
+) implements IWeightRequest {
 }

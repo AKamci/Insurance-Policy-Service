@@ -1,12 +1,13 @@
-package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
+package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.PolicyRepositoryGateway;
 
-import PolicyProject.policyService.application.gateways.EarthQuakeGateway;
+import PolicyProject.policyService.application.gateways.PolicyGateway.EarthQuakeGateway;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
+import PolicyProject.policyService.infrastructure.exception.AlreadyExistsException.EarthquakePolicyAlreadyExistsException;
+import PolicyProject.policyService.infrastructure.exception.AlreadyExistsException.HealthPolicyAlreadyExistsException;
 import PolicyProject.policyService.infrastructure.persistence.entity.*;
-
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.House;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.EarthquakePolicy;
-import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.Policies;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.HealthPolicy;
 import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.EarthQuakeRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.PoliciesRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +15,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -30,12 +30,20 @@ public class EarthQuakeRepositoryGateway implements EarthQuakeGateway {
 
     @Override
     public EarthquakePolicy create(EarthquakePolicy earthquakePolicy, Customer customer, House house) {
+        List<EarthquakePolicy> existingPolicies = earthQuakeRepository.findByCustomerAndPolicyEndDateGreaterThanEqualAndPolicyStartDateLessThanEqual(
+                customer,
+                earthquakePolicy.getPolicyStartDate(),
+                earthquakePolicy.getPolicyEndDate()
+        );
+
+        if (existingPolicies != null && !existingPolicies.isEmpty()) {
+            throw new EarthquakePolicyAlreadyExistsException("Bu tarih aralığında zaten bir poliçe mevcut.", earthquakePolicy.getId());
+        }
         earthquakePolicy.setCustomer(customer);
         earthquakePolicy.setHouse(house);
         earthquakePolicy.setState(PolicyState.CREATED);
         System.out.println(earthquakePolicy.getCoverage());
-        if (earthquakePolicy.getCoverage() == null)
-        {
+        if (earthquakePolicy.getCoverage() == null) {
             System.out.println("earthquakePolicy.getCoverage() is NULL");
 
         }
@@ -43,12 +51,6 @@ public class EarthQuakeRepositoryGateway implements EarthQuakeGateway {
         earthquakePolicy.getCoverage().setId(calculatedId);
         var entity = earthQuakeRepository.save(earthquakePolicy);
         return entity;
-    }
-
-    @Override
-    public EarthquakePolicy get(EarthquakePolicy earthquakePolicy) {
-        var entityObject = earthQuakeRepository.findById(earthquakePolicy.getId());
-        return entityObject.orElse(null);
     }
 
     @Override
@@ -63,13 +65,17 @@ public class EarthQuakeRepositoryGateway implements EarthQuakeGateway {
     }
 
     @Override
+    public EarthquakePolicy get(EarthquakePolicy earthquakePolicy) {
+        var entityObject = earthQuakeRepository.findById(earthquakePolicy.getId());
+        return entityObject.orElse(null);
+    }
+
+    @Override
+    @Transactional
     public EarthquakePolicy delete(EarthquakePolicy earthquakePolicy) {
         var entityObject = get(earthquakePolicy);
         if (entityObject != null) {
-           earthQuakeRepository.delete(entityObject);
-           Optional<Policies> policies = policiesRepository.findById(earthquakePolicy.getId());
-            Policies policies1 = policies.get();
-            policiesRepository.delete(policies1);
+            earthQuakeRepository.deleteById(entityObject.getId());
             return earthquakePolicy;
         }
         return null;
@@ -90,7 +96,7 @@ public class EarthQuakeRepositoryGateway implements EarthQuakeGateway {
 
     @Override
     public List<EarthquakePolicy> findByStateAndExpiryDateBefore(PolicyState state, LocalDate currentDate) {
-        return  earthQuakeRepository.findByStateAndExpiryDateBefore(state, currentDate);
+        return earthQuakeRepository.findByStateAndExpiryDateBefore(state, currentDate);
     }
 
     @Override

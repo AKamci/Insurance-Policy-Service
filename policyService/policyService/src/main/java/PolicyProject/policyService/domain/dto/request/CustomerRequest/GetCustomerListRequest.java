@@ -1,7 +1,7 @@
 package PolicyProject.policyService.domain.dto.request.CustomerRequest;
 
+import PolicyProject.policyService.domain.dto.request.IRequest.ICustomerRequest;
 import jakarta.validation.constraints.*;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDate;
 
@@ -39,6 +39,6 @@ public record GetCustomerListRequest(
         @Min(value = 1, message = "Size must be at least 1")
         @Max(value = 100, message = "Size cannot be greater than 100")
         int size
-) implements ICustomerRequest{
+) implements ICustomerRequest {
 
 }

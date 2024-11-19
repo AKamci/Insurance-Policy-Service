@@ -1,12 +1,12 @@
 package PolicyProject.policyService.infrastructure.config.DependecyInjection.PolicyDependecyInjection;
 
-import PolicyProject.policyService.application.gateways.HealthPolicyGateway;
+import PolicyProject.policyService.application.gateways.PolicyGateway.HealthPolicyGateway;
 import PolicyProject.policyService.application.service.ObjectValidation;
 import PolicyProject.policyService.application.service.Service.PolicyService.HealthPolicyService;
 import PolicyProject.policyService.application.usecases.*;
 import PolicyProject.policyService.application.usecases.ExecuteAuxiliary.HealthPolicy.ExecutePersonalHealth;
 import PolicyProject.policyService.application.usecases.ExecutePolicy.ExecuteHealthPolicy;
-import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.HealthPolicyRepositoryGateway;
+import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.PolicyRepositoryGateway.HealthPolicyRepositoryGateway;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.HealthPolicySpecificationBuild;
 import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.HealthPolicyRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.PoliciesRepository;

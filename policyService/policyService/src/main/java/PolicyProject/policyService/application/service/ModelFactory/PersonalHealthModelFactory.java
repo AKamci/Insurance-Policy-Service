@@ -1,6 +1,6 @@
 package PolicyProject.policyService.application.service.ModelFactory;
 
-import PolicyProject.policyService.domain.model.PersonalHealthModel;
+import PolicyProject.policyService.domain.model.AuxiliaryModel.HealthPolicy.PersonalHealthModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

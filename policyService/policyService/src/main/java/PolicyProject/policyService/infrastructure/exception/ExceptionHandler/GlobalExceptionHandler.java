@@ -2,12 +2,15 @@ package PolicyProject.policyService.infrastructure.exception.ExceptionHandler;
 
 
 import PolicyProject.policyService.infrastructure.exception.*;
-import PolicyProject.policyService.infrastructure.exception.CarPolicyValidationException;
-import PolicyProject.policyService.infrastructure.exception.CustomerValidationException;
-import PolicyProject.policyService.infrastructure.exception.DuplicateTcknException;
-import PolicyProject.policyService.infrastructure.exception.DuplicateWeightKeyException;
-import PolicyProject.policyService.infrastructure.exception.ErrorDetails;
-import PolicyProject.policyService.infrastructure.exception.ExpiredMedicalReportException;
+
+import PolicyProject.policyService.infrastructure.exception.AlreadyExistsException.CarPolicyAlreadyExistsException;
+import PolicyProject.policyService.infrastructure.exception.AlreadyExistsException.EarthquakePolicyAlreadyExistsException;
+import PolicyProject.policyService.infrastructure.exception.AlreadyExistsException.HealthPolicyAlreadyExistsException;
+import PolicyProject.policyService.infrastructure.exception.DuplicateException.DuplicateTcknException;
+import PolicyProject.policyService.infrastructure.exception.DuplicateException.DuplicateWeightKeyException;
+import PolicyProject.policyService.infrastructure.exception.ExpiredException.ExpiredMedicalReportException;
+import PolicyProject.policyService.infrastructure.exception.ValidationException.CarPolicyValidationException;
+import PolicyProject.policyService.infrastructure.exception.ValidationException.CustomerValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -41,7 +44,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetails);
     }
 
-    @ExceptionHandler(PolicyProject.policyService.infrastructure.exception.DuplicateTcknException.class)
+    @ExceptionHandler(DuplicateTcknException.class)
     public ResponseEntity<ErrorDetails> handleDuplicateTcknException(DuplicateTcknException exception) {
         ErrorDetails errorDetails = new ErrorDetails(exception.getMessage(), HttpStatus.BAD_REQUEST.value());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetails);
@@ -57,6 +60,23 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorDetails> handleExpiredMedicalReportException(ExpiredMedicalReportException exception) {
         ErrorDetails errorDetails = new ErrorDetails(exception.getMessage(), HttpStatus.FORBIDDEN.value());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorDetails);
+    }
+    @ExceptionHandler(HealthPolicyAlreadyExistsException.class)
+    public ResponseEntity<ErrorDetails> handleHealthPolicyAlreadyExistsException(HealthPolicyAlreadyExistsException exception) {
+        ErrorDetails errorDetails = new ErrorDetails(exception.getMessage(), HttpStatus.CONFLICT.value());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetails);
+    }
+
+    @ExceptionHandler(CarPolicyAlreadyExistsException.class)
+    public ResponseEntity<ErrorDetails> handleHealthPolicyAlreadyExistsException(CarPolicyAlreadyExistsException exception) {
+        ErrorDetails errorDetails = new ErrorDetails(exception.getMessage(), HttpStatus.CONFLICT.value());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetails);
+    }
+
+    @ExceptionHandler(EarthquakePolicyAlreadyExistsException.class)
+    public ResponseEntity<ErrorDetails> handleHealthPolicyAlreadyExistsException(EarthquakePolicyAlreadyExistsException exception) {
+        ErrorDetails errorDetails = new ErrorDetails(exception.getMessage(), HttpStatus.CONFLICT.value());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetails);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

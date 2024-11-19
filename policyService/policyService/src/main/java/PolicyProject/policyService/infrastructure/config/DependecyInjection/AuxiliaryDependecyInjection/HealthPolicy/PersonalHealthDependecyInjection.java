@@ -1,16 +1,19 @@
 package PolicyProject.policyService.infrastructure.config.DependecyInjection.AuxiliaryDependecyInjection.HealthPolicy;
 
-import PolicyProject.policyService.application.gateways.HealthPolicyWeightGateway;
-import PolicyProject.policyService.application.gateways.PersonalHealthGateway;
+import PolicyProject.policyService.application.gateways.AuxiliaryGateway.HealthPolicy.PersonalHealthGateway;
+import PolicyProject.policyService.application.gateways.WeightsGateway.HealthPolicyWeightGateway;
 import PolicyProject.policyService.application.service.ObjectValidation;
 import PolicyProject.policyService.application.service.Service.AuxiliaryService.HealthPolicy.PersonalHealthService;
 import PolicyProject.policyService.application.service.StrategyFactory.HealthPolicyWeightStrategyFactory;
 import PolicyProject.policyService.application.usecases.*;
 import PolicyProject.policyService.application.usecases.ExecuteAuxiliary.HealthPolicy.ExecutePersonalHealth;
-import PolicyProject.policyService.application.usecases.ExecuteHealthPolicyWeight;
-import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.PersonalHealthRepositoryGateway;
+
+import PolicyProject.policyService.application.usecases.ExecuteWeights.ExecuteHealthPolicyWeight;
+import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.AuxiliaryRepositoryGateway.HealthPolicy.PersonalHealthRepositoryGateway;
+import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.CustomerRepositoryGateway;
 import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.WeightsRepositoryGateway.HealthPolicyWeightRepositoryGateway;
 import PolicyProject.policyService.infrastructure.persistence.repository.AuxiliaryRepository.HealthPolicy.PersonalHealthRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.CustomerRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.HealthPolicyWeightRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +22,8 @@ import org.springframework.context.annotation.Configuration;
 public class PersonalHealthDependecyInjection {
 
     @Bean
-    PersonalHealthGateway personalHealthGateway(PersonalHealthRepository personalHealthRepository) {
-        return new PersonalHealthRepositoryGateway(personalHealthRepository);
+    PersonalHealthGateway personalHealthGateway(PersonalHealthRepository personalHealthRepository, CustomerRepository customerRepository) {
+        return new PersonalHealthRepositoryGateway(personalHealthRepository, customerRepository);
     }
 
     @Bean

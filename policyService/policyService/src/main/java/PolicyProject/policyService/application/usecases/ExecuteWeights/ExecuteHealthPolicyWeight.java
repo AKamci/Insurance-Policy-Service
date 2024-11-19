@@ -1,15 +1,17 @@
 package PolicyProject.policyService.application.usecases.ExecuteWeights;
 
-import PolicyProject.policyService.application.gateways.HealthPolicyWeightGateway;
+import PolicyProject.policyService.application.gateways.WeightsGateway.HealthPolicyWeightGateway;
 import PolicyProject.policyService.application.service.ModelFactory.PersonalHealthModelFactory;
 import PolicyProject.policyService.application.service.StrategyFactory.HealthPolicyWeightStrategyFactory;
-import PolicyProject.policyService.domain.model.PersonalHealthModel;
+import PolicyProject.policyService.domain.model.AuxiliaryModel.HealthPolicy.PersonalHealthModel;
 import PolicyProject.policyService.domain.model.WeightsModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.HealthPolicyWeight;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.EarthQuakePolicyWeightStrategy.EarthQuakeConstantStrategy;
-import PolicyProject.policyService.interfaces.mappers.HealthPolicyWeightMapper;
+import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.HealthPolicyWeightStrategy.HealtPolicyBoolen_Strategy;
+import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.HealthPolicyWeightStrategy.HealthPolicyConstant_Strategy;
+import PolicyProject.policyService.interfaces.mappers.WeightsMapper.HealthPolicyWeightMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
@@ -37,7 +39,15 @@ public class ExecuteHealthPolicyWeight {
             IWeightStrategy strategy = healthPolicyWeightStrategyFactory.getStrategy(parameter.getType());
             BigDecimal valueToCheck = strategy.getValue(personalHealthModel);
 
-            if (strategy instanceof EarthQuakeConstantStrategy) {
+            if (strategy instanceof HealthPolicyConstant_Strategy) {
+                System.out.println("Parametre :" + parameter);
+                System.out.println("Total :" + total);
+                System.out.println("Strategy :" + strategy);;
+                total = total.add(strategy.calculate(personalHealthModel, parameter));
+            } else if (strategy instanceof HealtPolicyBoolen_Strategy) {
+                System.out.println("Parametre :" + parameter);
+                System.out.println("Total :" + total);
+                System.out.println("Strategy :" + strategy);
                 total = total.add(strategy.calculate(personalHealthModel, parameter));
             } else if (parameter.getMinValue() != null && parameter.getMaxValue() != null) {
                 if (valueToCheck != null && parameter.getMinValue().compareTo(valueToCheck) <= 0

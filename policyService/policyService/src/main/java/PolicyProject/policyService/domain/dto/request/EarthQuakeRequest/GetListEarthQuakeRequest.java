@@ -1,6 +1,7 @@
 package PolicyProject.policyService.domain.dto.request.EarthQuakeRequest;
 
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
+import PolicyProject.policyService.domain.dto.request.IRequest.IEarthQuakeRequest;
 
 import java.time.LocalDate;
 
@@ -26,5 +27,5 @@ public record GetListEarthQuakeRequest(
         String neighborhood
 
 
-) implements IEarthQuakeRequest{
+) implements IEarthQuakeRequest {
 }

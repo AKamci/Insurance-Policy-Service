@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface HouseRepository extends JpaRepository<House, Long> {
 
@@ -24,5 +26,10 @@ public interface HouseRepository extends JpaRepository<House, Long> {
             @Param("apartmentNumber") int apartmentNumber,
             @Param("number") int number
     );
+
+
+    @Query("SELECT h FROM House h LEFT JOIN FETCH h.customer WHERE h.id = :id")
+    Optional<House> findByIdWithCustomer(@Param("id") Long id);
+
 
 }

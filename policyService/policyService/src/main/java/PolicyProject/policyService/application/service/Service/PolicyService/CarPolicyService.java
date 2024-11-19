@@ -5,9 +5,9 @@ import PolicyProject.policyService.application.service.ObjectValidation;
 
 import PolicyProject.policyService.application.usecases.ExecutePolicy.ExecuteCarPolicy;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyEvent;
-import PolicyProject.policyService.domain.dto.response.carPolicyResponse.*;
+import PolicyProject.policyService.domain.dto.response.CarPolicyResponse.*;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
-import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
+import PolicyProject.policyService.interfaces.mappers.PolicyMapper.CarPolicyMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

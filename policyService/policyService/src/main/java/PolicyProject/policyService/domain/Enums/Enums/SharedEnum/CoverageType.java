@@ -1,4 +1,4 @@
-package PolicyProject.policyService.domain.Enums.Enums;
+package PolicyProject.policyService.domain.Enums.Enums.SharedEnum;
 
 import lombok.Getter;
 

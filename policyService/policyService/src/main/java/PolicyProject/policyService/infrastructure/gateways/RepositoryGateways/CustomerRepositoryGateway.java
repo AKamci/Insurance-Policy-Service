@@ -1,7 +1,7 @@
 package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
 
 import PolicyProject.policyService.application.gateways.CustomerGateway;
-import PolicyProject.policyService.infrastructure.exception.DuplicateTcknException;
+import PolicyProject.policyService.infrastructure.exception.DuplicateException.DuplicateTcknException;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.HealthPolicy.PersonalHealth;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.repository.CustomerRepository;

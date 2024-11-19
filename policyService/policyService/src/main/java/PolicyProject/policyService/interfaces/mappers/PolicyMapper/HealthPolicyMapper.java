@@ -1,9 +1,9 @@
-package PolicyProject.policyService.interfaces.mappers;
+package PolicyProject.policyService.interfaces.mappers.PolicyMapper;
 
-import PolicyProject.policyService.domain.Enums.Enums.BloodType;
+import PolicyProject.policyService.domain.Enums.Enums.HealthPolicyEnum.BloodType;
 import PolicyProject.policyService.domain.dto.request.HealthPolicyRequest.*;
 import PolicyProject.policyService.domain.dto.response.HealthPolicyResponse.*;
-import PolicyProject.policyService.domain.model.HealthPolicyModel;
+import PolicyProject.policyService.domain.model.PolicyModel.HealthPolicyModel;
 import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.HealthPolicy;
 import org.mapstruct.Mapping;
@@ -43,19 +43,19 @@ public interface HealthPolicyMapper {
     @Mapping(source = "state", target = "state")
     @Mapping(source = "customerId", target = "customer.id")
     @Mapping(source = "personalHealthId", target = "personalHealth.id")
+    @Mapping(source = "alcoholConsumption", target = "personalHealth.alcoholConsumption")
+    @Mapping(source = "smokeConsumption", target = "personalHealth.smokeConsumption")
+    @Mapping(source = "isPregnant", target = "personalHealth.isPregnant")
+    @Mapping(source = "hasDisability", target = "personalHealth.hasDisability")
+    @Mapping(source = "hasPreviousSurgeries", target = "personalHealth.hasPreviousSurgeries")
     HealthPolicy healthPolicyModelToHealthPolicyEntity(HealthPolicyModel healthPolicyModel);
 
+
+
     @Mapping(source = "policyId", target = "id")
-    @Mapping(source = "personalHealth.bloodType", target = "bloodType", qualifiedByName = "mapBloodType")
+    @Mapping(source = "personalHealth.bloodType", target = "bloodType")
     @Mapping(source = "coverage", target = "coverage", qualifiedByName = "coverageFromInteger")
     List<HealthPolicyModel> healthPolicyEntityListToHealthPolicyModelList(List<HealthPolicy> healthPolicyList);
-
-    // Kan grubu için dönüştürücü metod
-    @Named("mapBloodType")
-    default BloodType mapBloodType(Integer bloodTypeValue) {
-        return bloodTypeValue != null ? BloodType.fromValue(bloodTypeValue) : null;
-    }
-
 
 
     @Mapping(source = "id", target = "policyId")

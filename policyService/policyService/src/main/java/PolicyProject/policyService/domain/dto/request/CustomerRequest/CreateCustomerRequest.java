@@ -1,12 +1,10 @@
 package PolicyProject.policyService.domain.dto.request.CustomerRequest;
 
 
+import PolicyProject.policyService.domain.dto.request.IRequest.ICustomerRequest;
 import jakarta.validation.constraints.*;
-import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 public record CreateCustomerRequest(
         @NotBlank(message = "Name cannot be blank")
@@ -37,5 +35,5 @@ public record CreateCustomerRequest(
         Integer gender
 
 
-) implements ICustomerRequest{
+) implements ICustomerRequest {
 }

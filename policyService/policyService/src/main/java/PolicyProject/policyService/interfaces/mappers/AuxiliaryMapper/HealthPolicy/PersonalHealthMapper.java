@@ -1,10 +1,10 @@
-package PolicyProject.policyService.interfaces.mappers;
+package PolicyProject.policyService.interfaces.mappers.AuxiliaryMapper.HealthPolicy;
 
 import PolicyProject.policyService.domain.dto.request.PersonalHealthRequest.CreatePersonalHealthRequest;
 import PolicyProject.policyService.domain.dto.request.PersonalHealthRequest.GetPersonalHealthWithCustomerRequest;
 import PolicyProject.policyService.domain.dto.response.PersonalHealthResponse.CreatePersonalHealthResponse;
 import PolicyProject.policyService.domain.dto.response.PersonalHealthResponse.GetPersonalHealthWithCustomerResponse;
-import PolicyProject.policyService.domain.model.PersonalHealthModel;
+import PolicyProject.policyService.domain.model.AuxiliaryModel.HealthPolicy.PersonalHealthModel;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.HealthPolicy.PersonalHealth;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

@@ -1,4 +1,4 @@
-package PolicyProject.policyService.domain.Enums.Enums;
+package PolicyProject.policyService.domain.Enums.Enums.HealthPolicyEnum;
 
 public enum BloodType {
     A_POSITIVE(1),
@@ -20,7 +20,6 @@ public enum BloodType {
         return value;
     }
 
-    // Statik metod: value'ye göre BloodType enum değerini almak
     public static BloodType fromValue(int value) {
         for (BloodType bloodType : values()) {
             if (bloodType.getValue() == value) {

@@ -1,5 +1,7 @@
 package PolicyProject.policyService.domain.dto.response.CustomerResponse;
 
+import PolicyProject.policyService.domain.dto.response.IResponse.ICustomerResponse;
+
 import java.time.LocalDate;
 
 public record GetCustomerResponse(
@@ -15,5 +17,5 @@ public record GetCustomerResponse(
         Integer gender
 
 
-) implements ICustomerResponse{
+) implements ICustomerResponse {
 }

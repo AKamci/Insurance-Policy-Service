@@ -1,4 +1,4 @@
-package PolicyProject.policyService.interfaces.mappers;
+package PolicyProject.policyService.interfaces.mappers.PolicyMapper;
 
 
 import PolicyProject.policyService.domain.dto.request.EarthQuakeRequest.*;

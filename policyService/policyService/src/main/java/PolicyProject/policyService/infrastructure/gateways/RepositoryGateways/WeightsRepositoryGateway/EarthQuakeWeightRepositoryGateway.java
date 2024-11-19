@@ -1,8 +1,9 @@
 package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.WeightsRepositoryGateway;
 
-import PolicyProject.policyService.application.gateways.EarthQuakeWeightGateway;
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyEnum.NonValuesStrategyType;
-import PolicyProject.policyService.infrastructure.exception.DuplicateWeightKeyException;
+import PolicyProject.policyService.application.gateways.WeightsGateway.EarthQuakeWeightGateway;
+import PolicyProject.policyService.domain.Enums.Enums.CarPolicyEnum.CarPolicyNonValuesStrategyType;
+import PolicyProject.policyService.domain.Enums.Enums.EarthquakePolicyEnum.EarthquakePolicyNonValueStrategyType;
+import PolicyProject.policyService.infrastructure.exception.DuplicateException.DuplicateWeightKeyException;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
 
 import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.EarthQuakeWeightsRepository;
@@ -39,7 +40,7 @@ public class EarthQuakeWeightRepositoryGateway implements EarthQuakeWeightGatewa
     @Transactional
     @Override
     public List<EarthQaukeWeights> updateOrSave(List<EarthQaukeWeights> weights) {
-        List<String> typesToNullify = Arrays.stream(NonValuesStrategyType.values())
+        List<String> typesToNullify = Arrays.stream(EarthquakePolicyNonValueStrategyType.values())
                 .map(Enum::name)
                 .collect(Collectors.toList());
         for (EarthQaukeWeights weight : weights) {
@@ -99,7 +100,7 @@ public class EarthQuakeWeightRepositoryGateway implements EarthQuakeWeightGatewa
                 .stream(weightsRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
 
-        List<String> typesToNullify = Arrays.stream(NonValuesStrategyType.values())
+        List<String> typesToNullify = Arrays.stream(EarthquakePolicyNonValueStrategyType.values())
                 .map(Enum::name)
                 .collect(Collectors.toList());
 

@@ -5,7 +5,6 @@ import PolicyProject.policyService.application.service.ObjectValidation;
 import PolicyProject.policyService.application.usecases.ExecuteCustomer;
 import PolicyProject.policyService.domain.dto.response.CustomerResponse.*;
 import PolicyProject.policyService.domain.model.CustomerModel;
-import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;

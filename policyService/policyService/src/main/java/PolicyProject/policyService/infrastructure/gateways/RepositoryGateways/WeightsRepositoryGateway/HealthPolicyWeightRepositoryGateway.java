@@ -1,8 +1,8 @@
 package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.WeightsRepositoryGateway;
 
-import PolicyProject.policyService.application.gateways.HealthPolicyWeightGateway;
-import PolicyProject.policyService.domain.Enums.Enums.CarPolicyEnum.NonValuesStrategyType;
-import PolicyProject.policyService.infrastructure.exception.DuplicateWeightKeyException;
+import PolicyProject.policyService.application.gateways.WeightsGateway.HealthPolicyWeightGateway;
+import PolicyProject.policyService.domain.Enums.Enums.HealthPolicyEnum.HealthPolicyNonValueStrategyType;
+import PolicyProject.policyService.infrastructure.exception.DuplicateException.DuplicateWeightKeyException;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.HealthPolicyWeight;
 import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.HealthPolicyWeightRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class HealthPolicyWeightRepositoryGateway implements HealthPolicyWeightGa
     @Transactional
     @Override
     public List<HealthPolicyWeight> updateOrSave(List<HealthPolicyWeight> weights) {
-        List<String> typesToNullify = Arrays.stream(NonValuesStrategyType.values())
+        List<String> typesToNullify = Arrays.stream(HealthPolicyNonValueStrategyType.values())
                 .map(Enum::name)
                 .collect(Collectors.toList());
         for (HealthPolicyWeight weight : weights) {
@@ -98,7 +98,7 @@ public class HealthPolicyWeightRepositoryGateway implements HealthPolicyWeightGa
                 .stream(healthPolicyWeightRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
 
-        List<String> typesToNullify = Arrays.stream(NonValuesStrategyType.values())
+        List<String> typesToNullify = Arrays.stream(HealthPolicyNonValueStrategyType.values())
                 .map(Enum::name)
                 .collect(Collectors.toList());
 

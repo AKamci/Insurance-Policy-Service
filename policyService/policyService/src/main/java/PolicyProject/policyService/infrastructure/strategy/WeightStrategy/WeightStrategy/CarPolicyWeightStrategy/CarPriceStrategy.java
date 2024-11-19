@@ -1,6 +1,6 @@
 package PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.CarPolicyWeightStrategy;
 
-import PolicyProject.policyService.domain.model.LicensePlateModel;
+import PolicyProject.policyService.domain.model.AuxiliaryModel.CarPolicy.LicensePlateModel;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.Weights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.ICarPolicyWeightStrategy;
 

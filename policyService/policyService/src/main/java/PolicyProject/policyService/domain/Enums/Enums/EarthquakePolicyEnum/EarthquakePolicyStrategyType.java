@@ -1,4 +1,4 @@
-package PolicyProject.policyService.domain.Enums.Enums;
+package PolicyProject.policyService.domain.Enums.Enums.EarthquakePolicyEnum;
 
 public enum EarthquakePolicyStrategyType {
     EARTHQUAKERISK,
@@ -6,4 +6,6 @@ public enum EarthquakePolicyStrategyType {
     CONSTRUCTION_YEAR,
     TOTAL_FLOORS,
     SQUARE_METERS,
+    CONSTANT,
+    POLICY_TYPE
 }

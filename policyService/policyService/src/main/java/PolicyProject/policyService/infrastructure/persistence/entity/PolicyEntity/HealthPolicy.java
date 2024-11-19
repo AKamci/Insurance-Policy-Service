@@ -13,7 +13,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@DiscriminatorValue("HEALTH")
 public class HealthPolicy extends Policies {
 
 

@@ -1,5 +1,6 @@
 package PolicyProject.policyService.domain.dto.request.CustomerRequest;
 
+import PolicyProject.policyService.domain.dto.request.IRequest.ICustomerRequest;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -34,5 +35,5 @@ public record UpdateCustomerRequest(
 
 
 
-) implements ICustomerRequest{
+) implements ICustomerRequest {
 }

@@ -1,6 +1,6 @@
 package PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.CarPolicyWeightStrategy;
 
-import PolicyProject.policyService.domain.model.LicensePlateModel;
+import PolicyProject.policyService.domain.model.AuxiliaryModel.CarPolicy.LicensePlateModel;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.Weights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.ICarPolicyWeightStrategy;
 
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class CustomerAgeStrategy  implements ICarPolicyWeightStrategy {
+public class CustomerAgeStrategy implements ICarPolicyWeightStrategy {
     @Override
     public BigDecimal calculate(LicensePlateModel model, Weights parameter) {
         return parameter.getWeight().multiply(getValue(model));

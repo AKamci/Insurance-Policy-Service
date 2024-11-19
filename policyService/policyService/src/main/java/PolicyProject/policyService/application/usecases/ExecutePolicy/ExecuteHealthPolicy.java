@@ -1,6 +1,6 @@
 package PolicyProject.policyService.application.usecases.ExecutePolicy;
 
-import PolicyProject.policyService.application.gateways.HealthPolicyGateway;
+import PolicyProject.policyService.application.gateways.PolicyGateway.HealthPolicyGateway;
 import PolicyProject.policyService.application.service.ModelFactory.CustomerModelFactory;
 import PolicyProject.policyService.application.service.ModelFactory.PersonalHealthModelFactory;
 import PolicyProject.policyService.application.usecases.ExecuteAuxiliary.HealthPolicy.ExecutePersonalHealth;
@@ -8,16 +8,16 @@ import PolicyProject.policyService.application.usecases.ExecuteCustomer;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyEvent;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
 import PolicyProject.policyService.domain.model.*;
-import PolicyProject.policyService.domain.model.HealthPolicyModel;
-import PolicyProject.policyService.domain.model.PersonalHealthModel;
+import PolicyProject.policyService.domain.model.PolicyModel.HealthPolicyModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.HealthPolicySpecificationBuild;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.HealthPolicy.PersonalHealth;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.HealthPolicy;
 import PolicyProject.policyService.interfaces.mappers.*;
-import PolicyProject.policyService.interfaces.mappers.HealthPolicyMapper;
-import PolicyProject.policyService.interfaces.mappers.PersonalHealthMapper;
+
+import PolicyProject.policyService.interfaces.mappers.AuxiliaryMapper.HealthPolicy.PersonalHealthMapper;
+import PolicyProject.policyService.interfaces.mappers.PolicyMapper.HealthPolicyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;

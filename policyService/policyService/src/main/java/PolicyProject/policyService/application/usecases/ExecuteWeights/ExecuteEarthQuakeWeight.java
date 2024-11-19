@@ -1,15 +1,15 @@
 package PolicyProject.policyService.application.usecases.ExecuteWeights;
 
-import PolicyProject.policyService.application.gateways.EarthQuakeWeightGateway;
+import PolicyProject.policyService.application.gateways.WeightsGateway.EarthQuakeWeightGateway;
 import PolicyProject.policyService.application.service.ModelFactory.HouseModelFactory;
 import PolicyProject.policyService.application.service.StrategyFactory.EarthQuakeWeightStrategyFactory;
-import PolicyProject.policyService.domain.model.HouseModel;
+import PolicyProject.policyService.domain.model.AuxiliaryModel.EarthquakePolicy.HouseModel;
 import PolicyProject.policyService.domain.model.WeightsModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.EarthQuakePolicyWeightStrategy.EarthQuakeConstantStrategy;
-import PolicyProject.policyService.interfaces.mappers.EarthQuakeWeightMapper;
+import PolicyProject.policyService.interfaces.mappers.WeightsMapper.EarthQuakeWeightMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
@@ -36,6 +36,8 @@ public class ExecuteEarthQuakeWeight {
             BigDecimal valueToCheck = strategy.getValue(houseModel);
 
             if (strategy instanceof EarthQuakeConstantStrategy) {
+                System.out.println("strategy instanceof EarthQuakeConstantStrategy");
+                System.out.println("SABİTELER YÜKLENİYOR");
                 total = total.add(strategy.calculate(houseModel, parameter));
             } else if (parameter.getMinValue() != null && parameter.getMaxValue() != null) {
                 if (valueToCheck != null && parameter.getMinValue().compareTo(valueToCheck) <= 0

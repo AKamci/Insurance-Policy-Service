@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 @Data
 @RequiredArgsConstructor
-//@AllArgsConstructor
 @Component
 
 public class CarPolicySpecificationBuild {

@@ -1,6 +1,6 @@
 package PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.EarthQuakePolicyWeightStrategy;
 
-import PolicyProject.policyService.domain.model.HouseModel;
+import PolicyProject.policyService.domain.model.AuxiliaryModel.EarthquakePolicy.HouseModel;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IEarthQuakeWeightStrategy;
 

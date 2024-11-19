@@ -1,6 +1,6 @@
 package PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.HealthPolicy;
 
-import PolicyProject.policyService.domain.Enums.Enums.BloodType;
+import PolicyProject.policyService.domain.Enums.Enums.HealthPolicyEnum.BloodType;
 import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import jakarta.persistence.*;

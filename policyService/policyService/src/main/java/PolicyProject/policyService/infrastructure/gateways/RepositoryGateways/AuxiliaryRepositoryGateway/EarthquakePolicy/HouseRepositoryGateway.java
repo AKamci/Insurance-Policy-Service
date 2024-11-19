@@ -1,7 +1,7 @@
-package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways;
+package PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.AuxiliaryRepositoryGateway.EarthquakePolicy;
 
 
-import PolicyProject.policyService.application.gateways.HouseGateway;
+import PolicyProject.policyService.application.gateways.AuxiliaryGateway.EarthquakePolicy.HouseGateway;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.Building;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.EarthquakePolicy.House;
 

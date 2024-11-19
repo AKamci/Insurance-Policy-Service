@@ -1,4 +1,4 @@
-package PolicyProject.policyService.infrastructure.exception;
+package PolicyProject.policyService.infrastructure.exception.ExpiredException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

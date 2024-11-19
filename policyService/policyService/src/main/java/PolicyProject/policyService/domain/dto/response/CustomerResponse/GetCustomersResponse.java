@@ -1,10 +1,10 @@
 package PolicyProject.policyService.domain.dto.response.CustomerResponse;
 
-import java.util.List;
+import PolicyProject.policyService.domain.dto.response.IResponse.ICustomerResponse;
 
 public record GetCustomersResponse(
 
         Iterable<GetCustomerResponse> customersResponse
 
-) implements ICustomerResponse{
+) implements ICustomerResponse {
 }

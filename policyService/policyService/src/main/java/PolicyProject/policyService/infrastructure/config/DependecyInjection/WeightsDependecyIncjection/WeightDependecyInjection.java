@@ -1,11 +1,11 @@
 package PolicyProject.policyService.infrastructure.config.DependecyInjection.WeightsDependecyIncjection;
 
 
-import PolicyProject.policyService.application.gateways.WeightGateway;
-import PolicyProject.policyService.application.service.StrategyFactory.WeightStrategyFactory;
-import PolicyProject.policyService.application.usecases.ExecuteWeight;
+import PolicyProject.policyService.application.gateways.WeightsGateway.CarPolicyWeightGateway;
+import PolicyProject.policyService.application.service.StrategyFactory.CarPolicyWeightStrategyFactory;
 
-import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.WeightsRepositoryGateway.WeightRepositoryGateway;
+import PolicyProject.policyService.application.usecases.ExecuteWeights.ExecuteCarPolicyWeight;
+import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.WeightsRepositoryGateway.CarPolicyWeightRepositoryGateway;
 import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.WeightsRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,13 +14,13 @@ import org.springframework.context.annotation.Configuration;
 public class WeightDependecyInjection {
 
     @Bean
-    WeightGateway weightGateway(WeightsRepository weightsRepository)
+    CarPolicyWeightGateway weightGateway(WeightsRepository weightsRepository)
     {
-        return new WeightRepositoryGateway(weightsRepository);
+        return new CarPolicyWeightRepositoryGateway(weightsRepository);
     }
 
     @Bean
-    ExecuteWeight executeWeight(WeightGateway weightGateway, WeightStrategyFactory weightStrategyFactory) {
-        return new ExecuteWeight(weightGateway, weightStrategyFactory);
+    ExecuteCarPolicyWeight executeWeight(CarPolicyWeightGateway weightGateway, CarPolicyWeightStrategyFactory carPolicyWeightStrategyFactory) {
+        return new ExecuteCarPolicyWeight(weightGateway, carPolicyWeightStrategyFactory);
     }
 }

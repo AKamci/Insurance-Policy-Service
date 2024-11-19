@@ -5,8 +5,8 @@ import PolicyProject.policyService.application.service.ObjectValidation;
 import PolicyProject.policyService.application.usecases.ExecutePolicy.ExecuteHealthPolicy;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyEvent;
 import PolicyProject.policyService.domain.dto.response.HealthPolicyResponse.*;
-import PolicyProject.policyService.domain.model.HealthPolicyModel;
-import PolicyProject.policyService.interfaces.mappers.HealthPolicyMapper;
+import PolicyProject.policyService.domain.model.PolicyModel.HealthPolicyModel;
+import PolicyProject.policyService.interfaces.mappers.PolicyMapper.HealthPolicyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

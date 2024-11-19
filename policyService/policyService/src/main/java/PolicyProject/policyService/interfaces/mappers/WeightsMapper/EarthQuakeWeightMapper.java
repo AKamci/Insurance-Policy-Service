@@ -1,4 +1,4 @@
-package PolicyProject.policyService.interfaces.mappers;
+package PolicyProject.policyService.interfaces.mappers.WeightsMapper;
 
 import PolicyProject.policyService.domain.dto.request.WeightRequest.*;
 import PolicyProject.policyService.domain.dto.response.WeightResponse.CreateWeightResponse;

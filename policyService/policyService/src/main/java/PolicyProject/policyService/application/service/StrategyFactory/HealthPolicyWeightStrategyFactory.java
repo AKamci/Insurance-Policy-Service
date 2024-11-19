@@ -1,7 +1,5 @@
 package PolicyProject.policyService.application.service.StrategyFactory;
 
-import PolicyProject.policyService.domain.Enums.Enums.EarthquakePolicyStrategyType;
-
 import PolicyProject.policyService.domain.Enums.Enums.HealthPolicyEnum.HealthPolicyStrategyType;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.WeightStrategy.CarPolicyWeightStrategy.CustomerAgeStrategy;
@@ -24,6 +22,10 @@ public class HealthPolicyWeightStrategyFactory {
         strategies.put(HealthPolicyStrategyType.BLOODTYPE.name(), new HealthPolicyCustomerBloodType_Strategy());
         strategies.put(HealthPolicyStrategyType.GENDER.name(), new HealthPolicyCustomerGender_Strategy());
         strategies.put(HealthPolicyStrategyType.POLICY_TYPE.name(), new HealthPolicyType_Strategy());
+        strategies.put(HealthPolicyStrategyType.CONSTANT.name(), new HealthPolicyConstant_Strategy());
+        strategies.put(HealthPolicyStrategyType.BOOLEAN_TYPE.name(), new HealtPolicyBoolen_Strategy());
+
+
     }
 
     public IWeightStrategy getStrategy(String type) {

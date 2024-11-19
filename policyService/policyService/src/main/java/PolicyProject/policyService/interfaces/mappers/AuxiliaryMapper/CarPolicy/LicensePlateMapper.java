@@ -1,8 +1,8 @@
-package PolicyProject.policyService.interfaces.mappers;
+package PolicyProject.policyService.interfaces.mappers.AuxiliaryMapper.CarPolicy;
 
 import PolicyProject.policyService.domain.dto.request.LicensePlateRequest.GetPlateWithCustomerRequest;
 import PolicyProject.policyService.domain.dto.response.LicensePlateResponse.GetPlateWithCustomerResponse;
-import PolicyProject.policyService.domain.model.LicensePlateModel;
+import PolicyProject.policyService.domain.model.AuxiliaryModel.CarPolicy.LicensePlateModel;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.LicensePlate;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

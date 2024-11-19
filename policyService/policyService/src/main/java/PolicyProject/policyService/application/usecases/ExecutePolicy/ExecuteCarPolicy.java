@@ -1,7 +1,8 @@
 package PolicyProject.policyService.application.usecases.ExecutePolicy;
 
-import PolicyProject.policyService.application.gateways.CarPolicyGateway;
+import PolicyProject.policyService.application.gateways.PolicyGateway.CarPolicyGateway;
 import PolicyProject.policyService.application.service.ModelFactory.CustomerModelFactory;
+import PolicyProject.policyService.application.usecases.ExecuteAuxiliary.CarPolicy.ExecuteLicensePlate;
 import PolicyProject.policyService.application.usecases.ExecuteCustomer;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyEvent;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
@@ -12,9 +13,9 @@ import PolicyProject.policyService.infrastructure.gateways.SpecificationsBuild.C
 import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
 import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.LicensePlate;
-import PolicyProject.policyService.interfaces.mappers.CarPolicyMapper;
+import PolicyProject.policyService.interfaces.mappers.AuxiliaryMapper.CarPolicy.LicensePlateMapper;
 import PolicyProject.policyService.interfaces.mappers.CustomerMapper;
-import PolicyProject.policyService.interfaces.mappers.LicensePlateMapper;
+import PolicyProject.policyService.interfaces.mappers.PolicyMapper.CarPolicyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class ExecuteCarPolicy {
 
     private final CarPolicyGateway carPolicyGateway;
     private final ExecuteCustomer executeCustomer;
-    private final PolicyProject.policyService.application.usecases.ExecuteLicensePlate executeLicensePlate;
+    private final ExecuteLicensePlate executeLicensePlate;
     private final CarPolicySpecificationBuild carPolicySpecificationBuild;
 
 

@@ -6,7 +6,7 @@ import PolicyProject.policyService.application.usecases.ExecutePolicy.ExecuteEar
 import PolicyProject.policyService.domain.Enums.Enums.PolicyEvent;
 import PolicyProject.policyService.domain.dto.response.EarthQuakeResponse.*;
 import PolicyProject.policyService.domain.model.EarthQuakeModel;
-import PolicyProject.policyService.interfaces.mappers.EarthQuakeMapper;
+import PolicyProject.policyService.interfaces.mappers.PolicyMapper.EarthQuakeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

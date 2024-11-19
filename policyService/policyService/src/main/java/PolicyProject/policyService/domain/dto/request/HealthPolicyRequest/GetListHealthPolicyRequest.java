@@ -1,8 +1,8 @@
 package PolicyProject.policyService.domain.dto.request.HealthPolicyRequest;
 
-import PolicyProject.policyService.domain.Enums.Enums.BloodType;
+import PolicyProject.policyService.domain.Enums.Enums.HealthPolicyEnum.BloodType;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
-import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
+import PolicyProject.policyService.domain.dto.request.IRequest.IHealthPolicyRequest;
 
 import java.time.LocalDate;
 
@@ -31,5 +31,5 @@ public record GetListHealthPolicyRequest(
         int size
 
 
-) implements IHealthPolicyRequest{
+) implements IHealthPolicyRequest {
 }

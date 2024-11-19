@@ -1,10 +1,12 @@
-package PolicyProject.policyService.application.usecases;
+package PolicyProject.policyService.application.usecases.ExecuteAuxiliary.CarPolicy;
 
-import PolicyProject.policyService.application.gateways.LicensePlateGateway;
-import PolicyProject.policyService.domain.model.LicensePlateModel;
+import PolicyProject.policyService.application.gateways.AuxiliaryGateway.CarPolicy.LicensePlateGateway;
+import PolicyProject.policyService.application.service.ModelFactory.LicensePlateModelFactory;
+import PolicyProject.policyService.application.usecases.ExecuteWeights.ExecuteCarPolicyWeight;
+import PolicyProject.policyService.domain.model.AuxiliaryModel.CarPolicy.LicensePlateModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.LicensePlate;
-import PolicyProject.policyService.interfaces.mappers.LicensePlateMapper;
+import PolicyProject.policyService.interfaces.mappers.AuxiliaryMapper.CarPolicy.LicensePlateMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -13,25 +15,16 @@ import java.util.Optional;
 public class ExecuteLicensePlate {
 
     private final LicensePlateGateway licensePlateGateway;
-    private final ExecuteWeight executeWeight;
+    private final ExecuteCarPolicyWeight executeWeight;
 
     public LicensePlateModel ExecuteGetLicensePlateWithCustomer(LicensePlateModel licensePlateModel) {
         LicensePlate entity = LicensePlateMapper.INSTANCE.LicensePlateModelToCustomerEntity(licensePlateModel);
         LicensePlate licensePlateEntity = Optional.ofNullable(licensePlateGateway.getWCustomer(entity))
                 .orElseThrow(() -> new EntityNotFoundException(licensePlateModel.id(), "Entity not found"));
-
         var licenseModel = LicensePlateMapper.INSTANCE.licensePlateEntityToLicensePlateModel(licensePlateEntity);
-        LicensePlateModel newPlate = new LicensePlateModel(
-                null,
-                licenseModel.plate(),
-                licenseModel.car(),
-                licenseModel.customer(),
-                licensePlateModel.coverageCode(),
-                licenseModel.policyStartDate(),
-                licenseModel.policyEndDate(),
-                0L
-        );
-        return executeWeight.Get_ALicensePlateModel(newPlate);
+        var licenseModelWCoverage = LicensePlateModelFactory.
+                createLicensePlateModelWithCoverageCode(licenseModel, licensePlateModel.coverageCode());
+        return executeWeight.Get_ALicensePlateModel(LicensePlateModelFactory.createLicensePlateModelFromExisting(licenseModelWCoverage));
     }
 
     public LicensePlateModel ExecuteGetLicensePlate(String plate) {
