@@ -4,7 +4,7 @@ import PolicyProject.policyService.application.gateways.WeightsGateway.HealthPol
 import PolicyProject.policyService.application.service.ModelFactory.PersonalHealthModelFactory;
 import PolicyProject.policyService.application.service.StrategyFactory.HealthPolicyWeightStrategyFactory;
 import PolicyProject.policyService.domain.model.AuxiliaryModel.HealthPolicy.PersonalHealthModel;
-import PolicyProject.policyService.domain.model.WeightsModel;
+import PolicyProject.policyService.domain.model.WeightsModel.WeightsModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.HealthPolicyWeight;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;

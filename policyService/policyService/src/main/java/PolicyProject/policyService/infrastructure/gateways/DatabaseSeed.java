@@ -26,9 +26,9 @@ import PolicyProject.policyService.infrastructure.persistence.repository.Auxilia
 import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.CarPolicyRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.EarthQuakeRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.PolicyRepository.HealthPolicyRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.CarPolicyWeightsRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.EarthQuakeWeightsRepository;
 import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.HealthPolicyWeightRepository;
-import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.WeightsRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -44,7 +44,7 @@ public class DatabaseSeed implements CommandLineRunner {
     private final CustomerRepository customerRepository;
     private final CarRepository carRepository;
     private final LicensePlateRepository licensePlateRepository;
-    private final WeightsRepository weightsRepository;
+    private final CarPolicyWeightsRepository weightsRepository;
     private final CoverageRepository coverageRepository;
     private final HouseRepository houseRepository;
     private final BuildingRepository buildingRepository;
@@ -60,7 +60,7 @@ public class DatabaseSeed implements CommandLineRunner {
                         CustomerRepository customerRepository,
                         CarRepository carRepository,
                         LicensePlateRepository licensePlateRepository,
-                        WeightsRepository weightsRepository,
+                        CarPolicyWeightsRepository weightsRepository,
                         CoverageRepository coverageRepository,
                         HouseRepository houseRepository,
                         BuildingRepository buildingRepository,

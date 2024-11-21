@@ -1,4 +1,4 @@
-package PolicyProject.policyService.domain.model;
+package PolicyProject.policyService.domain.model.WeightsModel;
 
 import java.math.BigDecimal;
 

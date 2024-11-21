@@ -51,8 +51,6 @@ public class CarPolicyController_V1 {
                         (CarPolicyMapper.INSTANCE.getCarPolicyRequestWPlateTocarPolicyModel(getCarPolicyWPlateRequest)));
     }
 
-
-
     @PutMapping
     public  ResponseEntity<UpdateCarPolicyResponse> updateCarPolicy(@Valid @RequestBody UpdateCarPolicyRequest updateCarPolicyRequest)
     {

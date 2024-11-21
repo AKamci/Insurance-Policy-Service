@@ -24,6 +24,7 @@ public interface PersonalHealthMapper {
     @Mapping(source = "tckn", target = "customer.tckn")
     PersonalHealth getPersonalHealthModelToPersonalHealthEntity(PersonalHealthModel personalHealthModel);
 
+    @Mapping(source = "customer.tckn", target = "tckn")
     PersonalHealthModel getPersonalHealthEntityToPersonalHealthModel(PersonalHealth personalHealth);
 
 

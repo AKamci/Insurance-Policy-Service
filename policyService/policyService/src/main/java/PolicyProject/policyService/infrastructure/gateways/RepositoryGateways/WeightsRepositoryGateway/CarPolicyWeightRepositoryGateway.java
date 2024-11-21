@@ -5,7 +5,7 @@ import PolicyProject.policyService.application.gateways.WeightsGateway.CarPolicy
 import PolicyProject.policyService.domain.Enums.Enums.CarPolicyEnum.CarPolicyNonValuesStrategyType;
 import PolicyProject.policyService.infrastructure.exception.DuplicateException.DuplicateWeightKeyException;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.Weights;
-import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.WeightsRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.CarPolicyWeightsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class CarPolicyWeightRepositoryGateway implements CarPolicyWeightGateway {
 
-    private final WeightsRepository weightsRepository;
+    private final CarPolicyWeightsRepository weightsRepository;
 
     @Override
     public Weights get(String key) {

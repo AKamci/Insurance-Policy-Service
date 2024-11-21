@@ -20,15 +20,15 @@ public class PersonalHealthService {
     public GetPersonalHealthWithCustomerResponse getWCustomer(PersonalHealthModel personalHealthModel)
     {
         objectValidation.validateModel(personalHealthModel, "personalHealthModel");
-        PersonalHealthModel personalHealthModelResult = executePersonalHealth.ExecuteGetWithCustomer(personalHealthModel);
-        return PersonalHealthMapper.INSTANCE.getPersonalHealthModelToGetPersonalHealthWithCustomerResponse(personalHealthModelResult);
+        return PersonalHealthMapper.INSTANCE.getPersonalHealthModelToGetPersonalHealthWithCustomerResponse
+                (executePersonalHealth.ExecuteGetWithCustomer(personalHealthModel));
     }
 
     public CreatePersonalHealthResponse create(PersonalHealthModel personalHealthModel)
     {
         objectValidation.validateModel(personalHealthModel, "personalHealthModel");
-        PersonalHealthModel personalHealthModelResult = executePersonalHealth.ExecuteCreate(personalHealthModel);
-        return PersonalHealthMapper.INSTANCE.CreatePersonalHealthModelToPersonalHealthResponse(personalHealthModelResult);
+        return PersonalHealthMapper.INSTANCE.CreatePersonalHealthModelToPersonalHealthResponse
+                (executePersonalHealth.ExecuteCreate(personalHealthModel));
     }
 
 }

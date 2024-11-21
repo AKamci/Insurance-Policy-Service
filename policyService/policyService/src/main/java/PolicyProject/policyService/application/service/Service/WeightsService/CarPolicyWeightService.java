@@ -6,7 +6,7 @@ import PolicyProject.policyService.domain.dto.response.WeightResponse.CreateWeig
 import PolicyProject.policyService.domain.dto.response.WeightResponse.DeleteWeightResponse;
 import PolicyProject.policyService.domain.dto.response.WeightResponse.GetWeightResponse;
 import PolicyProject.policyService.domain.dto.response.WeightResponse.UpdateWeightResponse;
-import PolicyProject.policyService.domain.model.WeightsModel;
+import PolicyProject.policyService.domain.model.WeightsModel.WeightsModel;
 import PolicyProject.policyService.interfaces.mappers.WeightsMapper.CarPolicyWeightsMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,14 +29,14 @@ public class CarPolicyWeightService implements IWeightService {
 
     @Override
     public UpdateWeightResponse update(WeightsModel weightsModel) {
-       // objectValidation.CustomerModelValidations(weightsModel);
+        objectValidation.validateModel(weightsModel, "weightsModel");
         return CarPolicyWeightsMapper.INSTANCE.WeightsModelToUpdateWeightResponse
                 (executeWeight.executeUpdate(weightsModel));
     }
 
     @Override
     public DeleteWeightResponse delete(WeightsModel weightsModel) {
-        //objectValidation.CustomerModelValidations(weightsModel);
+        objectValidation.validateModel(weightsModel, "weightsModel");
         return CarPolicyWeightsMapper.INSTANCE.WeightsModelToDeleteWeightResponse
                 (executeWeight.executeDelete(weightsModel));
     }
@@ -49,13 +49,13 @@ public class CarPolicyWeightService implements IWeightService {
 
     @Override
     public GetWeightResponse get(WeightsModel weightsModel) {
-        //objectValidation.CustomerModelValidations(weightsModel);
+        objectValidation.validateModel(weightsModel, "weightsModel");
         return CarPolicyWeightsMapper.INSTANCE.WeightsModelToGetWeightResponse
                 (executeWeight.executeGet(weightsModel));
     }
 
     public List<UpdateWeightResponse> updateList(List<WeightsModel> weightsModelList) {
-        // objectValidation.CustomerModelValidations(weightsModel);
+        objectValidation.validateModel(weightsModelList, "weightsModel");
         return CarPolicyWeightsMapper.INSTANCE.WeightsModelListToUpdateWeightResponseList
                 (executeWeight.executeUpdateList(weightsModelList));
     }

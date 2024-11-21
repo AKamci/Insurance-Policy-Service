@@ -3,6 +3,6 @@ package PolicyProject.policyService.infrastructure.persistence.repository.Weight
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.Weights;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface WeightsRepository extends JpaRepository<Weights, Long> {
+public interface CarPolicyWeightsRepository extends JpaRepository<Weights, Long> {
     Weights findByKey(String key);
 }

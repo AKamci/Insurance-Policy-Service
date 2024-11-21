@@ -6,7 +6,7 @@ import PolicyProject.policyService.domain.dto.response.WeightResponse.CreateWeig
 import PolicyProject.policyService.domain.dto.response.WeightResponse.DeleteWeightResponse;
 import PolicyProject.policyService.domain.dto.response.WeightResponse.GetWeightResponse;
 import PolicyProject.policyService.domain.dto.response.WeightResponse.UpdateWeightResponse;
-import PolicyProject.policyService.domain.model.WeightsModel;
+import PolicyProject.policyService.domain.model.WeightsModel.WeightsModel;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.Weights;
 import org.mapstruct.factory.Mappers;
 

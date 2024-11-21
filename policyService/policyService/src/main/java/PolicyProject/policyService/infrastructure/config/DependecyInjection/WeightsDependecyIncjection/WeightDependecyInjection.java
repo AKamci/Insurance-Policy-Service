@@ -6,7 +6,7 @@ import PolicyProject.policyService.application.service.StrategyFactory.CarPolicy
 
 import PolicyProject.policyService.application.usecases.ExecuteWeights.ExecuteCarPolicyWeight;
 import PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.WeightsRepositoryGateway.CarPolicyWeightRepositoryGateway;
-import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.WeightsRepository;
+import PolicyProject.policyService.infrastructure.persistence.repository.WeightsRepository.CarPolicyWeightsRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class WeightDependecyInjection {
 
     @Bean
-    CarPolicyWeightGateway weightGateway(WeightsRepository weightsRepository)
+    CarPolicyWeightGateway weightGateway(CarPolicyWeightsRepository weightsRepository)
     {
         return new CarPolicyWeightRepositoryGateway(weightsRepository);
     }

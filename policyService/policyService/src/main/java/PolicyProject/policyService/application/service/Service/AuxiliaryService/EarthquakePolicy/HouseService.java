@@ -19,7 +19,6 @@ public class HouseService {
     public GetHouseWCustomerResponse getWCustomer(HouseModel houseModel)
     {
         objectValidation.validateModel(houseModel, "houseModel");
-        HouseModel houseModelResult = executeHouse.ExecuteGetWithCustomer(houseModel);
-        return HouseMapper.INSTANCE.HouseModelToGetHouseWCustomerResponse(houseModelResult);
+        return HouseMapper.INSTANCE.HouseModelToGetHouseWCustomerResponse(executeHouse.ExecuteGetWithCustomer(houseModel));
     }
 }

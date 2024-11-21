@@ -37,10 +37,8 @@ public interface CarPolicyMapper {
 
 
 
-    List<CarPolicyModel> carPolicyEntityListToCarPolicyModelList(List<CarPolicy> carPolicies);
-
-    CarPolicy CarPolicyToCarPolicy(CarPolicy carPolicy);
-
+    //Hata verme ihtimali var
+    List<CarPolicyModel> carPolicyEntityListToCarPolicyModelList(List<CarPolicy> carPolicyList);
     List<GetCustomerCarPoliciesResponse> customerModelToGetCarPoliciesByCustomer(List<CarPolicyModel> carPolicyModelList);
 
 

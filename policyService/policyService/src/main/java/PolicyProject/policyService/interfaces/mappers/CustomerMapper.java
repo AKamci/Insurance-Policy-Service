@@ -14,34 +14,19 @@ public interface CustomerMapper{
 
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
 
-
     CustomerModel createCustomerRequestToCustomerModel(CreateCustomerRequest createCustomerRequest);
     CustomerModel updateCustomerRequestToCustomerModel(UpdateCustomerRequest updateCustomerRequest);
     CustomerModel getCustomerRequestToCustomerModel(GetCustomerRequest getCustomerRequest);
     CustomerModel deleteCustomerRequestToCustomerModel(DeleteCustomerRequest deleteCustomerRequest);
     CustomerModel getCustomerListRequestToCustomerModel(GetCustomerListRequest getCustomerListRequest);
 
-
-
     CreateCustomerResponse customerModelToCreateCustomerResponse(CustomerModel customerModel);
     UpdateCustomerResponse customerModelToUpdateCustomerResponse(CustomerModel customerModel);
     GetCustomerResponse customerModelToGetCustomerResponse(CustomerModel customerModel);
     DeleteCustomerResponse customerModelToDeleteCustomerResponse(CustomerModel customerModel);
-    List<GetCarPoliciesByCustomer> customerModelToGetCarPoliciesByCustomer(List<CustomerModel> customerModel);
-
-
-
-
-
     List<GetCustomerResponse> customersModelToGetCustomerResponse(List<CustomerModel> customerModel);
 
-
     List<CustomerModel> CustomerEntityListToCustomerModelList(List<Customer> customerList);
-
     Customer customerModelToCustomerEntity(CustomerModel customerModel);
-
     CustomerModel customerEntityToCustomerModel(Customer customer);
-
-    Iterable<CustomerModel> CustomerModelListToCustomerModelList(Iterable<CarPolicy> CarPolicyList);
-
 }

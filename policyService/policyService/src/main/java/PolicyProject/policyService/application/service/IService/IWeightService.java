@@ -9,7 +9,7 @@ import PolicyProject.policyService.domain.dto.response.WeightResponse.DeleteWeig
 import PolicyProject.policyService.domain.dto.response.WeightResponse.GetWeightResponse;
 import PolicyProject.policyService.domain.dto.response.WeightResponse.UpdateWeightResponse;
 import PolicyProject.policyService.domain.model.CustomerModel;
-import PolicyProject.policyService.domain.model.WeightsModel;
+import PolicyProject.policyService.domain.model.WeightsModel.WeightsModel;
 
 public interface IWeightService extends ISimpleCRUDService<
         CreateWeightResponse,

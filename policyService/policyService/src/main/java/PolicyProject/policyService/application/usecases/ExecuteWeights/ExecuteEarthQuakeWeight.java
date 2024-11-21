@@ -4,7 +4,7 @@ import PolicyProject.policyService.application.gateways.WeightsGateway.EarthQuak
 import PolicyProject.policyService.application.service.ModelFactory.HouseModelFactory;
 import PolicyProject.policyService.application.service.StrategyFactory.EarthQuakeWeightStrategyFactory;
 import PolicyProject.policyService.domain.model.AuxiliaryModel.EarthquakePolicy.HouseModel;
-import PolicyProject.policyService.domain.model.WeightsModel;
+import PolicyProject.policyService.domain.model.WeightsModel.WeightsModel;
 import PolicyProject.policyService.infrastructure.exception.EntityNotFoundException;
 import PolicyProject.policyService.infrastructure.persistence.entity.WeightsEntity.EarthQaukeWeights;
 import PolicyProject.policyService.infrastructure.strategy.WeightStrategy.IWeightStrategy.IWeightStrategy;

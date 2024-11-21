@@ -16,7 +16,7 @@ public class LicensePlateService {
 
     public GetPlateWithCustomerResponse getWCustomer(LicensePlateModel licensePlateModel) {
         objectValidation.validateModel(licensePlateModel, "licensePlateModel");
-        LicensePlateModel licensePlateModelResult = executeLicensePlate.ExecuteGetLicensePlateWithCustomer(licensePlateModel);
-        return LicensePlateMapper.INSTANCE.LicensePlateModelToGetPlateWithCustomerResponse(licensePlateModelResult);
+        return LicensePlateMapper.INSTANCE.LicensePlateModelToGetPlateWithCustomerResponse
+                (executeLicensePlate.ExecuteGetLicensePlateWithCustomer(licensePlateModel));
     }
 }

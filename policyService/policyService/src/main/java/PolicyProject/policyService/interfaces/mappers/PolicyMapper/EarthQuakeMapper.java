@@ -42,11 +42,6 @@ public interface EarthQuakeMapper {
     @Mapping(source = "coverageCode", target = "coverage", qualifiedByName = "coverageFromInteger")
     EarthquakePolicy earthQuakeModelToEarthQuakePolicyEntity(EarthQuakeModel earthQuakeModel);
 
-    @Mapping(source = "policyId", target = "id")
-    @Mapping(source = "coverage", target = "coverage", qualifiedByName = "coverageFromInteger")
-    List<EarthQuakeModel> earthQuakePolicyEntityListToEarthQuakeModelList(List<EarthquakePolicy> earthquakePolicyList);
-
-
     @Named("coverageFromInteger")
     default Coverage mapIntegerToCoverage(Integer coverage) {
         if (coverage == null) {
@@ -55,6 +50,12 @@ public interface EarthQuakeMapper {
         Coverage coverageEntity = findCoverageById(coverage);
         return coverageEntity;
     }
+
+    @Mapping(source = "policyId", target = "id")
+    @Mapping(source = "coverage", target = "coverage", qualifiedByName = "coverageFromInteger")
+    List<EarthQuakeModel> earthQuakePolicyEntityListToEarthQuakeModelList(List<EarthquakePolicy> earthquakePolicyList);
+
+
 
     default Coverage findCoverageById(Integer coverageId) {
         Coverage coverage = new Coverage();
