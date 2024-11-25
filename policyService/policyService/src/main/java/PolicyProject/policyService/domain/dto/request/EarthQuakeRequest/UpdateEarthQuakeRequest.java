@@ -17,10 +17,10 @@ public record UpdateEarthQuakeRequest(
         @NotBlank(message = "Policy description cannot be blank")
         String policyDescription,
 
-        @NotBlank(message = "Policy Status type cannot be blank")
+        @NotNull(message = "Policy Status type cannot be blank")
         PolicyState state,
 
-        @NotBlank(message = "Policy type cannot be blank")
+        @NotNull(message = "Policy type cannot be blank")
         Integer coverage,
 
         @PastOrPresent(message = "Policy start date must be in the past or present")

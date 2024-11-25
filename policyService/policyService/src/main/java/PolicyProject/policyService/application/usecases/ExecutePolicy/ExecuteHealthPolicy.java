@@ -76,17 +76,6 @@ public class ExecuteHealthPolicy {
         return HealthPolicyMapper.INSTANCE.healthPolicyEntityToHealthPolicyModel(healthPolicy);
     }
 
-    public List<HealthPolicyModel> executeGet_wPolicy(HealthPolicyModel healthPolicyModel)
-    {
-        String tckn = healthPolicyModel.tckn();
-
-        Optional<List<HealthPolicy>> EntityList = Optional.ofNullable
-                (healthPolicyGateway.getCarPoliciesByCustomer(tckn));
-
-        List<HealthPolicy> earthquakePolicies = EntityList.orElseThrow(() -> new EntityNotFoundException(healthPolicyModel.policyId(),"Entity not found"));
-        return HealthPolicyMapper.INSTANCE.healthPolicyEntityListToHealthPolicyModelList(earthquakePolicies);
-    }
-
     public List<HealthPolicyModel> executeGetList(HealthPolicyModel healthPolicyModel)
     {
         Specification<HealthPolicy> specification = healthPolicySpecificationBuild.HealthPolicyBuild(HealthPolicyMapper
@@ -123,9 +112,10 @@ public class ExecuteHealthPolicy {
                     (healthPolicyGateway.SetStateCarPolicy(HealthPolicyMapper.INSTANCE.healthPolicyModelToHealthPolicyEntity(healthPolicyModel), PolicyState.ACTIVE));
         }
         else
-        { new IllegalStateException();}
-        HealthPolicy healthPolicy = optionalEntity.orElseThrow(() -> new EntityNotFoundException(healthPolicyModel.customerId(),"Entity not found"));
-        return HealthPolicyMapper.INSTANCE.healthPolicyEntityToHealthPolicyModel(healthPolicy);
+        {
+             throw new IllegalStateException();
+        }
 
+        return healthPolicyModel;
     }
 }

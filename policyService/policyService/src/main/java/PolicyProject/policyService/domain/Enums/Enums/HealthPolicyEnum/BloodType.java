@@ -20,12 +20,4 @@ public enum BloodType {
         return value;
     }
 
-    public static BloodType fromValue(int value) {
-        for (BloodType bloodType : values()) {
-            if (bloodType.getValue() == value) {
-                return bloodType;
-            }
-        }
-        throw new IllegalArgumentException("Unexpected value: " + value);
-    }
 }

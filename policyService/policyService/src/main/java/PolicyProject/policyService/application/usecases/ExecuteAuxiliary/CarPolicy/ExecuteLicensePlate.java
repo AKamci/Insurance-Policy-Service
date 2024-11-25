@@ -18,12 +18,13 @@ public class ExecuteLicensePlate {
     private final ExecuteCarPolicyWeight executeWeight;
 
     public LicensePlateModel ExecuteGetLicensePlateWithCustomer(LicensePlateModel licensePlateModel) {
-        LicensePlate entity = LicensePlateMapper.INSTANCE.LicensePlateModelToCustomerEntity(licensePlateModel);
-        LicensePlate licensePlateEntity = Optional.ofNullable(licensePlateGateway.getWCustomer(entity))
+        LicensePlate licensePlateEntity = Optional.ofNullable
+                        (licensePlateGateway.getWCustomer(LicensePlateMapper.INSTANCE.LicensePlateModelToCustomerEntity(licensePlateModel)))
                 .orElseThrow(() -> new EntityNotFoundException(licensePlateModel.id(), "Entity not found"));
-        var licenseModel = LicensePlateMapper.INSTANCE.licensePlateEntityToLicensePlateModel(licensePlateEntity);
+
         var licenseModelWCoverage = LicensePlateModelFactory.
-                createLicensePlateModelWithCoverageCode(licenseModel, licensePlateModel.coverageCode());
+                createLicensePlateModelWithCoverageCode
+                        (LicensePlateMapper.INSTANCE.licensePlateEntityToLicensePlateModel(licensePlateEntity), licensePlateModel.coverageCode());
         return executeWeight.Get_ALicensePlateModel(LicensePlateModelFactory.createLicensePlateModelFromExisting(licenseModelWCoverage));
     }
 

@@ -160,7 +160,7 @@ public class EarthQuakePolicyController_V1Test {
     }
     @Test
     public void acceptPolicy_ShouldReturn400_WhenRequestIsInvalid() throws Exception {
-        SetStateEarthQuakeRequest request = new SetStateEarthQuakeRequest(null); // Invalid: policyId is null
+        SetStateEarthQuakeRequest request = new SetStateEarthQuakeRequest(null);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/earthQuake/accepted")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -183,7 +183,7 @@ public class EarthQuakePolicyController_V1Test {
     }
     @Test
     public void rejectPolicy_ShouldReturn400_WhenRequestIsInvalid() throws Exception {
-        SetStateEarthQuakeRequest request = new SetStateEarthQuakeRequest(null); // Invalid: policyId is null
+        SetStateEarthQuakeRequest request = new SetStateEarthQuakeRequest(null);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/earthQuake/rejected")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -243,7 +243,7 @@ public class EarthQuakePolicyController_V1Test {
     @Test
     public void getPolicies_ShouldReturn400_WhenRequestIsInvalid() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/earthQuake/list")
-                        .param("size", "-1")  // Invalid: size is negative
+                        .param("size", "-1")
                         .param("page", "0"))
                 .andExpect(status().isBadRequest());
     }

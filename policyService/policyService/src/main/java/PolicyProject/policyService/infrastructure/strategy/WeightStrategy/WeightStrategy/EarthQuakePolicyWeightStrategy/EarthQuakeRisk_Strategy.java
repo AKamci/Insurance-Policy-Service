@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 public class EarthQuakeRisk_Strategy implements IEarthQuakeWeightStrategy {
     @Override
     public BigDecimal calculate(HouseModel model, EarthQaukeWeights parameter) {
+        if (model == null || parameter == null || parameter.getWeight() == null) {
+            return BigDecimal.ZERO;
+        }
         return parameter.getWeight().multiply(getValue(model));
     }
 

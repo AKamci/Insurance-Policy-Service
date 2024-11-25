@@ -22,9 +22,7 @@ public class HouseController_V1 {
     public ResponseEntity<GetHouseWCustomerResponse> getWCustomer(
             @Valid @ModelAttribute GetHouseWCustomerRequest getHouseWCustomerRequest) {
 
-        GetHouseWCustomerResponse getHouseWCustomerResponse = houseService.getWCustomer(
-                HouseMapper.INSTANCE.getHouseWithCustomerRequestToHouseModel(getHouseWCustomerRequest));
-
-        return ResponseEntity.status(HttpStatus.OK).body(getHouseWCustomerResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(houseService.getWCustomer(
+                HouseMapper.INSTANCE.getHouseWithCustomerRequestToHouseModel(getHouseWCustomerRequest)));
     }
 }

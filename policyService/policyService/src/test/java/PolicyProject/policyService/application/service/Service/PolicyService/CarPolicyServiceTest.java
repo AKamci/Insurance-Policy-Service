@@ -5,9 +5,11 @@ import PolicyProject.policyService.application.service.Service.AuxiliaryService.
 import PolicyProject.policyService.application.usecases.ExecuteAuxiliary.CarPolicy.ExecuteLicensePlate;
 import PolicyProject.policyService.application.usecases.ExecutePolicy.ExecuteCarPolicy;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyEvent;
+import PolicyProject.policyService.domain.dto.response.CarPolicyResponse.UpdateCarPolicyResponse;
 import PolicyProject.policyService.domain.model.AuxiliaryModel.CarPolicy.LicensePlateModel;
 import PolicyProject.policyService.domain.model.AuxiliaryModel.HealthPolicy.PersonalHealthModel;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import PolicyProject.policyService.interfaces.mappers.AuxiliaryMapper.CarPolicy.LicensePlateMapper;
 import PolicyProject.policyService.interfaces.mappers.PolicyMapper.CarPolicyMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,11 +18,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Date;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class CarPolicyServiceTest {
 
@@ -43,6 +46,7 @@ public class CarPolicyServiceTest {
     @InjectMocks
     private CarPolicyService carPolicyService;
 
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -50,107 +54,108 @@ public class CarPolicyServiceTest {
 
     @Test
     void testCreate_ValidCarPolicyModel_ReturnsCreateCarPolicyResponse() {
-        objectValidation.validateModel(carPolicyModel, "carPolicyModel");
-        carPolicyMapper.carPolicyModelToCreateCarPolicyResponse(carPolicyModel);
-        executeCarPolicy.executeCreate(carPolicyModel);
+        when(executeCarPolicy.executeCreate(carPolicyModel)).thenReturn(carPolicyModel);
+        doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
+
+        carPolicyService.create(carPolicyModel);
 
         verify(executeCarPolicy, times(1)).executeCreate(carPolicyModel);
-        verify(carPolicyMapper, times(1)).carPolicyModelToCreateCarPolicyResponse(carPolicyModel);
-        verify(objectValidation, times(1)).validateModel(any(CarPolicyModel.class), any(String.class));
+        verify(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
     }
 
+    ///  Test update
     @Test
     void testUpdate_ValidCarPolicyModel_ReturnsUpdateCarPolicyResponse() {
-        objectValidation.validateModel(carPolicyModel, "carPolicyModel");
-        carPolicyMapper.cartPolicyModelToUpdateCarPolicyResponse(carPolicyModel);
-        executeCarPolicy.executeUpdate(carPolicyModel);
+        when(executeCarPolicy.executeUpdate(carPolicyModel)).thenReturn(carPolicyModel);
+        doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
 
-        verify(executeCarPolicy, times(1)).executeUpdate(carPolicyModel);
-        verify(carPolicyMapper, times(1)).cartPolicyModelToUpdateCarPolicyResponse(carPolicyModel);
-        verify(objectValidation, times(1)).validateModel(any(CarPolicyModel.class), any(String.class));
+        carPolicyService.update(carPolicyModel);
+
+        verify(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
+        verify(executeCarPolicy).executeUpdate(carPolicyModel);
     }
 
     @Test
     void testGetList_ValidCarPolicyModel_ReturnsListGetCarPolicyResponse() {
-        objectValidation.validateModel(carPolicyModel, "carPolicyModel");
-        carPolicyMapper.cartPolicyModelListToGetCarPolicyResponseList(List.of(carPolicyModel, carPolicyModel2));
-        executeCarPolicy.executeGetList(carPolicyModel);
+        when(executeCarPolicy.executeGetList(carPolicyModel)).thenReturn(List.of(carPolicyModel, carPolicyModel2));
+        doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
+
+        carPolicyService.getList(carPolicyModel);
 
         verify(executeCarPolicy, times(1)).executeGetList(carPolicyModel);
-        verify(carPolicyMapper, times(1)).cartPolicyModelListToGetCarPolicyResponseList(List.of(carPolicyModel, carPolicyModel2));
-        verify(objectValidation, times(1)).validateModel(any(CarPolicyModel.class), any(String.class));
+        verify(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
     }
 
     @Test
     void testDelete_ValidCarPolicyModel_ReturnsDeleteCarPolicyResponse() {
-        objectValidation.validateModel(carPolicyModel, "carPolicyModel");
-        carPolicyMapper.cartPolicyModelToDeleteCarPolicyResponse(carPolicyModel);
-        executeCarPolicy.executeDelete(carPolicyModel);
+        when(executeCarPolicy.executeDelete(carPolicyModel)).thenReturn(carPolicyModel);
+        doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
+
+        carPolicyService.delete(carPolicyModel);
 
         verify(executeCarPolicy, times(1)).executeDelete(carPolicyModel);
-        verify(carPolicyMapper, times(1)).cartPolicyModelToDeleteCarPolicyResponse(carPolicyModel);
-        verify(objectValidation, times(1)).validateModel(any(CarPolicyModel.class), any(String.class));
+        verify(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
     }
 
     @Test
     void testGet_ValidCarPolicyModel_ReturnsGetCarPolicyResponse() {
-        objectValidation.validateModel(carPolicyModel, "carPolicyModel");
-        carPolicyMapper.cartPolicyModelToGetCarPolicyResponse(carPolicyModel);
-        executeCarPolicy.executeGet(carPolicyModel);
+        when(executeCarPolicy.executeGet(carPolicyModel)).thenReturn(carPolicyModel);
+        doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
+
+        carPolicyService.get(carPolicyModel);
 
         verify(executeCarPolicy, times(1)).executeGet(carPolicyModel);
-        verify(carPolicyMapper, times(1)).cartPolicyModelToGetCarPolicyResponse(carPolicyModel);
-        verify(objectValidation, times(1)).validateModel(any(CarPolicyModel.class), any(String.class));
+        verify(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
     }
 
     @Test
     void testGetByPlate_ValidCarPolicyModel_ReturnsListGetCarPolicyResponse() {
-        objectValidation.validateModel(carPolicyModel, "carPolicyModel");
-        carPolicyMapper.cartPolicyModelListToGetCarPolicyResponseList(List.of(carPolicyModel, carPolicyModel2));
-        executeCarPolicy.executeGetWPlate(carPolicyModel);
+        when(executeCarPolicy.executeGetWPlate(carPolicyModel)).thenReturn(List.of(carPolicyModel));
+        doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
+
+        carPolicyService.getByPlate(carPolicyModel);
 
         verify(executeCarPolicy, times(1)).executeGetWPlate(carPolicyModel);
-        verify(carPolicyMapper, times(1)).cartPolicyModelListToGetCarPolicyResponseList(List.of(carPolicyModel, carPolicyModel2));
-        verify(objectValidation, times(1)).validateModel(any(CarPolicyModel.class), any(String.class));
+        verify(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
     }
 
     @Test
     void testGetWPolicy_ValidCarPolicyModel_ReturnsListGetCarPolicyResponse() {
-        objectValidation.validateModel(carPolicyModel, "carPolicyModel");
-        carPolicyMapper.cartPolicyModelListToGetCarPolicyResponseList((List.of(carPolicyModel, carPolicyModel2)));
-        executeCarPolicy.executeGet_wPolicy(carPolicyModel);
+        when(executeCarPolicy.executeGet_wPolicy(carPolicyModel)).thenReturn(List.of(carPolicyModel));
+        doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
+
+        carPolicyService.get(carPolicyModel);
 
         verify(executeCarPolicy, times(1)).executeGet_wPolicy(carPolicyModel);
-        verify(carPolicyMapper, times(1)).cartPolicyModelListToGetCarPolicyResponseList(List.of(carPolicyModel, carPolicyModel2));
-        verify(objectValidation, times(1)).validateModel(any(CarPolicyModel.class), any(String.class));
+        verify(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
     }
 
     @Test
     void testAccept_ValidCarPolicyModel_ReturnsSetCarPolicyStatusResponse() {
+        when(executeCarPolicy.changeCarPolicyState(carPolicyModel,PolicyEvent.ACTIVATE)).thenReturn(carPolicyModel);
+        doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
 
-        objectValidation.validateModel(carPolicyModel, "carPolicyModel");
-        carPolicyMapper.cartPolicyModelToSetStateCarPolicyResponse(carPolicyModel);
-        executeCarPolicy.changeCarPolicyState(carPolicyModel, PolicyEvent.ACTIVATE);
+        carPolicyService.acceptCarPolicy(carPolicyModel);
 
         verify(executeCarPolicy, times(1)).changeCarPolicyState(carPolicyModel, PolicyEvent.ACTIVATE);
-        verify(carPolicyMapper, times(1)).cartPolicyModelToSetStateCarPolicyResponse(carPolicyModel);
-        verify(objectValidation, times(1)).validateModel(any(CarPolicyModel.class), any(String.class));
+        verify(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
     }
 
     @Test
     void testReject_ValidCarPolicyModel_ReturnsSetCarPolicyStatusResponse() {
-        objectValidation.validateModel(carPolicyModel, "carPolicyModel");
-        carPolicyMapper.cartPolicyModelToSetStateCarPolicyResponse(carPolicyModel);
-        executeCarPolicy.changeCarPolicyState(carPolicyModel, PolicyEvent.CANCEL);
+        when(executeCarPolicy.changeCarPolicyState(carPolicyModel,PolicyEvent.CANCEL)).thenReturn(carPolicyModel);
+        doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
+
+        carPolicyService.rejectCarPolicy(carPolicyModel);
 
         verify(executeCarPolicy, times(1)).changeCarPolicyState(carPolicyModel, PolicyEvent.CANCEL);
-        verify(carPolicyMapper, times(1)).cartPolicyModelToSetStateCarPolicyResponse(carPolicyModel);
-        verify(objectValidation, times(1)).validateModel(any(CarPolicyModel.class), any(String.class));
+        verify(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
     }
 
     @Test
     void testTotalRecord_ValidCarPolicyModel_ReturnsINT() {
-        executeCarPolicy.executeGetTotalRecord();
+        when(executeCarPolicy.executeGetTotalRecord()).thenReturn(5);
+        carPolicyService.getTotalRecord();
         verify(executeCarPolicy, times(1)).executeGetTotalRecord();
     }
 }

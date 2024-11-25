@@ -13,18 +13,93 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.hamcrest.Matchers.is;
 
 @WebMvcTest(PersonalHealthController_V1.class)
 public class PersonalHealthController_V1Test {
+
+    @Test
+    void testCreatePersonalHealth_Success_WithBloodTypeANegative() throws Exception {
+        // Mock request
+        CreatePersonalHealthRequest mockRequest = new CreatePersonalHealthRequest(
+                "12345678901", 200, 180, 75.0, 23.1, BloodType.A_NEGATIVE, false, false, false, false, false
+        );
+
+        // Mock response
+        CreatePersonalHealthResponse mockResponse = new CreatePersonalHealthResponse(
+                mockRequest.tckn(), 1L
+        );
+
+        Mockito.when(personalHealthService.create(any())).thenReturn(mockResponse);
+
+        // Perform request
+        MvcResult result = mockMvc.perform(post("/api/v1/personalHealth")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(mockRequest)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.tckn", is("12345678901")))
+                .andReturn();
+
+        // Verify
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+    }
+
+
+
+    @Test
+    void testCreatePersonalHealth_Success() throws Exception {
+        // Mock request
+        CreatePersonalHealthRequest mockRequest = new CreatePersonalHealthRequest(
+                "12345678901", 200, 180, 75.0, 23.1, BloodType.A_NEGATIVE, false, false, false, false, false
+        );
+
+        // Mock response
+        CreatePersonalHealthResponse mockResponse = new CreatePersonalHealthResponse(
+                mockRequest.tckn(), 1L
+        );
+
+        Mockito.when(personalHealthService.create(any())).thenReturn(mockResponse);
+
+        // Perform request
+        MvcResult result = mockMvc.perform(post("/api/v1/personalHealth")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(mockRequest)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.tckn", is("12345678901")))
+                .andReturn();
+
+        // Verify
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @Test
+    void testCreatePersonalHealth_BadRequest() throws Exception {
+        // Mock request with invalid data
+        CreatePersonalHealthRequest mockRequest = new CreatePersonalHealthRequest(
+                "12345", 50, 180, 75.0, 23.1, BloodType.A_NEGATIVE, false, false, false, false, false
+        );
+
+        // Perform request
+        mockMvc.perform(post("/api/v1/personalHealth")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(mockRequest)))
+                .andExpect(status().isBadRequest());
+    }
 
     @Autowired
     private MockMvc mockMvc;
@@ -32,73 +107,37 @@ public class PersonalHealthController_V1Test {
     @MockBean
     private PersonalHealthService personalHealthService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Test
-    public void testGetWCustomer_ReturnsPersonalHealthWithCustomerResponse() throws Exception {
-        // Arrange
+    void testGetWCustomer_Success() throws Exception {
+        // Mock response
         GetPersonalHealthWithCustomerResponse mockResponse = new GetPersonalHealthWithCustomerResponse(
-                1L, 175, 70.0, 22.9, "O+", true, false, false, false, false,
-                null, null, 1000L);
+                1L, 180, 75.0, 23.1, "O+", false, false, false, false, false, LocalDateTime.now(), null, 10000L
+        );
+
         Mockito.when(personalHealthService.getWCustomer(any())).thenReturn(mockResponse);
 
-        // Act
+        // Perform request
         MvcResult result = mockMvc.perform(get("/api/v1/personalHealth/WCustomer")
                         .param("tckn", "12345678901")
-                        .param("coverageCode", "123")
-                        .accept(MediaType.APPLICATION_JSON))
+                        .param("coverageCode", "200")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.height", is(180)))
+                .andExpect(jsonPath("$.weight", is(75.0)))
+                .andExpect(jsonPath("$.bmi", is(23.1)))
+                .andExpect(jsonPath("$.bloodType", is("O+")))
                 .andReturn();
 
-        // Assert
-        String jsonResponse = result.getResponse().getContentAsString();
-        GetPersonalHealthWithCustomerResponse actualResponse = objectMapper.readValue(jsonResponse, GetPersonalHealthWithCustomerResponse.class);
-        assertThat(actualResponse).isEqualTo(mockResponse);
+        // Verify
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
     }
 
     @Test
-    public void testGetWCustomer_InvalidInput_ReturnsBadRequest() throws Exception {
-        // Act & Assert
+    void testGetWCustomer_BadRequest() throws Exception {
         mockMvc.perform(get("/api/v1/personalHealth/WCustomer")
-                        .param("tckn", "")
-                        .param("coverageCode", ""))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    public void testCreatePersonalHealth_ReturnsCreatedResponse() throws Exception {
-        // Arrange
-        CreatePersonalHealthRequest mockRequest = new CreatePersonalHealthRequest(
-                "12345678901", 123, 175, 70.0, 22.9, BloodType.A_NEGATIVE, true, false, false, false, false);
-        CreatePersonalHealthResponse mockResponse = new CreatePersonalHealthResponse("12345678901", 1L);
-        Mockito.when(personalHealthService.create(any())).thenReturn(mockResponse);
-
-        // Act
-        MvcResult result = mockMvc.perform(post("/api/v1/personalHealth")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(mockRequest))
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        // Assert
-        String jsonResponse = result.getResponse().getContentAsString();
-        CreatePersonalHealthResponse actualResponse = objectMapper.readValue(jsonResponse, CreatePersonalHealthResponse.class);
-        assertThat(actualResponse).isEqualTo(mockResponse);
-    }
-
-    @Test
-    public void testCreatePersonalHealth_InvalidInput_ReturnsBadRequest() throws Exception {
-        // Arrange
-        CreatePersonalHealthRequest mockRequest = new CreatePersonalHealthRequest(
-                "", 123, 175, 70.0, 22.9, BloodType.AB_NEGATIVE, true, false, false, false, false);
-
-        // Act & Assert
-        mockMvc.perform(post("/api/v1/personalHealth")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(mockRequest))
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
 }

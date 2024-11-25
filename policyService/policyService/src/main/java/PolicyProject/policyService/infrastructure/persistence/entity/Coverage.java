@@ -33,6 +33,8 @@ public class Coverage implements Serializable {
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "coverage", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Policies> policiesList;
+
+
 }
 
 

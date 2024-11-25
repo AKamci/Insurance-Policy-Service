@@ -16,13 +16,13 @@ public class EarthQuakeWeightStrategyFactory {
 
     public EarthQuakeWeightStrategyFactory() {
 
-        strategies.put(EarthquakePolicyStrategyType.SQUARE_METERS.name(), new SquareMeter_Strategy());//
-        strategies.put(EarthquakePolicyStrategyType.EARTHQUAKERISK.name(), new EarthQuakeRisk_Strategy());//
-        strategies.put(EarthquakePolicyStrategyType.CONSTRUCTION_STYLE.name(), new ConstructionStyle_Strategy());//
-        strategies.put(EarthquakePolicyStrategyType.TOTAL_FLOORS.name(), new TotalFloors_Strategy());//
-        strategies.put(EarthquakePolicyStrategyType.CONSTRUCTION_YEAR.name(), new ConstructionYear_Strategy());//
+        strategies.put(EarthquakePolicyStrategyType.SQUARE_METERS.name(), new SquareMeter_Strategy());
+        strategies.put(EarthquakePolicyStrategyType.EARTHQUAKERISK.name(), new EarthQuakeRisk_Strategy());
+        strategies.put(EarthquakePolicyStrategyType.CONSTRUCTION_STYLE.name(), new ConstructionStyle_Strategy());
+        strategies.put(EarthquakePolicyStrategyType.TOTAL_FLOORS.name(), new TotalFloors_Strategy());
+        strategies.put(EarthquakePolicyStrategyType.CONSTRUCTION_YEAR.name(), new ConstructionYear_Strategy());
         strategies.put(EarthquakePolicyStrategyType.CONSTANT.name(), new EarthQuakeConstantStrategy());
-        strategies.put(EarthquakePolicyStrategyType.POLICY_TYPE.name(), new EarthquakePolicyType_Strategy());//
+        strategies.put(EarthquakePolicyStrategyType.POLICY_TYPE.name(), new EarthquakePolicyType_Strategy());
 
 
     }

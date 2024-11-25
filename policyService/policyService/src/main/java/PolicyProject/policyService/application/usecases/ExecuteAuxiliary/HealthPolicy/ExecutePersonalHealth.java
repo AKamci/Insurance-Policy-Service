@@ -20,13 +20,7 @@ public class ExecutePersonalHealth {
     private final ExecuteHealthPolicyWeight executeHealthPolicyWeight;
     private final ExecuteCustomer executeCustomer;
 
-    public PersonalHealthModel ExecuteGetWithCustomer(PersonalHealthModel personalHealthModel) {
-        PersonalHealth entity = PersonalHealthMapper.INSTANCE.getPersonalHealthModelToPersonalHealthEntity(personalHealthModel);
-        PersonalHealth personalHealthEntity = Optional.ofNullable(personalHealthGateway.getWCustomer(entity))
-                .orElseThrow(() -> new EntityNotFoundException(personalHealthModel.id(), "Entity not found"));
-        var newModel = PersonalHealthMapper.INSTANCE.getPersonalHealthEntityToPersonalHealthModel(personalHealthEntity);
-        return executeHealthPolicyWeight.Get_APersonalHealthModel(newModel,personalHealthModel.coverageCode());
-    }
+
 
     public PersonalHealthModel ExecuteCreate(PersonalHealthModel personalHealthModel) {
         CustomerModel customerModel = new CustomerModel(null,
@@ -37,6 +31,15 @@ public class ExecutePersonalHealth {
         var newModel = PersonalHealthMapper.INSTANCE.getPersonalHealthEntityToPersonalHealthModel( personalHealthGateway.create(entity, customer));
         return newModel;
     }
+
+    public PersonalHealthModel ExecuteGetWithCustomer(PersonalHealthModel personalHealthModel) {
+        PersonalHealth entity = PersonalHealthMapper.INSTANCE.getPersonalHealthModelToPersonalHealthEntity(personalHealthModel);
+        PersonalHealth personalHealthEntity = Optional.ofNullable(personalHealthGateway.getWCustomer(entity))
+                .orElseThrow(() -> new EntityNotFoundException(personalHealthModel.id(), "Entity not found"));
+        var newModel = PersonalHealthMapper.INSTANCE.getPersonalHealthEntityToPersonalHealthModel(personalHealthEntity);
+        return executeHealthPolicyWeight.Get_APersonalHealthModel(newModel,personalHealthModel.coverageCode());
+    }
+
 
     public PersonalHealthModel ExecuteGetPersonalHealth(PersonalHealthModel personalHealthModel) {
         PersonalHealth entity = PersonalHealthMapper.INSTANCE.getPersonalHealthModelToPersonalHealthEntity(personalHealthModel);

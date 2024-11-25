@@ -36,8 +36,6 @@ public class HealthPolicyController_V1 {
                 .status(HttpStatus.OK)
                 .body(healthPolicyService.get
                         (HealthPolicyMapper.INSTANCE.getHealthPolicyRequestToHealthPolicyModel(getHealthPolicyRequest)));
-
-
     }
 
     @PutMapping

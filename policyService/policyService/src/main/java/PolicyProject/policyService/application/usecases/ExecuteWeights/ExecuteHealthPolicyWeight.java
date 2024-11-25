@@ -64,7 +64,7 @@ public class ExecuteHealthPolicyWeight {
                 total = total.add(strategy.calculate(personalHealthModel, parameter));
             }
         }
-
+        System.out.println("Total :" + total);
         return total;
     }
 

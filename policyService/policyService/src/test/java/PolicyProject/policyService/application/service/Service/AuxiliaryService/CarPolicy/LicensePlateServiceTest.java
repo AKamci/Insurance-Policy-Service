@@ -39,13 +39,13 @@ public class LicensePlateServiceTest {
     @Test
     void testGetWCustomer_ValidLicensePlateModel() {
 
-        objectValidation.validateModel(licensePlateModel,"licensePlateModel");
-        licensePlateMapper.LicensePlateModelToGetPlateWithCustomerResponse(licensePlateModel);
-        executeLicensePlate.ExecuteGetLicensePlateWithCustomer(licensePlateModel);
+        when(executeLicensePlate.ExecuteGetLicensePlateWithCustomer(licensePlateModel)).thenReturn(licensePlateModel);
+        doNothing().when(objectValidation).validateModel(licensePlateModel, "licensePlateModel");
 
-        verify(licensePlateMapper, times(1)).LicensePlateModelToGetPlateWithCustomerResponse(licensePlateModel);
+        licensePlateService.getWCustomer(licensePlateModel);
+
+        verify(objectValidation).validateModel(licensePlateModel, "licensePlateModel");
         verify(executeLicensePlate, times(1)).ExecuteGetLicensePlateWithCustomer(licensePlateModel);
-        verify(objectValidation, times(1)).validateModel(licensePlateModel, "licensePlateModel");
     }
 
 }

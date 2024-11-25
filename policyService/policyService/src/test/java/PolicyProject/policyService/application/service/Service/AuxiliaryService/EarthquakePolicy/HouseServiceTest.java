@@ -20,7 +20,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-@ExtendWith(MockitoExtension.class)
 public class HouseServiceTest {
 
     @Mock
@@ -46,11 +45,13 @@ public class HouseServiceTest {
 
     @Test
     void testGetWCustomer_ValidHouseModel_ReturnsGetHouseWCustomerResponse() {
-        objectValidation.validateModel(houseModel, "houseModel");
-        houseMapper.HouseModelToGetHouseWCustomerResponse(houseModel);
-        executeHouse.ExecuteGetHouse(houseModel);
-        verify(executeHouse,times(1)).ExecuteGetHouse(houseModel);
-        verify(houseMapper,times(1)).HouseModelToGetHouseWCustomerResponse(any(HouseModel.class));
+        when(executeHouse.ExecuteGetWithCustomer(houseModel)).thenReturn(houseModel);
+        doNothing().when(objectValidation).validateModel(houseModel, "houseModel");
+
+        houseService.getWCustomer(houseModel);
+
+
+        verify(executeHouse,times(1)).ExecuteGetWithCustomer(houseModel);
         verify(objectValidation, times(1)).validateModel(any(HouseModel.class), any(String.class));
     }
 }

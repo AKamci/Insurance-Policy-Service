@@ -15,11 +15,10 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
 
 
-@ExtendWith(MockitoExtension.class)
 public class PersonalHealthServiceTest {
 
     @Mock
@@ -27,9 +26,6 @@ public class PersonalHealthServiceTest {
 
     @Mock
     private ObjectValidation objectValidation;
-
-    @Mock
-    private PersonalHealthMapper personalHealthMapper;
 
     @Mock
     private PersonalHealthModel personalHealthModel;
@@ -44,23 +40,23 @@ public class PersonalHealthServiceTest {
 
     @Test
     void testGetWCustomer_ValidHouseModel_ReturnsGetHouseWCustomerResponse() {
-        objectValidation.validateModel(personalHealthModel, "personalHealthModel");
-        personalHealthMapper.getPersonalHealthModelToGetPersonalHealthWithCustomerResponse(personalHealthModel);
-        executePersonalHealth.ExecuteGetPersonalHealth(personalHealthModel);
+        when(executePersonalHealth.ExecuteGetWithCustomer(personalHealthModel)).thenReturn(personalHealthModel);
+        doNothing().when(objectValidation).validateModel(personalHealthModel, "personalHealthModel");
 
-        verify(executePersonalHealth,times(1)).ExecuteGetPersonalHealth(personalHealthModel);
-        verify(personalHealthMapper,times(1)).getPersonalHealthModelToGetPersonalHealthWithCustomerResponse(personalHealthModel);
+        personalHealthService.getWCustomer(personalHealthModel);
+
+        verify(executePersonalHealth,times(1)).ExecuteGetWithCustomer(personalHealthModel);
         verify(objectValidation, times(1)).validateModel(any(PersonalHealthModel.class), any(String.class));
     }
 
     @Test
     void testCreate_ValidHouseModel_ReturnsCreatePersonalHealthResponse() {
-        objectValidation.validateModel(personalHealthModel, "personalHealthModel");
-        personalHealthMapper.CreatePersonalHealthModelToPersonalHealthResponse(personalHealthModel);
-        executePersonalHealth.ExecuteCreate(personalHealthModel);
+        when(executePersonalHealth.ExecuteCreate(personalHealthModel)).thenReturn(personalHealthModel);
+        doNothing().when(objectValidation).validateModel(personalHealthModel, "personalHealthModel");
+
+        personalHealthService.create(personalHealthModel);
 
         verify(executePersonalHealth,times(1)).ExecuteCreate(personalHealthModel);
-        verify(personalHealthMapper,times(1)).CreatePersonalHealthModelToPersonalHealthResponse(personalHealthModel);
         verify(objectValidation, times(1)).validateModel(any(PersonalHealthModel.class), any(String.class));
     }
 }

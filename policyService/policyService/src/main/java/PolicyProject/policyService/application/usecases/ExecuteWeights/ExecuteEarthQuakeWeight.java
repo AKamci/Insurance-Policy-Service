@@ -23,8 +23,8 @@ public class ExecuteEarthQuakeWeight {
     private final EarthQuakeWeightStrategyFactory strategyFactory;
 
     public HouseModel Get_AHouseModel(HouseModel houseModel) {
-        BigDecimal Amount = calculatePolicyPrice(houseModel);
-        return HouseModelFactory.createNewHouseModelFromExisting(houseModel, Amount.longValue());
+        BigDecimal amount = calculatePolicyPrice(houseModel);
+        return HouseModelFactory.createNewHouseModelFromExisting(houseModel, amount.longValue());
     }
 
     private BigDecimal calculatePolicyPrice(HouseModel houseModel) {
@@ -58,51 +58,39 @@ public class ExecuteEarthQuakeWeight {
         return total;
     }
 
-    public WeightsModel executeUpdate(WeightsModel weightsModel)
-    {
-        Optional<EarthQaukeWeights> optionalEntity = Optional.ofNullable
-                (weightGateway.update(EarthQuakeWeightMapper.INSTANCE.WeightsModelToWeightEntity(weightsModel)));
-        EarthQaukeWeights weightsEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(weightsModel.id(),"Entity not found"));
+    public WeightsModel executeUpdate(WeightsModel weightsModel) {
+        EarthQaukeWeights weightsEntity = Optional.ofNullable(weightGateway.update(EarthQuakeWeightMapper.INSTANCE.WeightsModelToWeightEntity(weightsModel)))
+                .orElseThrow(() -> new EntityNotFoundException(weightsModel.id(), "Entity not found during update"));
         return EarthQuakeWeightMapper.INSTANCE.WeightsEntityToWeightsModel(weightsEntity);
     }
 
-    public WeightsModel executeCreate(WeightsModel weightsModel)
-    {
-        EarthQaukeWeights EnityObject = weightGateway.create(EarthQuakeWeightMapper.INSTANCE.WeightsModelToWeightEntity(weightsModel));
-
-        return EarthQuakeWeightMapper.INSTANCE.WeightsEntityToWeightsModel(EnityObject);
+    public WeightsModel executeCreate(WeightsModel weightsModel) {
+        EarthQaukeWeights entityObject = weightGateway.create(EarthQuakeWeightMapper.INSTANCE.WeightsModelToWeightEntity(weightsModel));
+        return EarthQuakeWeightMapper.INSTANCE.WeightsEntityToWeightsModel(entityObject);
     }
 
-    public WeightsModel executeGet(WeightsModel weightsModel)
-    {
-        Optional<EarthQaukeWeights> optionalEntity = Optional.ofNullable
-                (weightGateway.get(EarthQuakeWeightMapper.INSTANCE.WeightsModelToWeightEntity(weightsModel).getKey()));
-        EarthQaukeWeights weightsEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(weightsModel.id(),"Entity not found"));
+    public WeightsModel executeGet(WeightsModel weightsModel) {
+        EarthQaukeWeights weightsEntity = Optional.ofNullable(weightGateway.get(EarthQuakeWeightMapper.INSTANCE.WeightsModelToWeightEntity(weightsModel).getKey()))
+                .orElseThrow(() -> new EntityNotFoundException(weightsModel.id(), "Entity not found during get"));
         return EarthQuakeWeightMapper.INSTANCE.WeightsEntityToWeightsModel(weightsEntity);
     }
 
-    public WeightsModel executeDelete(WeightsModel weightsModel)
-    {
+    public WeightsModel executeDelete(WeightsModel weightsModel) {
         System.out.println(weightsModel);
-        Optional<EarthQaukeWeights> optionalEntity = Optional.ofNullable
-                (weightGateway.delete(EarthQuakeWeightMapper.INSTANCE.WeightsModelToWeightEntity(weightsModel).getKey()));
-        EarthQaukeWeights weightsEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(weightsModel.id(),"Entity not found"));
+        EarthQaukeWeights weightsEntity = Optional.ofNullable(weightGateway.delete(EarthQuakeWeightMapper.INSTANCE.WeightsModelToWeightEntity(weightsModel).getKey()))
+                .orElseThrow(() -> new EntityNotFoundException(weightsModel.id(), "Entity not found during delete"));
         return EarthQuakeWeightMapper.INSTANCE.WeightsEntityToWeightsModel(weightsEntity);
     }
 
-    public List<WeightsModel> executeGetList()
-    {
-        Optional<List<EarthQaukeWeights>> optionalEntity = Optional.ofNullable
-                (weightGateway.listFilter());
-        List<EarthQaukeWeights> weightsEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(0L,"Entity not found"));
+    public List<WeightsModel> executeGetList() {
+        List<EarthQaukeWeights> weightsEntity = Optional.ofNullable(weightGateway.listFilter())
+                .orElseThrow(() -> new EntityNotFoundException(0L, "Entity list not found"));
         return EarthQuakeWeightMapper.INSTANCE.WeightsEntityListToWeightsModelList(weightsEntity);
     }
 
     public List<WeightsModel> executeUpdateList(List<WeightsModel> weightsModels) {
-        Optional<List<EarthQaukeWeights>> optionalEntity = Optional.ofNullable
-                (weightGateway.updateOrSave(EarthQuakeWeightMapper.INSTANCE.WeightsModelListToWeightEntityList(weightsModels)));
-        List<EarthQaukeWeights> weightsEntity = optionalEntity.orElseThrow(() -> new EntityNotFoundException(0L,"Entity not found"));
+        List<EarthQaukeWeights> weightsEntity = Optional.ofNullable(weightGateway.updateOrSave(EarthQuakeWeightMapper.INSTANCE.WeightsModelListToWeightEntityList(weightsModels)))
+                .orElseThrow(() -> new EntityNotFoundException(0L, "Entity list not found during update or save"));
         return EarthQuakeWeightMapper.INSTANCE.WeightsEntityListToWeightsModelList(weightsEntity);
     }
-
 }
