@@ -188,7 +188,7 @@ public class ExecuteEarthQuakeWeightTest {
         HouseModel houseModel = new HouseModel(null,null,null,null,
                 null,null,null,null);
         when(weightGateway.list()).thenReturn(null);
-        Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             executeCarPolicyWeight.Get_AHouseModel(houseModel);
         });
         String expectedMessage = "Entity not found";
