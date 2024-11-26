@@ -22,7 +22,7 @@ public class CarPolicyWeightService implements IWeightService {
 
     @Override
     public CreateWeightResponse create(WeightsModel weightsModel) {
-
+        objectValidation.validateModel(weightsModel, "weightsModel");
     return CarPolicyWeightsMapper.INSTANCE.WeightsModelToCreateWeightResponse
                 (executeWeight.executeCreate(weightsModel));
     }
@@ -55,7 +55,7 @@ public class CarPolicyWeightService implements IWeightService {
     }
 
     public List<UpdateWeightResponse> updateList(List<WeightsModel> weightsModelList) {
-        objectValidation.validateModel(weightsModelList, "weightsModel");
+        objectValidation.validateModelList(weightsModelList, "weightsModelList");
         return CarPolicyWeightsMapper.INSTANCE.WeightsModelListToUpdateWeightResponseList
                 (executeWeight.executeUpdateList(weightsModelList));
     }

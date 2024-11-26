@@ -41,68 +41,70 @@ public class CarPolicyWeightServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void testGet_ValidWeightsModel_ReturnsGetWeightResponse() {
-        objectValidation.validateModel(weightsModel, "weightsModel");
-        carPolicyWeightsMapper.WeightsModelToGetWeightResponse(weightsModel);
-        executeWeight.executeGet(weightsModel);
-
-        verify(executeWeight,times(1)).executeGet(weightsModel);
-        verify(carPolicyWeightsMapper,times(1)).WeightsModelToGetWeightResponse(weightsModel);
-        verify(objectValidation, times(1)).validateModel(any(WeightsModel.class), any(String.class));
-    }
-    @Test
-    void testUpdateList_ValidWeightsModel_ReturnsListUpdateWeightResponse() {
-        objectValidation.validateModel(weightsModel, "weightsModel");
-        carPolicyWeightsMapper.WeightsModelListToUpdateWeightResponseList(List.of(weightsModel,weightsModel2));
-        executeWeight.executeUpdateList(List.of(weightsModel,weightsModel2));
-
-        verify(executeWeight,times(1)).executeUpdateList(List.of(weightsModel,weightsModel2));
-        verify(carPolicyWeightsMapper,times(1)).WeightsModelListToUpdateWeightResponseList(List.of(weightsModel,weightsModel2));
-        verify(objectValidation, times(1)).validateModel(any(WeightsModel.class), any(String.class));
-    }
-    @Test
-    void testGetList_ValidWeightsModel_ReturnsListGetWeightResponse() {
-        carPolicyWeightsMapper.WeightsModelListToGetWeightResponse(List.of(weightsModel,weightsModel2));
-        executeWeight.executeGetList();
-
-        verify(executeWeight,times(1)).executeGetList();
-        verify(carPolicyWeightsMapper,times(1)).WeightsModelListToGetWeightResponse(List.of(weightsModel,weightsModel2));
-    }
 
     @Test
-    void testDelete_ValidWeightsModel_ReturnsDeleteWeightResponse() {
-        objectValidation.validateModel(weightsModel, "weightsModel");
-        carPolicyWeightsMapper.WeightsModelToDeleteWeightResponse(weightsModel);
-        executeWeight.executeDelete(weightsModel);
+    void testCreate_ValidWeightsModel_ReturnsCreateWeightResponse() {
+        when(executeWeight.executeCreate(weightsModel)).thenReturn(weightsModel);
+        doNothing().when(objectValidation).validateModel(weightsModel, "weightsModel");
 
-        verify(executeWeight,times(1)).executeDelete(weightsModel);
-        verify(carPolicyWeightsMapper,times(1)).WeightsModelToDeleteWeightResponse(weightsModel);
-        verify(objectValidation, times(1)).validateModel(any(WeightsModel.class), any(String.class));
+        carPolicyWeightService.create(weightsModel);
+
+        verify(executeWeight, times(1)).executeCreate(weightsModel);
+        verify(objectValidation, times(1)).validateModel(weightsModel, "weightsModel");
     }
 
     @Test
     void testUpdate_ValidWeightsModel_ReturnsUpdateWeightResponse() {
-        objectValidation.validateModel(weightsModel, "weightsModel");
-        carPolicyWeightsMapper.WeightsModelToUpdateWeightResponse(weightsModel);
-        executeWeight.executeUpdate(weightsModel);
+        when(executeWeight.executeUpdate(weightsModel)).thenReturn(weightsModel);
+        doNothing().when(objectValidation).validateModel(weightsModel, "weightsModel");
 
-        verify(executeWeight,times(1)).executeUpdate(weightsModel);
-        verify(carPolicyWeightsMapper,times(1)).WeightsModelToUpdateWeightResponse(weightsModel);
-        verify(objectValidation, times(1)).validateModel(any(WeightsModel.class), any(String.class));
+        carPolicyWeightService.update(weightsModel);
+
+        verify(executeWeight, times(1)).executeUpdate(weightsModel);
+        verify(objectValidation, times(1)).validateModel(weightsModel, "weightsModel");
     }
 
     @Test
-    void testCreate_ValidWeightsModel_ReturnsCreateWeightResponse() {
-        objectValidation.validateModel(weightsModel, "weightsModel");
-        carPolicyWeightsMapper.WeightsModelToCreateWeightResponse(weightsModel);
-        executeWeight.executeCreate(weightsModel);
+    void testDelete_ValidWeightsModel_ReturnsDeleteWeightResponse() {
+        when(executeWeight.executeDelete(weightsModel)).thenReturn(weightsModel);
+        doNothing().when(objectValidation).validateModel(weightsModel, "weightsModel");
 
-        verify(executeWeight,times(1)).executeCreate(weightsModel);
-        verify(carPolicyWeightsMapper,times(1)).WeightsModelToCreateWeightResponse(weightsModel);
-        verify(objectValidation, times(1)).validateModel(any(WeightsModel.class), any(String.class));
+        carPolicyWeightService.delete(weightsModel);
+
+        verify(executeWeight, times(1)).executeDelete(weightsModel);
+        verify(objectValidation, times(1)).validateModel(weightsModel, "weightsModel");
     }
 
+    @Test
+    void testGet_ValidWeightsModel_ReturnsGetWeightResponse() {
+        when(executeWeight.executeGet(weightsModel)).thenReturn(weightsModel);
+        doNothing().when(objectValidation).validateModel(weightsModel, "weightsModel");
+
+        carPolicyWeightService.get(weightsModel);
+
+        verify(executeWeight, times(1)).executeGet(weightsModel);
+        verify(objectValidation, times(1)).validateModel(weightsModel, "weightsModel");
+    }
+
+    @Test
+    void testGetList_ValidWeightsModel_ReturnsListGetWeightResponse() {
+        when(executeWeight.executeGetList()).thenReturn(List.of(weightsModel));
+
+        carPolicyWeightService.getList();
+
+        verify(executeWeight, times(1)).executeGetList();
+    }
+
+    @Test
+    void testUpdateList_ValidWeightsModel_ReturnsListUpdateWeightResponse() {
+        when(executeWeight.executeUpdateList(List.of(weightsModel))).thenReturn(List.of(weightsModel));
+        doNothing().when(objectValidation).validateModelList(List.of(weightsModel), "weightsModelList");
+
+        carPolicyWeightService.updateList(List.of(weightsModel));
+
+        verify(executeWeight, times(1)).executeUpdateList(List.of(weightsModel));
+        verify(objectValidation, times(1)).validateModelList(List.of(weightsModel), "weightsModelList");
+    }
 
 
 }

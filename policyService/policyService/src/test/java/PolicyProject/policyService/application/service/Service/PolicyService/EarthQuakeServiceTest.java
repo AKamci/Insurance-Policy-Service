@@ -15,9 +15,10 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
 
 public class EarthQuakeServiceTest {
 
@@ -46,84 +47,88 @@ public class EarthQuakeServiceTest {
 
     @Test
     void testCreate_ValidEarthQuakePolicyModel_ReturnsCreateEarthQuakePolicyResponse() {
-        objectValidation.validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
-        earthQuakePolicyMapper.earthQuakeModelToCreateEarthQuakeResponse(earthQuakePolicyModel);
-        executeEarthQuakePolicy.executeCreate(earthQuakePolicyModel);
+        when(executeEarthQuakePolicy.executeCreate(earthQuakePolicyModel)).thenReturn(earthQuakePolicyModel);
+        doNothing().when(objectValidation).validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
+
+        earthQuakeService.create(earthQuakePolicyModel);
 
         verify(executeEarthQuakePolicy, times(1)).executeCreate(earthQuakePolicyModel);
-        verify(earthQuakePolicyMapper, times(1)).earthQuakeModelToCreateEarthQuakeResponse(earthQuakePolicyModel);
         verify(objectValidation, times(1)).validateModel(any(EarthQuakeModel.class), any(String.class));
     }
 
     @Test
     void testUpdate_ValidEarthQuakePolicyModel_ReturnsUpdateEarthQuakePolicyResponse() {
-        objectValidation.validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
-        earthQuakePolicyMapper.earthQuakeModelToUpdateEarthQuakeResponse(earthQuakePolicyModel);
-        executeEarthQuakePolicy.executeUpdate(earthQuakePolicyModel);
+        when(executeEarthQuakePolicy.executeUpdate(earthQuakePolicyModel)).thenReturn(earthQuakePolicyModel);
+        doNothing().when(objectValidation).validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
+
+        earthQuakeService.update(earthQuakePolicyModel);
 
         verify(executeEarthQuakePolicy, times(1)).executeUpdate(earthQuakePolicyModel);
-        verify(earthQuakePolicyMapper, times(1)).earthQuakeModelToUpdateEarthQuakeResponse(earthQuakePolicyModel);
         verify(objectValidation, times(1)).validateModel(any(EarthQuakeModel.class), any(String.class));
     }
 
     @Test
     void testGetList_ValidEarthQuakePolicyModel_ReturnsListGetEarthQuakePolicyResponse() {
-        objectValidation.validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
-        earthQuakePolicyMapper.earthQuakeModelListToGetEarthQuakeResponseList(List.of(earthQuakePolicyModel, earthQuakePolicyModel2));
-        executeEarthQuakePolicy.executeGetList(earthQuakePolicyModel);
+        when(executeEarthQuakePolicy.executeGetList(earthQuakePolicyModel)).thenReturn(List.of(earthQuakePolicyModel));
+        doNothing().when(objectValidation).validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
+
+        earthQuakeService.getList(earthQuakePolicyModel);
 
         verify(executeEarthQuakePolicy, times(1)).executeGetList(earthQuakePolicyModel);
-        verify(earthQuakePolicyMapper, times(1)).earthQuakeModelListToGetEarthQuakeResponseList(List.of(earthQuakePolicyModel, earthQuakePolicyModel2));
         verify(objectValidation, times(1)).validateModel(any(EarthQuakeModel.class), any(String.class));
     }
 
     @Test
     void testDelete_ValidEarthQuakePolicyModel_ReturnsDeleteEarthQuakePolicyResponse() {
-        objectValidation.validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
-        earthQuakePolicyMapper.earthQuakeModelToDeleteEarthQuakeResponse(earthQuakePolicyModel);
-        executeEarthQuakePolicy.executeDelete(earthQuakePolicyModel);
+        when(executeEarthQuakePolicy.executeDelete(earthQuakePolicyModel)).thenReturn(earthQuakePolicyModel);
+        doNothing().when(objectValidation).validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
+
+        earthQuakeService.delete(earthQuakePolicyModel);
 
         verify(executeEarthQuakePolicy, times(1)).executeDelete(earthQuakePolicyModel);
-        verify(earthQuakePolicyMapper, times(1)).earthQuakeModelToDeleteEarthQuakeResponse(earthQuakePolicyModel);
         verify(objectValidation, times(1)).validateModel(any(EarthQuakeModel.class), any(String.class));
     }
 
     @Test
     void testGet_ValidEarthQuakePolicyModel_ReturnsGetEarthQuakePolicyResponse() {
-        objectValidation.validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
-        earthQuakePolicyMapper.earthQuakeModelToGetEarthQuakeResponse(earthQuakePolicyModel);
-        executeEarthQuakePolicy.executeGet(earthQuakePolicyModel);
+        when(executeEarthQuakePolicy.executeGet(earthQuakePolicyModel)).thenReturn(earthQuakePolicyModel);
+        doNothing().when(objectValidation).validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
+
+        earthQuakeService.get(earthQuakePolicyModel);
 
         verify(executeEarthQuakePolicy, times(1)).executeGet(earthQuakePolicyModel);
-        verify(earthQuakePolicyMapper, times(1)).earthQuakeModelToGetEarthQuakeResponse(earthQuakePolicyModel);
         verify(objectValidation, times(1)).validateModel(any(EarthQuakeModel.class), any(String.class));
     }
 
     @Test
     void testAccept_ValidEarthQuakePolicyModel_ReturnsSetEarthQuakePolicyStatusResponse() {
-        objectValidation.validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
-        earthQuakePolicyMapper.earthQuakeModelToSetStateEarthQuakeResponse(earthQuakePolicyModel);
-        executeEarthQuakePolicy.changeCarPolicyState(earthQuakePolicyModel, PolicyEvent.ACTIVATE);
+        when(executeEarthQuakePolicy.changeCarPolicyState(earthQuakePolicyModel, PolicyEvent.ACTIVATE)).thenReturn(earthQuakePolicyModel);
+        doNothing().when(objectValidation).validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
+
+        earthQuakeService.accept(earthQuakePolicyModel);
 
         verify(executeEarthQuakePolicy, times(1)).changeCarPolicyState(earthQuakePolicyModel, PolicyEvent.ACTIVATE);
-        verify(earthQuakePolicyMapper, times(1)).earthQuakeModelToSetStateEarthQuakeResponse(earthQuakePolicyModel);
         verify(objectValidation, times(1)).validateModel(any(EarthQuakeModel.class), any(String.class));
     }
 
     @Test
     void testReject_ValidEarthQuakePolicyModel_ReturnsSetEarthQuakePolicyStatusResponse() {
-        objectValidation.validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
-        earthQuakePolicyMapper.earthQuakeModelToSetStateEarthQuakeResponse(earthQuakePolicyModel);
-        executeEarthQuakePolicy.changeCarPolicyState(earthQuakePolicyModel, PolicyEvent.CANCEL);
+        when(executeEarthQuakePolicy.changeCarPolicyState(earthQuakePolicyModel, PolicyEvent.CANCEL)).thenReturn(earthQuakePolicyModel);
+        doNothing().when(objectValidation).validateModel(earthQuakePolicyModel, "earthQuakePolicyModel");
+
+        earthQuakeService.reject(earthQuakePolicyModel);
 
         verify(executeEarthQuakePolicy, times(1)).changeCarPolicyState(earthQuakePolicyModel, PolicyEvent.CANCEL);
-        verify(earthQuakePolicyMapper, times(1)).earthQuakeModelToSetStateEarthQuakeResponse(earthQuakePolicyModel);
         verify(objectValidation, times(1)).validateModel(any(EarthQuakeModel.class), any(String.class));
     }
 
     @Test
     void testTotalRecord_ValidEarthQuakePolicyModel_ReturnsINT() {
-        executeEarthQuakePolicy.executeGetTotalRecord();
+        when(executeEarthQuakePolicy.executeGetTotalRecord()).thenReturn(5);
+
+        int totalRecord = earthQuakeService.getTotalRecord();
+
+        assertEquals(5, totalRecord);
         verify(executeEarthQuakePolicy, times(1)).executeGetTotalRecord();
     }
 }

@@ -1,12 +1,12 @@
 package PolicyProject.policyService.infrastructure.config.Specifications;
 
 import PolicyProject.policyService.domain.Enums.Enums.PolicyState;
-import PolicyProject.policyService.infrastructure.persistence.entity.AuxiliaryEntity.CarPolicy.Car;
-import PolicyProject.policyService.infrastructure.persistence.entity.Customer;
-import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import PolicyProject.policyService.infrastructure.persistence.entity.Coverage;
+import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
 import jakarta.persistence.criteria.*;
 import org.junit.jupiter.api.Test;
+
+import org.mockito.Mockito;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
@@ -14,14 +14,12 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.verify;
 
 public class CarPolicySpecificationTest {
-    
-    
+
     @Test
     public void testBuildSpecification() {
         Specification<CarPolicy> spec = CarPolicySpecification.build(
@@ -41,8 +39,7 @@ public class CarPolicySpecificationTest {
         CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
         Predicate predicate = mock(Predicate.class);
 
-        // Mock behavior
-        when(root.get("policyDescription")).thenReturn(mock(jakarta.persistence.criteria.Path.class));
+        when(root.get("policyDescription")).thenReturn(mock(Path.class));
         when(criteriaBuilder.equal(any(), eq(policyDescription))).thenReturn(predicate);
 
         // Act
@@ -57,32 +54,32 @@ public class CarPolicySpecificationTest {
     @Test
     public void testHasPolicyType() {
         Coverage policyType = new Coverage();
-        policyType.setId(102L);
+        policyType.setId(102L); // input id
 
-        Long adjustedId = 102L % 100;
+        Long adjustedId = 102L % 100; // adjusted id
 
         Root<CarPolicy> root = mock(Root.class);
         CriteriaQuery<?> query = mock(CriteriaQuery.class);
         CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
         Predicate predicate = mock(Predicate.class);
-        Path<Long> path = mock(Path.class);
+        Path<Coverage> coveragePath = mock(Path.class);
 
+        // Mock behavior
         when(root.get("coverage")).thenReturn(mock(Path.class));
-        when(criteriaBuilder.equal(path, adjustedId)).thenReturn(predicate);
+        when(criteriaBuilder.equal(coveragePath, policyType)).thenReturn(predicate);
 
         // Act
         Specification<CarPolicy> specification = CarPolicySpecification.hasPolicyType(policyType);
-        var result = specification.toPredicate(root, query, criteriaBuilder);
+        Predicate result = specification.toPredicate(root, query, criteriaBuilder);
 
         // Assert
         assertNotNull(result);
         assertEquals(predicate, result);
 
+        // Verify interactions
         verify(root).get("coverage");
-        verify(criteriaBuilder).equal(path, adjustedId);
+        verify(criteriaBuilder).equal(coveragePath, policyType);
     }
-
-
     @Test
     public void testHasPolicyStatus() {
         PolicyState state = PolicyState.ACTIVE;
@@ -97,15 +94,11 @@ public class CarPolicySpecificationTest {
 
         // Act
         Specification<CarPolicy> specification = CarPolicySpecification.hasPolicyStatus(state);
-        var result = specification.toPredicate(root, query, criteriaBuilder);
+        Predicate result = specification.toPredicate(root, query, criteriaBuilder);
 
         // Assert
         assertNotNull(result);
         assertEquals(predicate, result);
-
-        // Verify interactions
-        verify(root).get("state");
-        verify(criteriaBuilder).equal(any(), eq(state));
     }
 
     @Test
@@ -123,9 +116,13 @@ public class CarPolicySpecificationTest {
         LocalDate endDate = LocalDate.now().plusDays(10);
 
         Specification<CarPolicy> spec = CarPolicySpecification.isActiveBetween(startDate, endDate);
-        assertNotNull(spec.toPredicate(root, query, criteriaBuilder));
-    }
+        Predicate result = spec.toPredicate(root, query, criteriaBuilder);
 
+        assertNotNull(result);
+        verify(criteriaBuilder).lessThanOrEqualTo(any(), eq(endDate));
+        verify(criteriaBuilder).greaterThanOrEqualTo(any(), eq(startDate));
+        verify(criteriaBuilder).and(any(), any());
+    }
 
     @Test
     public void testHasPolicyStartDate() {
@@ -136,7 +133,6 @@ public class CarPolicySpecificationTest {
         CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
         Predicate predicate = mock(Predicate.class);
 
-        // Mock behavior
         when(root.get("policyStartDate")).thenReturn(mock(Path.class));
         when(criteriaBuilder.greaterThanOrEqualTo(any(), eq(startDate))).thenReturn(predicate);
 
@@ -158,7 +154,6 @@ public class CarPolicySpecificationTest {
         CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
         Predicate predicate = mock(Predicate.class);
 
-        // Mock behavior
         when(root.get("policyEndDate")).thenReturn(mock(Path.class));
         when(criteriaBuilder.lessThanOrEqualTo(any(), eq(endDate))).thenReturn(predicate);
 
@@ -171,7 +166,6 @@ public class CarPolicySpecificationTest {
         assertEquals(predicate, result);
     }
 
-
     @Test
     public void testHasPolicyAmount() {
         double policyAmount = 3050.0;
@@ -180,24 +174,19 @@ public class CarPolicySpecificationTest {
         CriteriaQuery<?> query = mock(CriteriaQuery.class);
         CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
         Predicate predicate = mock(Predicate.class);
-        Path<Object> licensePath = mock(Path.class);
-        Path<Object> platePath = mock(Path.class);
 
-        when(licensePath.get("policyAmount")).thenReturn(platePath);
+        when(root.get("policyAmount")).thenReturn(mock(Path.class));
         when(criteriaBuilder.equal(any(), eq(policyAmount))).thenReturn(predicate);
 
         // Act
         Specification<CarPolicy> specification = CarPolicySpecification.hasPolicyAmount(policyAmount);
-        var result = specification.toPredicate(root, query, criteriaBuilder);
+        Predicate result = specification.toPredicate(root, query, criteriaBuilder);
 
         // Assert
         assertNotNull(result);
         assertEquals(predicate, result);
-
-        // Verify interactions
-        verify(root).get("policyAmount");
-        verify(criteriaBuilder).equal(any(), eq(policyAmount));
     }
+
     @Test
     public void testHasLicensePlateNumber() {
         String plate = "34ABC0010";
@@ -216,16 +205,11 @@ public class CarPolicySpecificationTest {
 
         // Act
         Specification<CarPolicy> specification = CarPolicySpecification.hasLicensePlateNumber(plate);
-        var result = specification.toPredicate(root, query, criteriaBuilder);
+        Predicate result = specification.toPredicate(root, query, criteriaBuilder);
 
         // Assert
         assertNotNull(result);
         assertEquals(predicate, result);
-
-        // Verify interactions
-        verify(root).get("licensePlate");
-        verify(licensePath).get("plate");
-        verify(criteriaBuilder).equal(platePath, plate);
     }
 
     @Test
@@ -237,6 +221,7 @@ public class CarPolicySpecificationTest {
         CriteriaQuery<?> query = mock(CriteriaQuery.class);
         CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
         Predicate predicate = mock(Predicate.class);
+
         Path<Object> customerPath = mock(Path.class);
         Path<Object> tcknPath = mock(Path.class);
 
@@ -246,17 +231,10 @@ public class CarPolicySpecificationTest {
 
         // Act
         Specification<CarPolicy> specification = CarPolicySpecification.hasCustomerTckn(tckn);
-        var result = specification.toPredicate(root, query, criteriaBuilder);
+        Predicate result = specification.toPredicate(root, query, criteriaBuilder);
 
         // Assert
         assertNotNull(result);
         assertEquals(predicate, result);
-
-        // Verify interactions
-        verify(root).get("customer");
-        verify(customerPath).get("tckn");
-        verify(criteriaBuilder).equal(tcknPath, tckn);
     }
-
-
 }

@@ -56,7 +56,7 @@ public class ExecuteCarPolicyWeight {
 
         return total;
     }
-
+3659/4360
     public WeightsModel executeUpdate(WeightsModel weightsModel)
     {
         Optional<Weights> optionalEntity = Optional.ofNullable

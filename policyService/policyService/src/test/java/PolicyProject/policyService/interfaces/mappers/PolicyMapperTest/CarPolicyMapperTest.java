@@ -105,7 +105,7 @@ public class CarPolicyMapperTest {
         assertEquals(request.policyStartDate(), model.policyStartDate());
         assertEquals(request.policyEndDate(), model.policyEndDate());
         assertEquals(request.tckn(), model.tckn());
-        assertEquals(request.policyAmount(), model.policyAmount());
+        assertEquals(request.policyAmount().doubleValue(), model.policyAmount().doubleValue());
         assertEquals(request.licensePlateNumber(), model.licensePlateNumber());
     }
     @Test
@@ -162,7 +162,7 @@ public class CarPolicyMapperTest {
         assertEquals(request.policyOfferDate(), model.policyOfferDate());
         assertEquals(request.policyDescription(), model.policyDescription());
         assertEquals(request.state(), model.state());
-        assertEquals(request.coverage(), model.coverageCode());
+        assertEquals(request.coverage(), model.coverage().getCoverageType().getCode());
         assertEquals(request.policyStartDate(), model.policyStartDate());
         assertEquals(request.policyEndDate(), model.policyEndDate());
         assertEquals(request.policyAmount(), model.policyAmount());

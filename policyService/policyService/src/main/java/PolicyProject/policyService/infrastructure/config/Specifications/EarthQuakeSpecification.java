@@ -89,7 +89,7 @@ public class EarthQuakeSpecification {
 
     public static Specification<EarthquakePolicy> hasPolicyStatus(PolicyState state) {
         return (root, query, criteriaBuilder) ->
-                state == null ? null : criteriaBuilder.equal(root.get("state"), state);
+                state == null ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("state"), state);
     }
 
     public static Specification<EarthquakePolicy> hasPolicyStartDate(LocalDate startDate) {

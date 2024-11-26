@@ -39,64 +39,66 @@ public class EarthQuakePolicyWeightServiceTest {
     }
 
     @Test
-    void testGet_ValidWeightsModel_ReturnsGetWeightResponse() {
-        objectValidation.validateModel(weightsModel, "weightsModel");
-        earthquakePolicyWeightsMapper.WeightsModelToGetWeightResponse(weightsModel);
-        executeWeight.executeGet(weightsModel);
+    void testCreate_ValidWeightsModel_ReturnsCreateWeightResponse() {
+        when(executeWeight.executeCreate(weightsModel)).thenReturn(weightsModel);
+        doNothing().when(objectValidation).validateModel(weightsModel, "weightsModel");
 
-        verify(executeWeight,times(1)).executeGet(weightsModel);
-        verify(earthquakePolicyWeightsMapper,times(1)).WeightsModelToGetWeightResponse(weightsModel);
-        verify(objectValidation, times(1)).validateModel(any(WeightsModel.class), any(String.class));
-    }
-    @Test
-    void testUpdateList_ValidWeightsModel_ReturnsListUpdateWeightResponse() {
-        objectValidation.validateModel(weightsModel, "weightsModel");
-        earthquakePolicyWeightsMapper.WeightsModelListToUpdateWeightResponseList(List.of(weightsModel,weightsModel2));
-        executeWeight.executeUpdateList(List.of(weightsModel,weightsModel2));
+        earthQuakePolicyWeightService.create(weightsModel);
 
-        verify(executeWeight,times(1)).executeUpdateList(List.of(weightsModel,weightsModel2));
-        verify(earthquakePolicyWeightsMapper,times(1)).WeightsModelListToUpdateWeightResponseList(List.of(weightsModel,weightsModel2));
-        verify(objectValidation, times(1)).validateModel(any(WeightsModel.class), any(String.class));
-    }
-    @Test
-    void testGetList_ValidWeightsModel_ReturnsListGetWeightResponse() {
-        earthquakePolicyWeightsMapper.WeightsModelListToGetWeightResponse(List.of(weightsModel,weightsModel2));
-        executeWeight.executeGetList();
-
-        verify(executeWeight,times(1)).executeGetList();
-        verify(earthquakePolicyWeightsMapper,times(1)).WeightsModelListToGetWeightResponse(List.of(weightsModel,weightsModel2));
-    }
-
-    @Test
-    void testDelete_ValidWeightsModel_ReturnsDeleteWeightResponse() {
-        objectValidation.validateModel(weightsModel, "weightsModel");
-        earthquakePolicyWeightsMapper.WeightsModelToDeleteWeightResponse(weightsModel);
-        executeWeight.executeDelete(weightsModel);
-
-        verify(executeWeight,times(1)).executeDelete(weightsModel);
-        verify(earthquakePolicyWeightsMapper,times(1)).WeightsModelToDeleteWeightResponse(weightsModel);
-        verify(objectValidation, times(1)).validateModel(any(WeightsModel.class), any(String.class));
+        verify(executeWeight, times(1)).executeCreate(weightsModel);
+        verify(objectValidation, times(1)).validateModel(weightsModel, "weightsModel");
     }
 
     @Test
     void testUpdate_ValidWeightsModel_ReturnsUpdateWeightResponse() {
-        objectValidation.validateModel(weightsModel, "weightsModel");
-        earthquakePolicyWeightsMapper.WeightsModelToUpdateWeightResponse(weightsModel);
-        executeWeight.executeUpdate(weightsModel);
+        when(executeWeight.executeUpdate(weightsModel)).thenReturn(weightsModel);
+        doNothing().when(objectValidation).validateModel(weightsModel, "weightsModel");
 
-        verify(executeWeight,times(1)).executeUpdate(weightsModel);
-        verify(earthquakePolicyWeightsMapper,times(1)).WeightsModelToUpdateWeightResponse(weightsModel);
-        verify(objectValidation, times(1)).validateModel(any(WeightsModel.class), any(String.class));
+        earthQuakePolicyWeightService.update(weightsModel);
+
+        verify(executeWeight, times(1)).executeUpdate(weightsModel);
+        verify(objectValidation, times(1)).validateModel(weightsModel, "weightsModel");
     }
 
     @Test
-    void testCreate_ValidWeightsModel_ReturnsCreateWeightResponse() {
-        objectValidation.validateModel(weightsModel, "weightsModel");
-        earthquakePolicyWeightsMapper.WeightsModelToCreateWeightResponse(weightsModel);
-        executeWeight.executeCreate(weightsModel);
+    void testDelete_ValidWeightsModel_ReturnsDeleteWeightResponse() {
+        when(executeWeight.executeDelete(weightsModel)).thenReturn(weightsModel);
+        doNothing().when(objectValidation).validateModel(weightsModel, "weightsModel");
 
-        verify(executeWeight,times(1)).executeCreate(weightsModel);
-        verify(earthquakePolicyWeightsMapper,times(1)).WeightsModelToCreateWeightResponse(weightsModel);
-        verify(objectValidation, times(1)).validateModel(any(WeightsModel.class), any(String.class));
+        earthQuakePolicyWeightService.delete(weightsModel);
+
+        verify(executeWeight, times(1)).executeDelete(weightsModel);
+        verify(objectValidation, times(1)).validateModel(weightsModel, "weightsModel");
+    }
+
+    @Test
+    void testGet_ValidWeightsModel_ReturnsGetWeightResponse() {
+        when(executeWeight.executeGet(weightsModel)).thenReturn(weightsModel);
+        doNothing().when(objectValidation).validateModel(weightsModel, "weightsModel");
+
+        earthQuakePolicyWeightService.get(weightsModel);
+
+        verify(executeWeight, times(1)).executeGet(weightsModel);
+        verify(objectValidation, times(1)).validateModel(weightsModel, "weightsModel");
+    }
+
+    @Test
+    void testGetList_ValidWeightsModel_ReturnsListGetWeightResponse() {
+        when(executeWeight.executeGetList()).thenReturn(List.of(weightsModel));
+
+        earthQuakePolicyWeightService.getList();
+
+        verify(executeWeight, times(1)).executeGetList();
+    }
+
+    @Test
+    void testUpdateList_ValidWeightsModel_ReturnsListUpdateWeightResponse() {
+        when(executeWeight.executeUpdateList(List.of(weightsModel))).thenReturn(List.of(weightsModel));
+        doNothing().when(objectValidation).validateModelList(List.of(weightsModel), "weightsModelList");
+
+        earthQuakePolicyWeightService.updateList(List.of(weightsModel));
+
+        verify(executeWeight, times(1)).executeUpdateList(List.of(weightsModel));
+        verify(objectValidation, times(1)).validateModelList(List.of(weightsModel), "weightsModelList");
     }
 }

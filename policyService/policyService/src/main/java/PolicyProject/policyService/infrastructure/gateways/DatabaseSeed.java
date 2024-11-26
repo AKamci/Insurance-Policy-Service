@@ -32,11 +32,13 @@ import PolicyProject.policyService.infrastructure.persistence.repository.Weights
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.processing.Generated;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Generated("")
 @Component
 public class DatabaseSeed implements CommandLineRunner {
 
@@ -55,7 +57,7 @@ public class DatabaseSeed implements CommandLineRunner {
     private final HealthPolicyRepository healthPolicyRepository;
     private final PersonalHealthRepository personalHealthRepository;
 
-    // Constructor
+    @Generated("")
     public DatabaseSeed(CarPolicyRepository carPolicyrepository,
                         CustomerRepository customerRepository,
                         CarRepository carRepository,
@@ -870,7 +872,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 EarthQaukeWeights.builder().key("TAM_KAPSAM").weight(new BigDecimal("4.8")).minValue(new BigDecimal("104")).maxValue(new BigDecimal("104")).type("POLICY_TYPE").build()
 
 
-                ));
+        ));
     }
 
     private void seedDataEarthquakePolicies() {
@@ -968,7 +970,7 @@ public class DatabaseSeed implements CommandLineRunner {
                 HealthPolicyWeight.builder().key("DISABILITY").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("BOOLEAN_TYPE").build(),
                 HealthPolicyWeight.builder().key("SURGERIES").weight(new BigDecimal("4.8")).minValue(new BigDecimal("1")).maxValue(new BigDecimal("1")).type("BOOLEAN_TYPE").build()
 
-                ));
+        ));
     }
 
     private void seedDataHealthPolicies()
@@ -1040,5 +1042,4 @@ public class DatabaseSeed implements CommandLineRunner {
         return tcknBuilder.toString();
     }
 }
-
 

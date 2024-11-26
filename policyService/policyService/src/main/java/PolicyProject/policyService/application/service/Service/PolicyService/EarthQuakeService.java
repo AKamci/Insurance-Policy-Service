@@ -52,7 +52,7 @@ public class EarthQuakeService implements IEarthQuakeService {
     public DeleteEarthQuakeResponse delete(EarthQuakeModel earthQuakeModel) {
         objectValidation.validateModel(earthQuakeModel, "earthQuakeModel");
         return EarthQuakeMapper.INSTANCE.earthQuakeModelToDeleteEarthQuakeResponse
-                (executeEarthQuakePolicy.executeUpdate(earthQuakeModel));
+                (executeEarthQuakePolicy.executeDelete(earthQuakeModel));
     }
 
     public SetStateEarthQuakeResponse accept (EarthQuakeModel earthQuakeModel)

@@ -58,7 +58,7 @@ public class EarthQuakePolicyWeightService implements IWeightService {
     }
 
     public List<UpdateWeightResponse> updateList(List<WeightsModel> weightsModelList) {
-        objectValidation.validateModel(weightsModelList, "weightsModel");
+        objectValidation.validateModelList(weightsModelList, "weightsModelList");
         return CarPolicyWeightsMapper.INSTANCE.WeightsModelListToUpdateWeightResponseList
                 (executeWeight.executeUpdateList(weightsModelList));
     }

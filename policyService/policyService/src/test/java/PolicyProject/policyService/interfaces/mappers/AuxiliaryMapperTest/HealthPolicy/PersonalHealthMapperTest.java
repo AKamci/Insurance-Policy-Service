@@ -23,6 +23,51 @@ public class PersonalHealthMapperTest {
     private final PersonalHealthMapper mapper = PersonalHealthMapper.INSTANCE;
 
 
+
+    @Test
+    public void testGetPersonalHealthEntityToPersonalHealthModel_withCompleteEntity() {
+        Customer customer = new Customer();
+        customer.setTckn("12345678910");
+
+        PersonalHealth entity = PersonalHealth.builder()
+                .id(1L)
+                .customer(customer)
+                .height(170)
+                .weight(70.0)
+                .bmi(24.2)
+                .bloodType(BloodType.A_POSITIVE)
+                .build();
+
+        PersonalHealthModel model = mapper.getPersonalHealthEntityToPersonalHealthModel(entity);
+
+        assertNotNull(model);
+        assertEquals(entity.getId(), model.id());
+        assertEquals(entity.getCustomer().getTckn(), model.tckn());
+        assertEquals(entity.getHeight(), model.height());
+        assertEquals(entity.getWeight(), model.weight());
+        assertEquals(entity.getBmi(), model.bmi());
+        assertEquals(entity.getBloodType(), model.bloodType());
+    }
+    @Test
+    public void testGetPersonalHealthEntityToPersonalHealthModel_withNullCustomer() {
+        PersonalHealth entity = PersonalHealth.builder()
+                .id(1L)
+                .height(170)
+                .weight(70.0)
+                .bmi(24.2)
+                .bloodType(BloodType.A_POSITIVE)
+                .build();
+
+        PersonalHealthModel model = mapper.getPersonalHealthEntityToPersonalHealthModel(entity);
+
+        assertNotNull(model);
+        assertEquals(entity.getId(), model.id());
+        assertNull(model.tckn());
+        assertEquals(entity.getHeight(), model.height());
+        assertEquals(entity.getWeight(), model.weight());
+        assertEquals(entity.getBmi(), model.bmi());
+        assertEquals(entity.getBloodType(), model.bloodType());
+    }
     @Test
     public void testGetPersonalHealthWithCustomerRequestToPersonalHealthModel() {
         GetPersonalHealthWithCustomerRequest request = new GetPersonalHealthWithCustomerRequest("12345678910", 100);
@@ -124,7 +169,7 @@ public class PersonalHealthMapperTest {
         assertEquals(model.id(), response.id());
     }
     @Test
-    public void testGetPersonalHealthModelToPersonalHealthEntity() {
+    public void testGetPersonalHealthModelToPersonalHealthEntity_withCompleteModel() {
         PersonalHealthModel model = new PersonalHealthModel(
                 1L,
                 "12345678910",
@@ -146,7 +191,39 @@ public class PersonalHealthMapperTest {
         PersonalHealth entity = mapper.getPersonalHealthModelToPersonalHealthEntity(model);
 
         assertNotNull(entity);
+        assertEquals(model.id(), entity.getId());
         assertEquals(model.tckn(), entity.getCustomer().getTckn());
+        assertEquals(model.height(), entity.getHeight());
+        assertEquals(model.weight(), entity.getWeight());
+        assertEquals(model.bmi(), entity.getBmi());
+        assertEquals(model.bloodType(), entity.getBloodType());
+    }
+    @Test
+    public void testGetPersonalHealthModelToPersonalHealthEntity_withNullCustomer() {
+        PersonalHealthModel model = new PersonalHealthModel(
+                1L,
+                null,
+                null,
+                100,
+                null,
+                170,
+                70.0,
+                24.2,
+                BloodType.A_POSITIVE,
+                true,
+                false,
+                false,
+                false,
+                false,
+                1000L
+        );
+
+        PersonalHealth entity = mapper.getPersonalHealthModelToPersonalHealthEntity(model);
+
+        assertNotNull(entity);
+        assertNull(entity.getCustomer().getTckn());
+
+        assertEquals(model.id(), entity.getId());
         assertEquals(model.height(), entity.getHeight());
         assertEquals(model.weight(), entity.getWeight());
         assertEquals(model.bmi(), entity.getBmi());

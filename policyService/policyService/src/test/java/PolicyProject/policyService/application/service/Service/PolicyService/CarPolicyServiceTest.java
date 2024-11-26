@@ -1,16 +1,10 @@
 package PolicyProject.policyService.application.service.Service.PolicyService;
 
 import PolicyProject.policyService.application.service.ObjectValidation;
-import PolicyProject.policyService.application.service.Service.AuxiliaryService.CarPolicy.LicensePlateService;
-import PolicyProject.policyService.application.usecases.ExecuteAuxiliary.CarPolicy.ExecuteLicensePlate;
 import PolicyProject.policyService.application.usecases.ExecutePolicy.ExecuteCarPolicy;
 import PolicyProject.policyService.domain.Enums.Enums.PolicyEvent;
-import PolicyProject.policyService.domain.dto.response.CarPolicyResponse.UpdateCarPolicyResponse;
-import PolicyProject.policyService.domain.model.AuxiliaryModel.CarPolicy.LicensePlateModel;
-import PolicyProject.policyService.domain.model.AuxiliaryModel.HealthPolicy.PersonalHealthModel;
+import PolicyProject.policyService.domain.dto.response.CarPolicyResponse.*;
 import PolicyProject.policyService.domain.model.CarPolicyModel;
-import PolicyProject.policyService.infrastructure.persistence.entity.PolicyEntity.CarPolicy;
-import PolicyProject.policyService.interfaces.mappers.AuxiliaryMapper.CarPolicy.LicensePlateMapper;
 import PolicyProject.policyService.interfaces.mappers.PolicyMapper.CarPolicyMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,11 +16,9 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class CarPolicyServiceTest {
-
 
     @Mock
     private ExecuteCarPolicy executeCarPolicy;
@@ -46,7 +38,6 @@ public class CarPolicyServiceTest {
     @InjectMocks
     private CarPolicyService carPolicyService;
 
-
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -63,7 +54,6 @@ public class CarPolicyServiceTest {
         verify(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
     }
 
-    ///  Test update
     @Test
     void testUpdate_ValidCarPolicyModel_ReturnsUpdateCarPolicyResponse() {
         when(executeCarPolicy.executeUpdate(carPolicyModel)).thenReturn(carPolicyModel);
@@ -124,15 +114,26 @@ public class CarPolicyServiceTest {
         when(executeCarPolicy.executeGet_wPolicy(carPolicyModel)).thenReturn(List.of(carPolicyModel));
         doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
 
-        carPolicyService.get(carPolicyModel);
+        carPolicyService.get_wPolicy(carPolicyModel);
 
         verify(executeCarPolicy, times(1)).executeGet_wPolicy(carPolicyModel);
         verify(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
     }
 
     @Test
-    void testAccept_ValidCarPolicyModel_ReturnsSetCarPolicyStatusResponse() {
-        when(executeCarPolicy.changeCarPolicyState(carPolicyModel,PolicyEvent.ACTIVATE)).thenReturn(carPolicyModel);
+    void testGetPoliciesBetweenDate_ValidCarPolicyModel_ReturnsListGetCustomerCarPoliciesResponse() {
+        when(executeCarPolicy.executeGet_BetweenDate(carPolicyModel)).thenReturn(List.of(carPolicyModel));
+        doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
+
+        carPolicyService.get_Policies_BetweenDate(carPolicyModel);
+
+        verify(executeCarPolicy, times(1)).executeGet_BetweenDate(carPolicyModel);
+        verify(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
+    }
+
+    @Test
+    void testAcceptCarPolicy_ValidCarPolicyModel_ReturnsSetCarPolicyStatusResponse() {
+        when(executeCarPolicy.changeCarPolicyState(carPolicyModel, PolicyEvent.ACTIVATE)).thenReturn(carPolicyModel);
         doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
 
         carPolicyService.acceptCarPolicy(carPolicyModel);
@@ -142,8 +143,8 @@ public class CarPolicyServiceTest {
     }
 
     @Test
-    void testReject_ValidCarPolicyModel_ReturnsSetCarPolicyStatusResponse() {
-        when(executeCarPolicy.changeCarPolicyState(carPolicyModel,PolicyEvent.CANCEL)).thenReturn(carPolicyModel);
+    void testRejectCarPolicy_ValidCarPolicyModel_ReturnsSetCarPolicyStatusResponse() {
+        when(executeCarPolicy.changeCarPolicyState(carPolicyModel, PolicyEvent.CANCEL)).thenReturn(carPolicyModel);
         doNothing().when(objectValidation).validateModel(carPolicyModel, "carPolicyModel");
 
         carPolicyService.rejectCarPolicy(carPolicyModel);
@@ -153,9 +154,12 @@ public class CarPolicyServiceTest {
     }
 
     @Test
-    void testTotalRecord_ValidCarPolicyModel_ReturnsINT() {
+    void testGetTotalRecord_ReturnsTotalRecordCount() {
         when(executeCarPolicy.executeGetTotalRecord()).thenReturn(5);
-        carPolicyService.getTotalRecord();
+
+        int totalRecord = carPolicyService.getTotalRecord();
+
+        assertEquals(5, totalRecord);
         verify(executeCarPolicy, times(1)).executeGetTotalRecord();
     }
 }

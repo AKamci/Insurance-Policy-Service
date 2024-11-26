@@ -52,7 +52,7 @@ public class HealthPolicyService implements IHealthPolicyService {
     public DeleteHealthPolicyResponse delete(HealthPolicyModel healthPolicyModel) {
         objectValidation.validateModel(healthPolicyModel, "healthPolicyModel");
         return HealthPolicyMapper.INSTANCE.healthPolicyModelToDeleteHealthPolicyResponse
-                (executeHealthPolicy.executeUpdate(healthPolicyModel));
+                (executeHealthPolicy.executeDelete(healthPolicyModel));
     }
 
 

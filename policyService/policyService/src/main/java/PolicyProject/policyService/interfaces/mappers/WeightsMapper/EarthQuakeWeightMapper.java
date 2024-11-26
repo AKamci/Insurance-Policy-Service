@@ -19,8 +19,6 @@ public interface EarthQuakeWeightMapper {
     WeightsModel UpdateWeightRequestToWeightsModel(UpdateWeightRequest updateWeightRequest);
     WeightsModel DeleteWeightRequestToWeightsModel(DeleteWeightRequest deleteWeightRequest);
     WeightsModel GetWeightRequestToWeightsModel(GetWeightRequest getWeightRequest);
-    WeightsModel GetListWeightRequestToWeightsModel(GetListWeightRequest getListWeightRequest);
-    List<WeightsModel> GetWeightRequestListToWeightsModelList(List<GetWeightRequest> getWeightRequestList);
     List<WeightsModel> UpdateWeightRequestListToWeightsModelList(List<UpdateWeightRequest> updateWeightRequestlist);
 
 

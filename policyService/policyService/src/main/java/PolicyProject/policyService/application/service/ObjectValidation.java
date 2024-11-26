@@ -12,5 +12,19 @@ public class ObjectValidation {
             throw new IllegalArgumentException(modelName + " is null");
         }
     }
+
+    public <T> void validateModelList (T model, String modelName){
+        if (model == null) {
+            throw new IllegalArgumentException(modelName + " is null");
+        }
+
+        if (model instanceof Iterable) {
+            for (Object item : (Iterable<?>) model) {
+                if (item == null) {
+                    throw new IllegalArgumentException(modelName + " contains null elements");
+                }
+            }
+        }
+    }
 }
 

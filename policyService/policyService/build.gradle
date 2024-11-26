@@ -51,8 +51,11 @@ test {
 	useJUnitPlatform()
 	filter {
 		include 'PolicyProject.policyService.infrastructure.gateways.RepositoryGateways.*'
+		exclude "PolicyProject.policyService.infrastructure.gateways.exclude.DataBaseSeed.class"
+
 	}
 }
+
 
 springBoot {
 	mainClass = 'PolicyProject.policyService.PolicyServiceApplication'

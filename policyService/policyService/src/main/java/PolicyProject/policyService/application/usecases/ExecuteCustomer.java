@@ -54,14 +54,15 @@ public class ExecuteCustomer {
     public List<CustomerModel> executeGetList(CustomerModel customerModel)
     {
         Specification<Customer> specification = customerSpecificationBuild.CustomerBuild(CustomerMapper.INSTANCE.customerModelToCustomerEntity(customerModel));
+
         int page = customerModel.page();
         int size = customerModel.size();
 
+        List<Customer> customerList =
+                Optional.ofNullable(customerGateway.getList(specification, page, size))
+                        .orElseThrow(() -> new EntityNotFoundException(customerModel.id(), "Entity not found"));
 
-        Optional<List<Customer>> EntityList = Optional.ofNullable
-                (customerGateway.getList(specification, page, size));
-        List<Customer> CustomerList = EntityList.orElseThrow(() -> new EntityNotFoundException(customerModel.id(),"Entity not found"));
-        return CustomerMapper.INSTANCE.CustomerEntityListToCustomerModelList(CustomerList);
+        return CustomerMapper.INSTANCE.CustomerEntityListToCustomerModelList(customerList);
     }
 
     public int executeGetTotalRecord()

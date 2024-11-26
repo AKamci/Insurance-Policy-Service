@@ -58,7 +58,7 @@ public class HealthPolicyWeightService implements IWeightService {
     }
 
     public List<UpdateWeightResponse> updateList(List<WeightsModel> weightsModelList) {
-        objectValidation.validateModel(weightsModelList, "weightsModelList");
+        objectValidation.validateModelList(weightsModelList, "weightsModelList");
         return CarPolicyWeightsMapper.INSTANCE.WeightsModelListToUpdateWeightResponseList
                 (executeWeight.executeUpdateList(weightsModelList));
     }

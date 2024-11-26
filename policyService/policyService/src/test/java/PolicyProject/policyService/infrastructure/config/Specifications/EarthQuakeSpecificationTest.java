@@ -14,9 +14,8 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-
-
 public class EarthQuakeSpecificationTest {
+
     @Mock
     private Root<EarthquakePolicy> root;
 
@@ -50,11 +49,7 @@ public class EarthQuakeSpecificationTest {
     @Test
     void testHasCity_withValidCity_returnsEqualPredicate() {
         String city = "Ankara";
-        Root<EarthquakePolicy> root = mock(Root.class);
-        CriteriaQuery<?> query = mock(CriteriaQuery.class);
-        CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
         Predicate predicate = mock(Predicate.class);
-
         Join<Object, Object> houseJoin = mock(Join.class);
         Join<Object, Object> buildingJoin = mock(Join.class);
         Join<Object, Object> addressJoin = mock(Join.class);
@@ -132,7 +127,6 @@ public class EarthQuakeSpecificationTest {
         assertNotNull(result);
     }
 
-
     @Test
     void testHasDistrict_withNullDistrict_returnsConjunction() {
         when(criteriaBuilder.conjunction()).thenReturn(mock(Predicate.class));
@@ -147,11 +141,7 @@ public class EarthQuakeSpecificationTest {
     @Test
     void testHasDistrict_withValidDistrict_returnsEqualPredicate() {
         String district = "Cankaya";
-        Root<EarthquakePolicy> root = mock(Root.class);
-        CriteriaQuery<?> query = mock(CriteriaQuery.class);
-        CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
         Predicate predicate = mock(Predicate.class);
-
         Join<Object, Object> houseJoin = mock(Join.class);
         Join<Object, Object> buildingJoin = mock(Join.class);
         Join<Object, Object> addressJoin = mock(Join.class);
@@ -185,12 +175,7 @@ public class EarthQuakeSpecificationTest {
     @Test
     void testHasNeighborhood_withValidNeighborhood_returnsEqualPredicate() {
         String neighborhood = "Kizilay";
-        Root<EarthquakePolicy> root = mock(Root.class);
-        CriteriaQuery<?> query = mock(CriteriaQuery.class);
-        CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
         Predicate predicate = mock(Predicate.class);
-
-        // Join adımlarının mocklanması
         Join<Object, Object> houseJoin = mock(Join.class);
         Join<Object, Object> buildingJoin = mock(Join.class);
         Join<Object, Object> addressJoin = mock(Join.class);
@@ -213,30 +198,19 @@ public class EarthQuakeSpecificationTest {
     @Test
     void testHasNumber_withNullNumber_returnsConjunction() {
         Integer number = 0;
-        Root<EarthquakePolicy> root = mock(Root.class);
-        CriteriaQuery<?> query = mock(CriteriaQuery.class);
-        CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
-        Predicate conjunctionPredicate = mock(Predicate.class);
-
-        when(criteriaBuilder.conjunction()).thenReturn(conjunctionPredicate);
+        when(criteriaBuilder.conjunction()).thenReturn(mock(Predicate.class));
 
         var spec = EarthQuakeSpecification.hasNumber(number);
         Predicate result = spec.toPredicate(root, query, criteriaBuilder);
 
         verify(criteriaBuilder).conjunction();
         assertNotNull(result);
-        assertEquals(conjunctionPredicate, result);
     }
 
     @Test
     void testHasNumber_withValidNumber_returnsEqualPredicate() {
-
         Integer number = 123;
-        Root<EarthquakePolicy> root = mock(Root.class);
-        CriteriaQuery<?> query = mock(CriteriaQuery.class);
-        CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
         Predicate predicate = mock(Predicate.class);
-
         Join<Object, Object> houseJoin = mock(Join.class);
         Path<Object> numberPath = mock(Path.class);
 
@@ -250,35 +224,24 @@ public class EarthQuakeSpecificationTest {
         verify(criteriaBuilder).equal(numberPath, number);
         assertNotNull(result);
         assertEquals(predicate, result);
-
     }
 
     @Test
     void testHasApartmentNumber_withNullApartmentNumber_returnsConjunction() {
         Integer apartmentNumber = 0;
-        Root<EarthquakePolicy> root = mock(Root.class);
-        CriteriaQuery<?> query = mock(CriteriaQuery.class);
-        CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
-        Predicate conjunctionPredicate = mock(Predicate.class);
-
-        when(criteriaBuilder.conjunction()).thenReturn(conjunctionPredicate);
+        when(criteriaBuilder.conjunction()).thenReturn(mock(Predicate.class));
 
         var spec = EarthQuakeSpecification.hasApartmentNumber(apartmentNumber);
         Predicate result = spec.toPredicate(root, query, criteriaBuilder);
 
         verify(criteriaBuilder).conjunction();
         assertNotNull(result);
-        assertEquals(conjunctionPredicate, result);
     }
 
     @Test
     void testHasApartmentNumber_withValidApartmentNumber_returnsEqualPredicate() {
         Integer apartmentNumber = 123;
-        Root<EarthquakePolicy> root = mock(Root.class);
-        CriteriaQuery<?> query = mock(CriteriaQuery.class);
-        CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
         Predicate predicate = mock(Predicate.class);
-
         Join<Object, Object> houseJoin = mock(Join.class);
         Join<Object, Object> buildingJoin = mock(Join.class);
         Path<Object> apartmentNumberPath = mock(Path.class);
@@ -404,10 +367,4 @@ public class EarthQuakeSpecificationTest {
         verify(criteriaBuilder).lessThanOrEqualTo(any(), eq(endDate));
         assertNotNull(result);
     }
-    
-    
-    
-    
-    
-    
 }

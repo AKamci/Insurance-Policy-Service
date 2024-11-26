@@ -16,9 +16,10 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
 
 public class HealthPolicyServiceTest {
 
@@ -50,83 +51,87 @@ public class HealthPolicyServiceTest {
 
     @Test
     void testGet_ValidHealthPolicyModel_ReturnsGetHealthPolicyResponse() {
-        objectValidation.validateModel(healthPolicyModel, "healthPolicyModel");
-        healthPolicyMapper.healthPolicyModelToGetHealthPolicyResponse(healthPolicyModel);
-        executeHealthPolicy.executeGet(healthPolicyModel);
+        when(executeHealthPolicy.executeGet(healthPolicyModel)).thenReturn(healthPolicyModel);
+        doNothing().when(objectValidation).validateModel(healthPolicyModel, "healthPolicyModel");
+
+        healthPolicyService.get(healthPolicyModel);
 
         verify(executeHealthPolicy, times(1)).executeGet(healthPolicyModel);
-        verify(healthPolicyMapper, times(1)).healthPolicyModelToGetHealthPolicyResponse(healthPolicyModel);
         verify(objectValidation, times(1)).validateModel(any(HealthPolicyModel.class), any(String.class));
     }
 
     @Test
     void testGetList_ValidHealthPolicyModel_ReturnsListGetHealthPolicyResponse() {
-        objectValidation.validateModel(healthPolicyModel, "healthPolicyModel");
-        healthPolicyMapper.healthPolicyModelListToGetHealthPolicyResponseList(List.of(healthPolicyModel, healthPolicyModel2));
-        executeHealthPolicy.executeGetList(healthPolicyModel);
+        when(executeHealthPolicy.executeGetList(healthPolicyModel)).thenReturn(List.of(healthPolicyModel));
+        doNothing().when(objectValidation).validateModel(healthPolicyModel, "healthPolicyModel");
+
+        healthPolicyService.getList(healthPolicyModel);
 
         verify(executeHealthPolicy, times(1)).executeGetList(healthPolicyModel);
-        verify(healthPolicyMapper, times(1)).healthPolicyModelListToGetHealthPolicyResponseList(List.of(healthPolicyModel, healthPolicyModel2));
         verify(objectValidation, times(1)).validateModel(any(HealthPolicyModel.class), any(String.class));
     }
 
     @Test
     void testCreate_ValidHealthPolicyModel_ReturnsCreateHealthPolicyResponse() {
-        objectValidation.validateModel(healthPolicyModel, "healthPolicyModel");
-        healthPolicyMapper.healthPolicyModelToCreateHealthPolicyResponse(healthPolicyModel);
-        executeHealthPolicy.executeCreate(healthPolicyModel);
+        when(executeHealthPolicy.executeCreate(healthPolicyModel)).thenReturn(healthPolicyModel);
+        doNothing().when(objectValidation).validateModel(healthPolicyModel, "healthPolicyModel");
+
+        healthPolicyService.create(healthPolicyModel);
 
         verify(executeHealthPolicy, times(1)).executeCreate(healthPolicyModel);
-        verify(healthPolicyMapper, times(1)).healthPolicyModelToCreateHealthPolicyResponse(healthPolicyModel);
         verify(objectValidation, times(1)).validateModel(any(HealthPolicyModel.class), any(String.class));
     }
 
     @Test
     void testUpdate_ValidHealthPolicyModel_ReturnsUpdateHealthPolicyResponse() {
-        objectValidation.validateModel(healthPolicyModel, "healthPolicyModel");
-        healthPolicyMapper.healthPolicyModelToUpdateHealthPolicyResponse(healthPolicyModel);
-        executeHealthPolicy.executeUpdate(healthPolicyModel);
+        when(executeHealthPolicy.executeUpdate(healthPolicyModel)).thenReturn(healthPolicyModel);
+        doNothing().when(objectValidation).validateModel(healthPolicyModel, "healthPolicyModel");
+
+        healthPolicyService.update(healthPolicyModel);
 
         verify(executeHealthPolicy, times(1)).executeUpdate(healthPolicyModel);
-        verify(healthPolicyMapper, times(1)).healthPolicyModelToUpdateHealthPolicyResponse(healthPolicyModel);
         verify(objectValidation, times(1)).validateModel(any(HealthPolicyModel.class), any(String.class));
     }
 
     @Test
     void testDelete_ValidHealthPolicyModel_ReturnsDeleteHealthPolicyResponse() {
-        objectValidation.validateModel(healthPolicyModel, "healthPolicyModel");
-        healthPolicyMapper.healthPolicyModelToDeleteHealthPolicyResponse(healthPolicyModel);
-        executeHealthPolicy.executeDelete(healthPolicyModel);
+        when(executeHealthPolicy.executeDelete(healthPolicyModel)).thenReturn(healthPolicyModel);
+        doNothing().when(objectValidation).validateModel(healthPolicyModel, "healthPolicyModel");
+
+        healthPolicyService.delete(healthPolicyModel);
 
         verify(executeHealthPolicy, times(1)).executeDelete(healthPolicyModel);
-        verify(healthPolicyMapper, times(1)).healthPolicyModelToDeleteHealthPolicyResponse(healthPolicyModel);
         verify(objectValidation, times(1)).validateModel(any(HealthPolicyModel.class), any(String.class));
     }
 
     @Test
     void testAccept_ValidHealthPolicyModel_ReturnsSetStateHealthPolicyResponse() {
-        objectValidation.validateModel(healthPolicyModel, "healthPolicyModel");
-        healthPolicyMapper.healthPolicyModelToSetStateHealthPolicyResponse(healthPolicyModel);
-        executeHealthPolicy.changeCarPolicyState(healthPolicyModel, PolicyEvent.ACTIVATE);
+        when(executeHealthPolicy.changeCarPolicyState(healthPolicyModel, PolicyEvent.ACTIVATE)).thenReturn(healthPolicyModel);
+        doNothing().when(objectValidation).validateModel(healthPolicyModel, "healthPolicyModel");
+
+        healthPolicyService.accept(healthPolicyModel);
 
         verify(executeHealthPolicy, times(1)).changeCarPolicyState(healthPolicyModel,PolicyEvent.ACTIVATE);
-        verify(healthPolicyMapper, times(1)).healthPolicyModelToSetStateHealthPolicyResponse(healthPolicyModel);
         verify(objectValidation, times(1)).validateModel(any(HealthPolicyModel.class), any(String.class));
     }
     @Test
     void testReject_ValidHealthPolicyModel_ReturnsSetStateHealthPolicyResponse() {
-        objectValidation.validateModel(healthPolicyModel, "healthPolicyModel");
-        healthPolicyMapper.healthPolicyModelToSetStateHealthPolicyResponse(healthPolicyModel);
-        executeHealthPolicy.changeCarPolicyState(healthPolicyModel, PolicyEvent.CANCEL);
+        when(executeHealthPolicy.changeCarPolicyState(healthPolicyModel, PolicyEvent.CANCEL)).thenReturn(healthPolicyModel);
+        doNothing().when(objectValidation).validateModel(healthPolicyModel, "healthPolicyModel");
+
+        healthPolicyService.reject(healthPolicyModel);
 
         verify(executeHealthPolicy, times(1)).changeCarPolicyState(healthPolicyModel,PolicyEvent.CANCEL);
-        verify(healthPolicyMapper, times(1)).healthPolicyModelToSetStateHealthPolicyResponse(healthPolicyModel);
         verify(objectValidation, times(1)).validateModel(any(HealthPolicyModel.class), any(String.class));
     }
 
     @Test
     void testTotal_ValidHealthPolicyModel_ReturnsINT() {
-        executeHealthPolicy.executeGetTotalRecord();
+        when(executeHealthPolicy.executeGetTotalRecord()).thenReturn(5);
+
+        int totalRecord = healthPolicyService.getTotalRecord();
+
+        assertEquals(5, totalRecord);
         verify(executeHealthPolicy, times(1)).executeGetTotalRecord();
     }
 

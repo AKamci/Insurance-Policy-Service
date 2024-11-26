@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LicensePlateMapperTest {
 
@@ -28,6 +27,7 @@ public class LicensePlateMapperTest {
         assertEquals(request.plate(), model.plate());
         assertEquals(request.coverageCode(), model.coverageCode());
     }
+
     @Test
     void testLicensePlateModelToGetPlateWithCustomerResponse() {
         LicensePlateModel model = new LicensePlateModel(
@@ -51,6 +51,7 @@ public class LicensePlateMapperTest {
         assertEquals(model.customer(), response.customer());
         assertEquals(model.amount(), response.amount());
     }
+
     @Test
     void testLicensePlateModelToCustomerEntity() {
         LicensePlateModel model = new LicensePlateModel(
@@ -72,6 +73,7 @@ public class LicensePlateMapperTest {
         assertEquals(model.car(), entity.getCar());
         assertEquals(model.customer(), entity.getCustomer());
     }
+
     @Test
     void testLicensePlateEntityToLicensePlateModel() {
         Car car = new Car();
@@ -90,5 +92,95 @@ public class LicensePlateMapperTest {
         assertEquals(licensePlate.getPlate(), model.plate());
         assertEquals(licensePlate.getCar(), model.car());
         assertEquals(licensePlate.getCustomer(), model.customer());
+    }
+
+    @Test
+    void testPartialLicensePlateEntityToLicensePlateModel() {
+        Car car = new Car();
+        LicensePlate licensePlate = LicensePlate.builder()
+                .id(2L)
+                .plate("ABC789")
+                .car(car)
+                .build();
+
+        LicensePlateModel model = mapper.licensePlateEntityToLicensePlateModel(licensePlate);
+
+        assertNotNull(model);
+        assertEquals(licensePlate.getId(), model.id());
+        assertEquals(licensePlate.getPlate(), model.plate());
+        assertEquals(licensePlate.getCar(), model.car());
+        // customer should be null in both licensePlate and model
+        assertNull(model.customer());
+    }
+
+    @Test
+    void testNullCustomerInLicensePlateEntityToLicensePlateModel() {
+        Car car = new Car();
+        LicensePlate licensePlate = LicensePlate.builder()
+                .id(3L)
+                .plate("LMN456")
+                .car(car)
+                .customer(null)
+                .build();
+
+        LicensePlateModel model = mapper.licensePlateEntityToLicensePlateModel(licensePlate);
+
+        assertNotNull(model);
+        assertEquals(licensePlate.getId(), model.id());
+        assertEquals(licensePlate.getPlate(), model.plate());
+        assertEquals(licensePlate.getCar(), model.car());
+        assertNull(model.customer());
+    }
+
+    @Test
+    void testNullCarInLicensePlateEntityToLicensePlateModel() {
+        Customer customer = new Customer();
+        LicensePlate licensePlate = LicensePlate.builder()
+                .id(4L)
+                .plate("GHI012")
+                .car(null)
+                .customer(customer)
+                .build();
+
+        LicensePlateModel model = mapper.licensePlateEntityToLicensePlateModel(licensePlate);
+
+        assertNotNull(model);
+        assertEquals(licensePlate.getId(), model.id());
+        assertEquals(licensePlate.getPlate(), model.plate());
+        assertNull(model.car());
+        assertEquals(licensePlate.getCustomer(), model.customer());
+    }
+
+    @Test
+    void testGetPlateWithCustomerRequestToLicensePlateModelWithNullValues() {
+        GetPlateWithCustomerRequest request = new GetPlateWithCustomerRequest(null, 0);
+
+        LicensePlateModel model = mapper.getPlateWithCustomerRequestToLicensePlateModel(request);
+
+        assertNotNull(model);
+        assertNull(model.plate());
+        assertEquals(0, model.coverageCode());
+    }
+
+    @Test
+    void testLicensePlateModelToCustomerEntityWithNullValues() {
+        LicensePlateModel model = new LicensePlateModel(
+                null,
+                null,
+                null,
+                null,
+                0,
+                null,
+                null,
+                null
+        );
+
+        LicensePlate entity = mapper.LicensePlateModelToCustomerEntity(model);
+
+        assertNotNull(entity);
+        assertNull(entity.getId());
+        assertNull(entity.getPlate());
+        assertNull(entity.getCar());
+        assertNull(entity.getCustomer());
     }
 }

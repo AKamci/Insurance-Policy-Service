@@ -206,7 +206,7 @@ public class HealthPolicyMapperTest {
         assertEquals(request.policyStartDate(), model.policyStartDate());
         assertEquals(request.policyEndDate(), model.policyEndDate());
         assertEquals(request.tckn(), model.tckn());
-        assertEquals(request.policyAmount(), model.policyAmount());
+        assertEquals(request.policyAmount().doubleValue(), model.policyAmount().doubleValue());
     }
     @Test
     void testCreateHealthPolicyRequestToHealthPolicyModelWithNullValues() {

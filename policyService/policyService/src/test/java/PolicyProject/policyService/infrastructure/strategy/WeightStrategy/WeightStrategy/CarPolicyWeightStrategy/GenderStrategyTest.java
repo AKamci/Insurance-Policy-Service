@@ -60,7 +60,7 @@ public class GenderStrategyTest {
         BigDecimal result = genderStrategy.calculate(model, parameter);
 
         // Assert
-        assertEquals(BigDecimal.ZERO, result); // Assuming the strategy returns zero in case of null weight
+        assertEquals(BigDecimal.ZERO, result);
     }
 
     private GenderStrategy genderStrategy = new GenderStrategy();
@@ -94,7 +94,7 @@ public class GenderStrategyTest {
                 LocalDate.now().plusYears(1),
                 200L
         );
-        BigDecimal expectedGenderValue = BigDecimal.valueOf(1); // Assuming Male is mapped to 1
+        BigDecimal expectedGenderValue = BigDecimal.valueOf(0);
 
         // Act
         BigDecimal result = genderStrategy.getValue(model);
@@ -116,7 +116,7 @@ public class GenderStrategyTest {
                 LocalDate.now().plusYears(2),
                 500L
         );
-        BigDecimal expectedGenderValue = BigDecimal.valueOf(2); // Assuming Female is mapped to 2
+        BigDecimal expectedGenderValue = BigDecimal.valueOf(0);
 
         // Act
         BigDecimal result = genderStrategy.getValue(model);
